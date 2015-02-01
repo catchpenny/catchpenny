@@ -1,21 +1,33 @@
 {
     "name": "catchpenny/catchpenny",
-    "description": "kjbn",
+    "description": "Social Platform for *",
     "license": "open",
     "authors": [
         {
-            "name": "sknh",
-            "email": "skjxn@nj.com"
+            "name": "tahaa karim",
+            "email": "tahaalibra@gmail.com"
         }
     ],
     "minimum-stability": "dev",
-    "repositories": [
+    "repositories": 
         {
             "type": "git",
-            "url": "https://github.com/tahaalibra/hello-world.git"
+            "url": "https://github.com/tahaalibra/hello-world.git",
+            "url": "https://github.com/tahaalibra/framework.git"
         }
     ],
      "require": {
-        "libracious/hello-world": "*"
-    }
+        "libracious/hello-world": "*",
+         "catchpenny/framework": "*"
+    },
+"autoload": {
+		"classmap": [
+			"app/commands",
+			"app/controllers",
+			"app/models",
+			"app/database/migrations",
+			"app/database/seeds",
+			"app/tests/TestCase.php"
+		]
+	}
 }
