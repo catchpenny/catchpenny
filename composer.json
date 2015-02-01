@@ -1,0 +1,21 @@
+{
+    "name": "catchpenny/catchpenny",
+    "description": "kjbn",
+    "license": "open",
+    "authors": [
+        {
+            "name": "sknh",
+            "email": "skjxn@nj.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/tahaalibra/hello-world.git"
+        }
+    ],
+     "require": {
+        "libracious/hello-world": "*"
+    }
+}
