@@ -1,7 +1,7 @@
 <?php
 
 
-class pdoquery
+class PDOquery
 {
 
 protected $_dbconnect;

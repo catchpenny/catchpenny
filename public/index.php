@@ -2,8 +2,6 @@
 /*
  * Index page
  *
- * Todo:
- * Url defination to be moved and without the use of /kitchen/ or str_replace
  *
  */
 

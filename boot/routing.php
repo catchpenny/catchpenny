@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This Files call the controller and passes the needed argument to controller class
  * Todo:
@@ -17,50 +18,42 @@ function routing($url)
      * Rest of the url will become an array and will be stored in $Extend_Action
      */
 
-    //only for testing
-    //echo "routing";
-
-
-    $urlArray = array();
-    $urlArray = explode("/", $url);
-    $Action = '';
+    $urlArray      = array();
+    $urlArray      = explode("/", $url);
+    $Action        = '';
     $Extend_Action = array();
 
-    $Controller = $urlArray[0];
-
+    //Initialise Algorithm
+    $Controller    = $urlArray[0];
+    //Check for Action
     if (sizeof($urlArray)>1) {
         array_shift($urlArray);
         $Action = $urlArray[0];
-            //echo 'test';
     }
+    //check for Extended Action
     if (sizeof($urlArray)>1) {
         array_shift($urlArray);
         $Extend_Action = $urlArray;
     }
-
     /*
      * If $controller is equal to Null we load default page that is home page
      */
     if ($Controller == '') {
-        $Controller = 'home';
+        $Controller = 'Home';
     }
     if ($Action == '') {
         $Action = $Controller;
-        //echo $Action;
     }
-
     /*
      * Define all essential variables
      * Add _controller to $Controller to identify it as controller
      * Add _model to $Model to identify it as model
      */
-
-    $Controller = rtrim(strtolower($Controller));
+    $Controller = rtrim(ucfirst($Controller));
     $Model = $Controller;
-    $Model .= '_model';
+    $Model .= 'Model';
     $PassController = $Controller;
-    $Controller .= "_controller";
-
+    $Controller .= "Controller";
     /*
      * Try Load the $controller page and $Action Method and also pass $Extended_Action and $Model
      * if fail load error page

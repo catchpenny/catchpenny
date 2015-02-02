@@ -1,6 +1,6 @@
 <?php
 
-class error_404_controller
+class Error_404Controller
 {
 
     public function __construct()

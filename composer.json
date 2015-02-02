@@ -9,16 +9,15 @@
         }
     ],
     "minimum-stability": "dev",
-    "repositories": 
+    "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/tahaalibra/hello-world.git",
-            "url": "https://github.com/tahaalibra/framework.git"
+            "url": "https://github.com/tahaalibra/hello-world.git"
         }
     ],
      "require": {
         "libracious/hello-world": "*",
-         "catchpenny/framework": "*"
+         "monolog/monolog": "*"
     },
 "autoload": {
 		"classmap": [

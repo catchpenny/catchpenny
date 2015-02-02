@@ -1,6 +1,6 @@
 <?php
-global $any;
-class template
+
+class Template
 {
 
 protected $_controller;

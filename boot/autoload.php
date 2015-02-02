@@ -4,26 +4,30 @@ spl_autoload_register("autoloadModel");
 spl_autoload_register("autoloadController");
 spl_autoload_register("autoloadClass");
 
-function autoloadModel($className) {
-    if (file_exists(ROOT.DS.'core'.DS.strtolower($className).'.class.php')) {
-        require_once ROOT.DS.'core'.DS.strtolower($className).'.class.php';
+
+function autoloadClass($className)
+{
+    if (file_exists(ROOT.DS.'core'.DS.$className.'.class.php')) {
+        require_once ROOT.DS.'core'.DS.$className.'.class.php';
     }
 }
 
-function autoloadController($className) {
-    if (file_exists(ROOT.DS.'app'.DS.'controllers'.DS.strtolower($className).'.php')) {
-        require_once ROOT.DS.'app'.DS.'controllers'.DS.strtolower($className).'.php';
+function autoloadController($className)
+{
+    if (file_exists(ROOT.DS.'app'.DS.'controllers'.DS.$className.'.php')) {
+        require_once ROOT.DS.'app'.DS.'controllers'.DS.$className.'.php';
     }
 }
 
-function autoloadClass($className) {
-if (file_exists(ROOT.DS.'app'.DS.'models'.DS.strtolower($className).'.php')) {
-        require_once ROOT.DS.'app'.DS.'models'.DS.strtolower($className).'.php';
+function autoloadModel($className)
+{
+    if (file_exists(ROOT.DS.'app'.DS.'models'.DS.$className.'.php')) {
+        require_once ROOT.DS.'app'.DS.'models'.DS.$className.'.php';
     }
 }
 
-require ROOT.DS.'vendor'.DS.'autoload.php';
-//require './../vendor/autoload.php';
-use HelloWorld\SayHello;
+// Autoload Extentions
+require_once ROOT.DS.'extentions'.DS.'autoload.php';
 
-echo SayHello::world();
+//Autoload composer
+require_once ROOT.DS.'vendor'.DS.'autoload.php';

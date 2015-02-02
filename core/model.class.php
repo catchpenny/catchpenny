@@ -3,7 +3,7 @@
 /*
 $_model in both controller and this file : may generate error
 */
-class Model extends pdoquery
+class Model extends PDOquery
 {
     protected $_model;
     protected $_table;

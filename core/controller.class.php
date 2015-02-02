@@ -3,7 +3,7 @@
  * Todo:
  * Shift this file into app/class
  */
-class controller
+class Controller
 {
 
     protected $_controller;
@@ -22,7 +22,7 @@ class controller
         $this->_model = $model;
         $this->doNotRenderHeader = 0;
         $this->render = 1;
-        $this->_template = new template($controller, $action);
+        $this->_template = new Template($controller, $action);
     }
 
     public function set($key, $value)

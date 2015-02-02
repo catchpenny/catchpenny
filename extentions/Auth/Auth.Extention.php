@@ -1,6 +1,6 @@
 <?php
 
-class auth extends PDOQuery
+class Auth extends PDOQuery
 {
 
     private $_password;
@@ -94,7 +94,7 @@ class auth extends PDOQuery
             session_destroy();
     }
 
-    public function boot_session()
+    public function bootSession()
     {
         if (!isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
             $session_name = 'sec_session_id';   // Set a custom session name
