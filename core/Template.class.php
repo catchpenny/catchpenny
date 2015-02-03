@@ -31,7 +31,7 @@ protected $_controller;
                 require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'header.php';
             }
         }
-        require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.'.php';
+        require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.strtolower($this->_controller).'.php';
 
     //require_once (ROOT . DS . 'app' . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');
         if ($doNotRenderHeader == 0) {
