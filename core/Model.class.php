@@ -1,8 +1,6 @@
 
 <?php
-/*
-$_model in both controller and this file : may generate error
-*/
+
 class Model extends PDOquery
 {
     protected $_model;
