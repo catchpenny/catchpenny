@@ -1,4 +1,6 @@
 <?php
+
+/*
 $str = addslashes('What does "yolo" mean?');
 echo($str);
 
@@ -29,3 +31,14 @@ $var_array = array("color" => "blue",
 extract($var_array);
 
 echo "$color, $size, $shape, $size\n";
+*/
+class A {
+   public function example() {
+        echo "I am the original function A::example().<br />\n";
+    }
+}
+
+
+
+A::example();
+
