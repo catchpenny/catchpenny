@@ -6,8 +6,6 @@ All notable changes to this project will be documented in this file.
 - This CHANGELOG file to hopefully serve as an evolving example of a standardized open source project CHANGELOG.
 - Test extention is created for testing purpose
 
-### Modified
+### Bugfix
 - Auth extention has been modified
-- check.php for https is added
-
-[unreleased]:
+- checks.php checks if only https is enabled
