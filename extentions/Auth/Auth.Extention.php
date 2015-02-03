@@ -24,6 +24,10 @@ class Auth extends PDOQuery
     {
         $this->close();
     }
+    
+    public function auth(){
+        echo "yo";
+    }
 
     public function login($username, $password)
     {
