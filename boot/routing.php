@@ -63,7 +63,7 @@ function routing($url)
             $page = new $Controller($PassController, $Action, $Extend_Action, $Model);
             call_user_func_array(array($page, $Action), $Extend_Action);
         } else {
-            $page = new error_404_controller();
+            $page = new Error_404Controller();
         }
     } catch (Exception $e) {
         echo $e->getMessage();
