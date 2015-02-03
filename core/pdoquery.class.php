@@ -5,7 +5,7 @@ class PDOquery
 {
 
 protected $_dbconnect;
-    protected $_result;
+protected $_result;
 
     public function connect($dbname, $host, $dbusername, $dbpassword)
     {
