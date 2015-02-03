@@ -1,6 +1,6 @@
 <?php
 
-class Auth extends PDOQuery
+class Auth extends PDOquery
 {
 
     private $password;
