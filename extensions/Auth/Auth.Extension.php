@@ -4,20 +4,22 @@ class Auth extends PDOquery
 {
 
     private $password;
-    private $passwordhash;
-    private $salt;
     private $username;
-    private $user_browser;
-    private $login_string;
-    private $userid;
-    private $model;
-    private $table;
 
-    private function __construct()
+    //private function __construct()
+    //{
+    //    $this->connect(DB_NAME, DB_HOST, DB_USER, DB_PASSWORD);
+    //    $this->_model = get_class($this);
+    //}
+
+    private function doConnect()
     {
-        $this->connect(DB_NAME, DB_HOST, DB_USER, DB_PASSWORD);
-        $this->_model = get_class($this);
-        $this->startSession ();
+        Auth::connect(DB_NAME, DB_HOST, DB_USER, DB_PASSWORD);
+    }
+
+    public static function getConfig()
+    {
+      $config = RWConfig::read('Auth'.DS.'config.json');
     }
 
     public static function login($username, $password)

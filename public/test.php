@@ -33,8 +33,10 @@ extract($var_array);
 echo "$color, $size, $shape, $size\n";
 */
 class A {
+   static $data;
    public function example() {
         echo "I am the original function A::example().<br />\n";
+        A::$data="yo";
     }
 }
 
@@ -42,3 +44,4 @@ class A {
 
 A::example();
 
+echo A::$data;

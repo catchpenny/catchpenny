@@ -26,8 +26,8 @@ function autoloadModel($className)
     }
 }
 
-// Autoload Extentions
-require_once ROOT.DS.'extentions'.DS.'autoload.php';
+// Autoload Extensions
+require_once ROOT.DS.'extensions'.DS.'autoload.php';
 
 //Autoload composer
-require_once ROOT.DS.'vendor'.DS.'autoload.php';
+//require_once ROOT.DS.'vendor'.DS.'autoload.php';
