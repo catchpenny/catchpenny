@@ -12,7 +12,7 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)));
 
 //Define Install Folder
-define('INSTALL_FOLDER', '/catchpenny/');
+define('INSTALL_FOLDER', '/catchpenny/public_html/');
 
 //Call Bootstrap
 require_once ROOT.DS.'boot'.DS.'bootstrap.php';
