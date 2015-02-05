@@ -22,17 +22,10 @@ class HTML
     }
 
     public function includeJs($fileName)
-    {
-        $data = '<script src="'.BASE_PATH.'/public/js/'.$fileName.'.js"></script>';
-
-        return $data;
+    {    echo file_get_contents(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'js'.DS.$fileName.'.js');
     }
 
     public function includeCss($fileName)
-    {
-        //$data = '<style href="'.BASE_PATH.'/public/css/'.$fileName.'.css"></style>';
-        $data = '<link rel="stylesheet" type="text/css" href="'.BASE_PATH.'/public/css/'.$fileName.'.css">';
-
-        return $data;
+    {    echo file_get_contents(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'css'.DS.$fileName.'.css');
     }
 }

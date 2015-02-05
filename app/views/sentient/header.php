@@ -2,10 +2,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CatchPenny Project</title>
-    <link rel="stylesheet" type="text/css" href="/main.css">
-    <?php //echo $html->includeCss('home'); ?>
     <style>
-    <?php echo file_get_contents(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'main.css');  ?>
+    <?php $html->includeCss('main');  ?>
     </style>
 </head>
 <body>

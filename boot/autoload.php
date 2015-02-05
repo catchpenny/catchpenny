@@ -27,7 +27,7 @@ function autoloadModel($className)
 }
 
 // Autoload Extensions
-require_once ROOT.DS.'extensions'.DS.'autoload.php';
+require_once EXT_PATH.DS.'autoload.php';
 
 //Autoload composer
 //require_once ROOT.DS.'vendor'.DS.'autoload.php';
