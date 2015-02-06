@@ -11,7 +11,7 @@
 define('DEVELOPMENT_ENVIRONMENT', true);
 
 //Sql Database Setting
-define('DB_NAME', 'android_quiz');
+define('DB_NAME', 'catchpenny');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'toor');
 define('DB_HOST', 'localhost');

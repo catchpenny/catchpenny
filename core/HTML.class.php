@@ -28,4 +28,19 @@ class HTML
     public function includeCss($fileName)
     {    echo file_get_contents(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'css'.DS.$fileName.'.css');
     }
+
+    public function getDataURI($image, $mime = '')
+    { //under developed area
+      // Read image path, convert to base64 encoding
+      $imageData = base64_encode(file_get_contents($image));
+
+      // Format the image SRC:  data:{mime};base64,{data};
+      $src = 'data: '.mime_content_type($image).';base64,'.$imageData;
+
+      // Echo out a sample image
+      //echo '<img src="', $src, '">';
+      //return 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(file_get_contents($image));
+
+    }
+
 }

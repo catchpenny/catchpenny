@@ -1,4 +1,14 @@
 <?php
+header("Content-type: image/jpeg");
+
+
+//$image=imagecreatefromjpeg("./img/bw.jpg");
+//imagejpeg($image);
+
+$image = "./../img/bw.jpg";
+readfile($image);
+
+
 
 /*
 $str = addslashes('What does "yolo" mean?');
@@ -31,7 +41,7 @@ $var_array = array("color" => "blue",
 extract($var_array);
 
 echo "$color, $size, $shape, $size\n";
-*/
+
 class A {
    static $data;
    public function example() {
@@ -39,9 +49,4 @@ class A {
         A::$data="yo";
     }
 }
-
-
-
-A::example();
-
-echo A::$data;
+*/

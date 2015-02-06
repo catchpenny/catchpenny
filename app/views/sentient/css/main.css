@@ -12,6 +12,7 @@
   float: left;
   border: 2px solid yellow;
   display: inline;
+  height: 100%;
 }
 #nav {
     line-height:30px;
@@ -20,6 +21,7 @@
     width:100px;
     float:left;
     padding:5px;
+    height: 100%;
 }
 #section {
     width:350px;
@@ -30,6 +32,7 @@
     width: 30%;
     float: right;
     border: 2px solid blue;
+    height: 100%;
 }
 #footer {
     background-color:black;
