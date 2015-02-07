@@ -4,14 +4,14 @@
 class PDOquery
 {
 
-protected $_dbconnect;
-protected $_result;
+protected $dbconnect;
+protected $result;
 
     public function connect($dbname, $host, $dbusername, $dbpassword)
     {
         try {
-            $this->_dbconnect = new PDO("mysql:host=$host;dbname=$dbname", $dbusername, $dbpassword);
-            $this->_dbconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbconnect = new PDO("mysql:host=$host;dbname=$dbname", $dbusername, $dbpassword);
+            $this->dbconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo $e->getMessage();
             //handle the error
@@ -20,7 +20,7 @@ protected $_result;
 
     public function close()
     {
-        $this->_dbconnect = null;
+        $this->dbconnect = null;
     }
 
     //ADD CRUD

@@ -14,5 +14,6 @@ require_once ROOT.DS.'boot'.DS.'checks.php';
 
 //start session;
 Auth::startSession();
+//Email::send("root@localhost","bunny",'activation');
 
 routing($url);

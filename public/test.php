@@ -1,12 +1,12 @@
 <?php
-header("Content-type: image/jpeg");
+//header("Content-type: image/jpeg");
 
 
 //$image=imagecreatefromjpeg("./img/bw.jpg");
 //imagejpeg($image);
 
-$image = "./../img/bw.jpg";
-readfile($image);
+//$image = "./../img/bw.jpg";
+//readfile($image);
 
 
 
@@ -50,3 +50,28 @@ class A {
     }
 }
 */
+
+//php code to send mail, 
+//author : idrish laxmidhar
+//Use this code to send a test mail from your localhost.
+
+$random_hash1 = password_hash('14792', PASSWORD_BCRYPT);
+echo $random_hash1."<br>";
+echo $random_hash='$2y$10$QwCiokWAp.Gf57aMw30RNeZc/q0.aUA5b9kYWg5q62xcxl/2Dvho6';
+echo " ".password_verify('14792',$random_hash);
+
+$content ='
+<html><head></head>
+<body>
+Hello {NAME},
+Business name : {BUSINESS_NAME}.
+Tel : {TELEPHONE}.
+Mob : {MOBILE}.
+</body>
+</html>';
+
+$search= array ('{BUSINESS_NAME}','{TELEPHONE}','{MOBILE}');
+$replace=array($sBusiness,$sTelp,$sMobile);
+$content =str_replace($search,$replace,$content);
+    
+?>

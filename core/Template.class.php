@@ -2,9 +2,8 @@
 
 class Template
 {
-
-protected $_controller;
-    protected $_action;
+    protected $controller;
+    protected $action;
     protected $vars = array();
 
     public function set($key, $value)
@@ -14,8 +13,8 @@ protected $_controller;
 
     public function __construct($controller, $action)
     {
-        $this->_controller = $controller;
-        $this->_action = $action;
+        $this->controller = $controller;
+        $this->action = $action;
     }
 
     public function render($doNotRenderHeader = 0)
@@ -25,31 +24,33 @@ protected $_controller;
         extract($this->vars);
         
         if ($doNotRenderHeader == 0) {
-            if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.'header.php')) {
-                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.'header.php';
+            if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->controller.DS.'header.php')) {
+                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->controller.DS.'header.php';
             } else {
                 require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'header.php';
             }
         }
        
         
-        if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.$this->_action.'.php')) {
-                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.$this->_action.'.php';
+        if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.strtolower($this->controller).DS.strtolower($this->action).'.php')) {
+            require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.strtolower($this->controller).DS.strtolower($this->action).'.php';
+            
             } else {
-                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.strtolower($this->_controller).'.php';  
+                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.strtolower($this->controller).'.php';  
+             
             }
         
         if ($doNotRenderHeader == 0) {
-            if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.'sidebar.php')) {
-                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.'sidebar.php';
+            if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.strtolower($this->controller).DS.'sidebar.php')) {
+                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.strtolower($this->controller).DS.'sidebar.php';
             } else {
                 require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'sidebar.php';
             }
         }
         
         if ($doNotRenderHeader == 0) {
-            if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.'footer.php')) {
-                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->_controller.DS.'footer.php';
+            if (file_exists(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->controller.DS.'footer.php')) {
+                require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.$this->controller.DS.'footer.php';
             } else {
                 require_once ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'footer.php';
             }

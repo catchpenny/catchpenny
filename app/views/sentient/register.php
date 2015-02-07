@@ -1,4 +1,7 @@
 <div id="main">
+   <?php if(isset($error)){
+         echo $error;}
+    ?>
     <form id="register" action="register" method="post">
       <input type="text" placeholder="First Name" name="firstname" required><br>
       <input type="text" placeholder="Last Name" name="lastname" required><br>
@@ -7,7 +10,7 @@
       <input type="password" placeholder="Confirm Password" name="confirmpassword" required><br>
       <input type="text" placeholder="Invite Code" name="invitecode" required><br>
       <select  name="role" form="register" required>
-          <option value="" disabled selected>Role:</option>
+          <option value="" disabled selected>I am a:</option>
           <option value="teacher">Teacher</option>
           <option value="student">Student</option>
           <option value="other">Other</option>
@@ -117,7 +120,7 @@
         <option value="1948">1948</option>
         <option value="1947">1947</option>
       </select>
-      <br><input type="submit" value="Submit">
+      <br><input type="submit" value="Submit" name="submit">
     </form>
 
 </div>
