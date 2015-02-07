@@ -26,12 +26,12 @@ class Email
       {
            $subject  = "CatchPenny Activation Link";
            $link     = $vars;  
-           $message  = str_replace('$name', $name, $message);
            $message  = str_replace('$link', $link, $message);
+      }elseif($type=='activated'){
+           $subject  = "CatchPenny Account Activated";
       }else{
            $subject  = "CatchPenny";
-      } 
-      //preg_match( "/[\r\n]/", $name );
+      }
 
       mail($email, $subject, $message, $headers);
 

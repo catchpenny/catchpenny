@@ -10,6 +10,7 @@ class RegisterModel extends Model
        $ip                = $_SERVER['REMOTE_ADDR'];
        $date              = $month." ".$day." ".$year;
        $date              = date('Y-m-d', strtotime($date));        
+       
        if(strtolower($role)=='teacher')
           $level=1;
        elseif(strtolower($role)=='student')
@@ -30,8 +31,10 @@ class RegisterModel extends Model
        $this->registerProfile($user_id, $firstname, $lastname, $gender, $date);
        $random=$this->generateActivationKey($user_id);
        //Email::send($email,$firstname,'activation',$random);
-       $link='localhost/catchpenny/register/activate/key='.$random.'&email='.$email.'&name='.$firstname;    
-       Email::send("root@localhost",$firstname,'activation',$link);      
+       $link=BASE_PATH."/register/activate/key=".$random."&email=".$email."&name=".$firstname;    
+       Email::send("root@localhost",$firstname,'activation',$link);
+       
+       return true;
         
     }
     
@@ -89,20 +92,19 @@ class RegisterModel extends Model
                     if($datetime1 <= $datetime2){
                         $stmt = $this->dbconnect->prepare('UPDATE users set status=1, activation_key=NULL,  
                                                            activation_validity = NOW() WHERE email=:email');
-                        $stmt->execute(array(':email'=>$email));  
-                        //Email::send($email,$firstname,'activation',$random);
+                        $stmt->execute(array(':email'=>$email));
                         return true;
                     }else{
-                        //activation key expired
+                        return 'The Activation Key Expired';
                     }    
                  }else{
-                    //activation key invalid
+                    return 'The Activation Key Invalid';
                  }
             }else{
-                //user already active
+                return 'The Account is Already Active';
             }
         }else{
-            //user does not exists
+            return 'The Email Account does not Exists';
         }
         
     }
