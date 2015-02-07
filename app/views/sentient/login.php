@@ -3,6 +3,7 @@
 
 <head>
 <?php $html->includeCss('login'); ?>
+<title>CatchPenny Project | Login</title>
 <script src="js/jquery-2.1.3.js"></script>
 <script>
 
@@ -24,8 +25,6 @@ if (navigator.userAgent.toLowerCase().indexOf("chrome") >= 0) {
 
 <body>
 	<div class="blur">
-		
-
 		<div id="left">
 			<div id="heading">
                <h1>
@@ -33,11 +32,11 @@ if (navigator.userAgent.toLowerCase().indexOf("chrome") >= 0) {
                </h1>
             </div>
 			    <div class="view1">
-
 					<div class='login'>
-					<form action="" method="post" autocomplete="off" id="form1">
+					<?php if(isset($error)) echo $error; ?>
+					<form action="login" method="post" autocomplete="off" id="form1">
     				<div id="arrow">></div>
-    				<input type="text" placeholder="username" name="username" autocomplete="off" id="username" required/> 
+    				<input type="email" placeholder="Email" name="email" autocomplete="off" id="username" required/> 
     				<br>
     				<div id="arrow">></div>
     				<input type="password" placeholder="Password" name="password" id="password" required/>

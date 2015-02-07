@@ -3,14 +3,14 @@
 
 class Model extends PDOquery
 {
-    protected $_model;
-    protected $_table;
+    protected $model;
+    protected $table;
 
     public function __construct()
     {
         $this->connect(DB_NAME, DB_HOST, DB_USER, DB_PASSWORD);
-        $this->_model = get_class($this);
-        //$this->_table = $table;
+        //$this->model = get_class($this);
+        //$this->table = $table;
     }
 
     public function __destruct()

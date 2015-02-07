@@ -1,69 +1,57 @@
 <?php
 
-class Auth extends PDOquery
+class Auth 
 {
-
-    private $password;
-    private $username;
-
-    //private function __construct()
-    //{
-    //    $this->connect(DB_NAME, DB_HOST, DB_USER, DB_PASSWORD);
-    //    $this->_model = get_class($this);
-    //}
-
-    private function doConnect()
-    {
-        Auth::connect(DB_NAME, DB_HOST, DB_USER, DB_PASSWORD);
-    }
 
     public static function getConfig()
     {
-      $config = RWConfig::read('Auth'.DS.'config.json');
+      //$config = RWConfig::read('Auth'.DS.'config.json');
     }
 
-    public static function login($username, $password)
+    public static function login($email, $password)
     {
-        $this->_password = $password;
-        $this->_username = $username;
-        $stmt            = $this->_dbconnect->prepare('SELECT * FROM users WHERE username = :username');
-        $stmt->execute(array('username' => $this->_username));
+        $model           = new Model;
+        $stmt            = $model->dbconnect->prepare('SELECT * FROM users WHERE email = :email');
+        $stmt->execute(array('email' => $email));
         $row             = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $model= null;
         if ($stmt->rowCount() == 1) {
-            $this->_passwordhash = $row["password"];
-            if (password_verify($this->_password, $this->_passwordhash) == true) {
-                $_user_browser            = $_SERVER['HTTP_USER_AGENT'];
-                //$this->_userid          = preg_replace("/[^a-zA-Z0-9_\-]+/","",row["id"]);
-                $_SESSION['user_id']      = $row["id"];
-                //$this->_username        = preg_replace("/[^a-zA-Z0-9_\-]+/","",$this->_username);
-                $_SESSION['username']     = $this->_username;
-                $_SESSION['login_string'] = hash('sha512', $this->_passwordhash.$_user_browser);
-                $_SESSION['level']        = $row["level"];
-                return true;
-             } else {
-                   return false;
+            if($row["status"]!=0){
+                $passwordhash = $row["password"];
+                    if (password_verify($password, $passwordhash) == true) {
+                        $_user_browser            = $_SERVER['HTTP_USER_AGENT'];
+                        $_SESSION['user_id']      = $row["user_id"];
+                        $_SESSION['email']     = $email;
+                        $_SESSION['login_string'] = hash('sha512', $passwordhash.$_user_browser);
+                        $_SESSION['level']        = $row["level"];
+                        return true;
+                     } else {
+                           return 'Password or Email does not match';
+                     }
+             }else{
+                return 'Your Account has not been Activated';
              }
         } else {
-              return false;
+              return 'Password or Email does not match';
         }
     }
 
-    public static function checklogin()
+    public static function checkLogin()
     {
-        if (isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
-            $this->_username = $_SESSION['username'];
-            $this->_userid   = $_SESSION['user_id'];
+        if (isset($_SESSION['user_id'], $_SESSION['email'], $_SESSION['login_string'])) {
+            $email        = $_SESSION['email'];
+            $userid          = $_SESSION['user_id'];
             $_user_browser   = $_SERVER['HTTP_USER_AGENT'];
-            $stmt            = $this->_dbconnect->prepare('SELECT * FROM users WHERE username = :username');
-            $stmt->execute(array('username' => $this->_username));
+            $model           = new Model;
+            $stmt            = $model->dbconnect->prepare('SELECT * FROM users WHERE email = :email');
+            $stmt->execute(array('email' => $email));
             $row             = $stmt->fetch(PDO::FETCH_ASSOC);
-
+            $model= null;
             if ($stmt->rowCount() == 1) {
-                $this->_passwordhash = $row["password"];
-                $_user_browser       = $_SERVER['HTTP_USER_AGENT'];
+                $passwordhash    = $row["password"];
+                $_user_browser   = $_SERVER['HTTP_USER_AGENT'];
 
-                if ($_SESSION['login_string'] == hash('sha512', $this->_passwordhash.$_user_browser)) {
+                if ($_SESSION['login_string'] == hash('sha512', $passwordhash.$_user_browser)) {
                     return true;
                 } else {
                     return false;
@@ -113,17 +101,4 @@ class Auth extends PDOquery
           }
     }
 
-    ///WANRNING!!!!!! TEMP FUNCTION DELETE ME
-    /*function register($username,$password)
-    {
-       $password_hashed = password_hash($password, PASSWORD_BCRYPT);
-       $stmt = $this->_dbconnect->prepare('INSERT INTO users (username,password) VALUES (:username,:password)');
-       $stmt->execute(array(':username'=>$username,':password'=>$password_hashed));
-    }
-    */
-
-   public function __destruct()
-   {
-     $this->close();
-   }
 }
