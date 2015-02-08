@@ -14,16 +14,20 @@ class Auth
         $stmt            = $model->dbconnect->prepare('SELECT * FROM users WHERE email = :email');
         $stmt->execute(array('email' => $email));
         $row             = $stmt->fetch(PDO::FETCH_ASSOC);
-        $model= null;
+        $model           = null;
         if ($stmt->rowCount() == 1) {
             if($row["status"]!=0){
                 $passwordhash = $row["password"];
                     if (password_verify($password, $passwordhash) == true) {
                         $_user_browser            = $_SERVER['HTTP_USER_AGENT'];
                         $_SESSION['user_id']      = $row["user_id"];
-                        $_SESSION['email']     = $email;
+                        $_SESSION['email']        = $email;
                         $_SESSION['login_string'] = hash('sha512', $passwordhash.$_user_browser);
                         $_SESSION['level']        = $row["level"];
+                        if($_SESSION['after_login']!=null){
+                            header('Location: '.$_SESSION['after_login']);
+                            $_SESSION['after_login']=null;
+                        }
                         return true;
                      } else {
                            return 'Password or Email does not match';
@@ -36,10 +40,10 @@ class Auth
         }
     }
 
-    public static function checkLogin()
-    {
+    public static function checkLogin($bool)
+    {   $result=null;
         if (isset($_SESSION['user_id'], $_SESSION['email'], $_SESSION['login_string'])) {
-            $email        = $_SESSION['email'];
+            $email           = $_SESSION['email'];
             $userid          = $_SESSION['user_id'];
             $_user_browser   = $_SERVER['HTTP_USER_AGENT'];
             $model           = new Model;
@@ -52,16 +56,29 @@ class Auth
                 $_user_browser   = $_SERVER['HTTP_USER_AGENT'];
 
                 if ($_SESSION['login_string'] == hash('sha512', $passwordhash.$_user_browser)) {
-                    return true;
+                    $result = true;               
                 } else {
-                    return false;
+                    $result = false;
                 }
             } else {
-                return false;
+                $result = false;
             }
         } else {
-            return false;
+            $result = false;
         }
+     
+     if($bool===true){
+         if($result===false){
+             $_SESSION['after_login']=$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+             header('Location: '.BASE_PATH.'redirect.php?to=login');
+         }
+     }else{
+         if($result===true){
+             header('Location: '.BASE_PATH.'redirect.php?to=index');
+         }
+     }
+         
+     
     }
 
 

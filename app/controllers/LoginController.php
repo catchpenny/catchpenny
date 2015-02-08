@@ -5,10 +5,8 @@ class LoginController extends Controller
     function login()
     {
         $this->doNotRenderHeader=1;
-        if(Auth::checkLogin())
-        {
-            header('Location: '.BASE_PATH.'redirect.php?to=index');
-        }
+        Auth::checkLogin(false);
+       
         
         if(isset($_POST['email'],$_POST['password'])){
              

@@ -23,7 +23,7 @@ class HTML
 
     public function includeJs($fileName)
     {    //echo file_get_contents(ROOT.DS.'app'.DS.'views'.DS.THEME.DS.'js'.DS.$fileName.'.js');
-         echo '<script src="'.BASE_PATH.'js/'.$fileName.'.js">';
+         echo '<script src="'.BASE_PATH.'js/'.$fileName.'.js"></script>';
     }
 
     public function includeCss($fileName)

@@ -5,7 +5,7 @@ class RegisterController extends Controller
 
     public function register()
     {
-       
+        Auth::checkLogin(false);
         if(isset($_POST["firstname"], $_POST["lastname"],        $_POST["email"],
                  $_POST["password"],  $_POST["confirmpassword"], $_POST["invitecode"],
                  $_POST["role"],      $_POST["gender"],          $_POST["day"],
@@ -34,7 +34,7 @@ class RegisterController extends Controller
     }
     
     public function status()
-    {
+    {   Auth::checkLogin(false);
         if(isset($_GET['value'])){
                 if($_GET['value']=='fail'){
                     $this->set('statusMessage','Email already exists');
@@ -49,7 +49,7 @@ class RegisterController extends Controller
     }
     
     public function activate()
-    {   
+    {   Auth::checkLogin(false);
         if(isset($_GET['key'],$_GET['email']))
         {
            $model  = new $this->model;
