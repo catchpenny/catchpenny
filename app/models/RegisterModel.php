@@ -31,7 +31,7 @@ class RegisterModel extends Model
        $this->registerProfile($user_id, $firstname, $lastname, $gender, $date);
        $random=$this->generateActivationKey($user_id);
        //Email::send($email,$firstname,'activation',$random);
-       $link=BASE_PATH."/register/activate/key=".$random."&email=".$email."&name=".$firstname;    
+       $link=BASE_PATH."register/activate/key=".$random."&email=".$email."&name=".$firstname;    
        Email::send("root@localhost",$firstname,'activation',$link);
        
        return true;
