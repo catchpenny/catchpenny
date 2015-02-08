@@ -22,11 +22,11 @@ define('PAGINATE_LIMIT', '5');
 
 
 //Define Install Folder
-define('INSTALL_FOLDER', '/catchpenny/');
+define('INSTALL_FOLDER', '/catchpenny');
 //define Default theme
 define('THEME', 'sentient');
 //BASE PATH
-define('BASE_PATH', "http://".$_SERVER['HTTP_HOST'].INSTALL_FOLDER);
+define('BASE_PATH', "http://".$_SERVER['HTTP_HOST'].INSTALL_FOLDER.'/');
 //Extension Path
 define('EXT_PATH', ROOT.DS.'extensions');
 //Extension Path

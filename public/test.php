@@ -70,8 +70,12 @@ Mob : {MOBILE}.
 </body>
 </html>';
 
-$search= array ('{BUSINESS_NAME}','{TELEPHONE}','{MOBILE}');
-$replace=array($sBusiness,$sTelp,$sMobile);
-$content =str_replace($search,$replace,$content);
+//$search= array ('{BUSINESS_NAME}','{TELEPHONE}','{MOBILE}');
+//$replace=array($sBusiness,$sTelp,$sMobile);
+//$content =str_replace($search,$replace,$content);
+
+$url = str_ireplace('', "", $_SERVER["REQUEST_URI"]);
+$url = substr( $url, 1 );
+echo $url;
     
 ?>
