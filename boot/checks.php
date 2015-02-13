@@ -1,13 +1,12 @@
 <?php
 /*
- * Perform Checks when initalising
+ * Perform essential checks
+ * before loading the website
+ *
  */
-
- /*
-  * this function checks DEVELOPMENT_ENVIRONMENT value
-  * if true only then the website will output errors else will be logged in tmp/log/error/log
-  */
- function setReporting()
+ 
+//Check if development enviourment is true
+function setReporting()
  {
      if (DEVELOPMENT_ENVIRONMENT == true) {
          error_reporting(E_ALL);
@@ -20,14 +19,11 @@
      }
  }
 
- /*
-  * This Check for Magic Quotes and Remove them for more refer google
-  */
-
- function stripSlashesDeep($value)
+ 
+// This Check for Magic Quotes and Remove them for more refer google
+function stripSlashesDeep($value)
  {
      $value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
-
      return $value;
  }
 
@@ -40,8 +36,8 @@
      }
  }
 
- //Check register globals and remove them
- function unregisterGlobals()
+//Check register globals and remove them
+function unregisterGlobals()
  {
      if (ini_get('register_globals')) {
          $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');

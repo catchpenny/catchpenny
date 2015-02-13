@@ -1,3 +1,3 @@
 <div id="main">
-    <?php echo $activateMessage ;?>
+    ${{activateMessage}}
 </div>

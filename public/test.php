@@ -77,5 +77,8 @@ Mob : {MOBILE}.
 $url = str_ireplace('', "", $_SERVER["REQUEST_URI"]);
 $url = substr( $url, 1 );
 echo $url;
+
+$url = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
+print_r(json_decode(file_get_contents($url)));
     
 ?>

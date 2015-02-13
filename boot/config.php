@@ -1,10 +1,7 @@
 <?php
  /*
   * Configuration Setting File
-  *
-  * Todo:
-  * support for redis database
-  *
+  * for the website
   */
 
 //Development Enviourment Setting
@@ -25,12 +22,15 @@ define('PAGINATE_LIMIT', '5');
 define('INSTALL_FOLDER', '/catchpenny');
 //define Default theme
 define('THEME', 'sentient');
+//view
+define('VIEW', ROOT.DS.'app'.DS.'views');
 //BASE PATH
 define('BASE_PATH', "http://".$_SERVER['HTTP_HOST'].INSTALL_FOLDER.'/');
 //Extension Path
 define('EXT_PATH', ROOT.DS.'extensions');
 //Extension Path
 define('CONFIG_PATH', ROOT.DS.'config');
+
 
 //Define Url
 $url = str_ireplace(INSTALL_FOLDER, "", $_SERVER["REQUEST_URI"]);

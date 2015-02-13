@@ -24,11 +24,14 @@ class Controller
         
         //convert extended action to get
         if(count($extended_action)>0){
-        $getArray         = explode("&", $extended_action[0]);
-        for($i=0;$i<count($getArray);$i++){
-             list($k, $v) = explode('=', $getArray[$i]);
-             $_GET[$k]    = $v;
-        }}
+            $getArray = explode("&", $extended_action[0]);
+            if($getArray[0]!=''){
+                for($i=0;$i<count($getArray);$i++){
+                    list($k, $v) = explode('=', $getArray[$i]);
+                    $_GET[$k]    = $v;
+                    }
+            }
+        }
     }
 
     public function set($key, $value)

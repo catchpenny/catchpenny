@@ -1,3 +1,3 @@
 <div id="main">
-    <?php echo $statusMessage ;?>
+    ${{statusMessage}}
 </div>

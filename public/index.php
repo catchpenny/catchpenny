@@ -1,9 +1,9 @@
 <?php
 /*
  * Index page
- *
- *
+ * 
  */
+
 
 //Define Directory Separator
 define('DS', DIRECTORY_SEPARATOR);

@@ -4,9 +4,9 @@
 <head>
 <?php $html->includeCss('login'); ?>
 <title>CatchPenny Project | Login</title>
-<script src="js/jquery-2.1.3.js"></script>
-<script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+<script>
 if (navigator.userAgent.toLowerCase().indexOf("chrome") >= 0) {
     var _interval = window.setInterval(function () {
         var autofills = $('input:-webkit-autofill');
@@ -19,11 +19,17 @@ if (navigator.userAgent.toLowerCase().indexOf("chrome") >= 0) {
         }
     }, 20);
 }
+    
+$(window).load(function() {
+	$(".loader").fadeOut("slow");
+})
+
 </script>
 
 </head>
 
 <body>
+<div class="loader"></div>
 	<div class="blur">
 		<div id="left">
 			<div id="heading">
@@ -33,7 +39,7 @@ if (navigator.userAgent.toLowerCase().indexOf("chrome") >= 0) {
             </div>
 			    <div class="view1">
 					<div class='login'>
-					<?php if(isset($error)) echo $error; ?>
+					${{error}}
 					<form action="login" method="post" autocomplete="off" id="form1">
     				<div id="arrow">></div>
     				<input type="email" placeholder="Email" name="email" autocomplete="off" id="username" required/> 
