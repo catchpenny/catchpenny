@@ -1,6 +1,10 @@
 #Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.0.1] - 2015-02-15
+### Added
+- Url routing improved. [@tahaalibra]
+
 ## [0.0.1] - 2015-02-04
 ### Added
 - Sidebar.php added for template support. [@tahaalibra]
