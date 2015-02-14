@@ -10,7 +10,21 @@ function routing($url)
    
     $api           = false;
     $urlArray      = array();
-    $urlArray      = explode("/", $url);
+    $urlArray      = explode("?", $url);  
+   
+    //define $_GET variables
+        if(count($urlArray)>1){            
+            $getArray = explode("&", $urlArray[1]);
+                if($getArray[0]!=''){
+                        for($i=0;$i<count($getArray);$i++){
+                            @ list($k, $v) = explode('=', $getArray[$i]);                        
+                            $_GET[$k]      = $v;                        
+                    }
+                }
+        }
+    
+    
+    $urlArray      = explode("/", $urlArray[0]);
     $Controller    = '';
     $Action        = '';
     $Extend_Action = array();

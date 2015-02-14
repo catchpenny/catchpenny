@@ -9,6 +9,7 @@ class Controller
     protected $controller;
     protected $model;
     protected $action;
+    protected $extended_action;
     protected $template;
     public $doNotRenderHeader;
     public $render;
@@ -20,18 +21,8 @@ class Controller
         $this->model             = $model;
         $this->doNotRenderHeader = 0;
         $this->render            = 1;
+        $this->extended_action   = $extended_action;
         $this->template          = new Template($controller, $action);
-        
-        //convert extended action to get
-        if(count($extended_action)>0){
-            $getArray = explode("&", $extended_action[0]);
-            if($getArray[0]!=''){
-                for($i=0;$i<count($getArray);$i++){
-                    list($k, $v) = explode('=', $getArray[$i]);
-                    $_GET[$k]    = $v;
-                    }
-            }
-        }
     }
 
     public function set($key, $value)
