@@ -3,6 +3,7 @@
 
 <head>
 <?php $html->includeCss('login'); ?>
+<?php $html->includeCss('main'); ?>
 <title>CatchPenny Project | Login</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -29,6 +30,7 @@ $(window).load(function() {
 </head>
 
 <body>
+<div id="main">
 <div class="loader"></div>
 	<div class="blur">
 		<div id="left">
@@ -54,7 +56,13 @@ $(window).load(function() {
 				
 		</div>
     </div>
-
+</div>
+<div id="footer">
+      <div id="f_area1">
+        <br>Manifesto About Contact	Apps Developers Blog Privacy Terms Help <br><br>
+        CatchPenny-Project 2015
+      </div>
+</div>
 
 </body>
 </html>
