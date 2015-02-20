@@ -54,7 +54,8 @@ class A {
 //php code to send mail, 
 //author : idrish laxmidhar
 //Use this code to send a test mail from your localhost.
-
+/*
+    
 $random_hash1 = password_hash('14792', PASSWORD_BCRYPT);
 echo $random_hash1."<br>";
 echo $random_hash='$2y$10$QwCiokWAp.Gf57aMw30RNeZc/q0.aUA5b9kYWg5q62xcxl/2Dvho6';
@@ -80,5 +81,17 @@ echo $url;
 
 $url = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
 print_r(json_decode(file_get_contents($url)));
+*/
+$timeTarget = 0.05; // 50 milliseconds 
+
+$cost = 8;
+do {
+    $cost++;
+    $start = microtime(true);
+    password_hash("test", PASSWORD_BCRYPT, ["cost" => $cost]);
+    $end = microtime(true);
+} while (($end - $start) < $timeTarget);
+
+echo "Appropriate Cost Found: " . $cost . "\n";
     
 ?>

@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <title>CatchPenny Project</title>
     <style>
+@font-face {
+    font-family: myFirstFont;
+    src: url(font/LetterGothic.woff) ;
+}       
+
 html {
   background: url(img/happy.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  font-family: "Letter Gothic Std";
+  font-family: myFirstFont;
 }
 
 body{
@@ -37,22 +42,20 @@ input[type=text], input[type=password], input[type=email] {
   border: 1px solid rgba(255,255,255,0);
   border-bottom: 1px solid rgba(255,255,255,0.5);
   color: white;
-  font-family: "Letter Gothic Std";
   padding-bottom: 0px;
   padding-top: 10px;
   text-align: center;
+  font-family: myFirstFont;
 
 }
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
   color: white;
   background: rgba(0, 0, 0, 0.1);
   outline: 0;
-  font-family: "Letter Gothic Std";
 }
 
 #form{
     margin-left:100px;
-    font-family: "Letter Gothic Std";
 }
 
 #submit{
@@ -60,7 +63,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
     background-color: rgba(16, 1, 24, 0);;
     outline: 0;
     border: 0px;
-    font-family: "Letter Gothic Std";
+    font-family: myFirstFont;
 }
 
 #submit:hover{

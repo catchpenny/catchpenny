@@ -11,6 +11,7 @@
     "minimum-stability": "dev",
     
      "require": {
-         "monolog/monolog": "*"
+         "monolog/monolog": "*",
+        "symfony/event-dispatcher": "2.6.4"
     }
 }
