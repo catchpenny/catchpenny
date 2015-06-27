@@ -1,5 +1,6 @@
 .idea
 .idea/workspace.xml
+.idea/deployment.xml
 /vendor
 /node_modules
 Homestead.yaml
