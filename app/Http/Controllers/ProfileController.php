@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Profile;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -56,9 +56,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return "Yo";
     }
 
     /**
