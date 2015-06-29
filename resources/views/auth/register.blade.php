@@ -3,9 +3,14 @@
 <form method="POST" action="register">
     {!! csrf_field() !!}
 
-    <div class="col-md-6">
-        Name
-        <input type="text" name="name" value="{{ old('name') }}">
+    <div>
+        First Name
+        <input type="text" name="firstName" value="{{ old('firstName') }}">
+    </div>
+
+    <div>
+        Last Name
+        <input type="text" name="lastName" value="{{ old('lastName') }}">
     </div>
 
     <div>
@@ -18,7 +23,7 @@
         <input type="password" name="password">
     </div>
 
-    <div class="col-md-6">
+    <div>
         Confirm Password
         <input type="password" name="password_confirmation">
     </div>
@@ -27,3 +32,13 @@
         <button type="submit">Register</button>
     </div>
 </form>
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif

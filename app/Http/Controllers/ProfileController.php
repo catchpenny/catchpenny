@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Profile;
 use App\Http\Requests;
+use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,27 +25,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //
+        $profile = Profile::findOrNew(Auth::user()->id);
+        $user    = Auth::user();
+        return view("profile.index", compact('profile','user'));
     }
 
     /**
@@ -47,7 +38,9 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $profile  = Profile::findOrFail($id);
+        $user     = User::findOrFail($id);
+        return view("profile.show", compact('profile','user'));
     }
 
     /**
@@ -56,9 +49,10 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit()
+    public function edit(Request $request)
     {
-        return "Yo";
+        $profile = Profile::findOrNew(Auth::user()->id);
+        return view("profile.edit", compact('profile'));
     }
 
     /**
@@ -67,19 +61,25 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request)
     {
-        //
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $instance = Profile::updateOrCreate([ 'id' => Auth::user()->id], $request->all());
+git
+        return redirect('profile/edit');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
+    protected function validator(array $data)
     {
-        //
+        return Validator::make($data, [
+            'contactNumber' => 'numeric',
+        ]);
     }
 }
