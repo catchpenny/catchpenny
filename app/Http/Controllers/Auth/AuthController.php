@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Facades\Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -21,6 +22,8 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers;
+
+    protected $registrar;
 
     /**
      * Create a new authentication controller instance.
@@ -45,6 +48,8 @@ class AuthController extends Controller
             'lastName' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
+            'dateOfBirth' => 'required|date',
+            'gender'        => 'required'
         ]);
     }
 
@@ -57,10 +62,12 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'firstName' => $data['firstName'],
-            'lastName' => $data['lastName'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'firstName'     => $data['firstName'],
+            'lastName'     => $data['lastName'],
+            'email'         => $data['email'],
+            'password'      => bcrypt($data['password']),
+            'dateOfBirth'   => $data['dateOfBirth'],
+            'gender'        => $data['gender']
         ]);
     }
 }
