@@ -1,27 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-
+use Storage;
+use Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class ImageController extends Controller
 {
-    public function __construct()
-    {
-        //$this->middleware('guest', ['except' => 'getLogout']);
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index($image)
     {
-        return view('omnibar');
+        $contents = Storage::get('img/.'.$image);
+        return Response::make($contents, 200, ['Content-Type' => 'image/jpeg']);
     }
 
     /**
@@ -39,7 +36,7 @@ class DashboardController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store(Response $response)
     {
         //
     }

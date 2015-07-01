@@ -28,7 +28,7 @@
                         </md-input-container>
                         <md-input-container>
                             <label>Password</label>
-                            <input name="password" ng-model="password" required minlength="6">
+                            <input type="password" name="password" ng-model="password" required minlength="6">
                             <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
                                 <div ng-message="required">This is required!</div>
                             </div>

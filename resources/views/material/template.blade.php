@@ -3,7 +3,6 @@
 
     <!-- Angular Material CSS now available via Google CDN; version 0.10 used here -->
     {{--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">--}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <meta name="viewport" content="initial-scale=1" />
     <title> @yield('title') </title>
     <style>
@@ -45,5 +44,6 @@
     <script src="{{ url('js/angular-aria.min.js') }}"></script>
     <script src="{{ url('js/angular-material.min.js') }}"></script>
     <script src="{{ url('js/starter.js') }}"></script>
+
 </body>
 </html>

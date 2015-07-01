@@ -11,7 +11,7 @@ class Profile extends Model
     protected $fillable = [
         'id',
         'aboutMe',
-        'status',
+        'relationshipStatus',
         'photoBig',
         'photoSmall ',
         'city',

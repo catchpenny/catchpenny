@@ -72,7 +72,6 @@ class ProfileController extends Controller
         }
 
         $instance = Profile::updateOrCreate([ 'id' => Auth::user()->id], $request->all());
-git
         return redirect('profile/edit');
     }
 
