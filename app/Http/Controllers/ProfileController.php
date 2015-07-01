@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Image;
+use Storage;
 use Illuminate\Http\Request;
 use App\Profile;
 use App\Http\Requests;
@@ -65,6 +67,13 @@ class ProfileController extends Controller
     {
         $validator = $this->validator($request->all());
 
+        if ($request->hasFile('profilePhoto')) {
+            Storage::makeDirectory('users/'.Auth::user()->id.'/img');
+            Image::make($request->file('profilePhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/fooBig.jpeg');
+            Image::make($request->file('profilePhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/fooSmall.jpeg');
+            Image::make($request->file('profilePhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/fooMedium.jpeg');
+        }
+
         if ($validator->fails()) {
             $this->throwValidationException(
                 $request, $validator
@@ -79,6 +88,7 @@ class ProfileController extends Controller
     {
         return Validator::make($data, [
             'contactNumber' => 'numeric',
+            'profilePhoto'  => 'mimes:jpeg,png',
         ]);
     }
 }

@@ -13,7 +13,7 @@
                     <span flex="50">
                         <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in getMatches(searchText)" md-item-text="item.display">
                             <md-item-template>
-                                <span md-highlight-text="searchText">@@{{item.display}}</span>
+                                <span md-highlight-text="searchText">@{{item.display}}</span>
                             </md-item-template>
                             <md-not-found>
                                 No matches found.

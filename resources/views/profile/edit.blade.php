@@ -38,15 +38,21 @@
                                 <div layout="column" style="width:100%;">
                                     <span>
 
-                                        <form action="" method="post">
+                                        <form action="" method="post" enctype="multipart/form-data">
                                             {!! csrf_field() !!}
+                                            <div layout="column">
+                                                <label class="md-primary md-raised md-button" md-ink-ripple for="profilePhoto">
+                                                    <span>Select</span>
+                                                </label>
+                                                <input id="profilePhoto" ng-file-select="onFileSelect($files)" name="profilePhoto" type="file" style=" display: none; ">
+                                            </div>
                                             <md-input-container>
                                                 <label>About Me</label>
                                                 <input type="text" name="aboutMe" value="{{ $profile->aboutMe }}"/>
                                             </md-input-container>
                                             <md-input-container>
                                                 <label>Relationship Status</label>
-                                                <input type="text" name="relationshipStatus" value="{{ $profile->RelationshipStatus }}"/>
+                                                <input type="text" name="relationshipStatus" value="{{ $profile->relationshipStatus }}"/>
                                             </md-input-container>
                                             <md-input-container>
                                                 <label>Contact</label>

@@ -19,6 +19,8 @@ class UsersProfile extends Migration
             $table->string("photoBig");
             $table->string("photoMedium");
             $table->string("photoSmall");
+            $table->string("coverBig");
+            $table->string("coverSmall");
             $table->string("city");
             $table->string("country");
             $table->string("contactNumber");

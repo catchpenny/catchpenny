@@ -18,16 +18,12 @@ Route::get('/', function () {
 Route::get('dashboard','DashboardController@index');
 Route::get('home','HomeController@index');
 
-
-Route::get('api/image/{id}','Api\ImageController@index');
-Route::post('api/image/store','Api\ImageController@store');
-
+Route::get('api/image/{id}/{type}','Api\ImageController@index');
 
 Route::get('profile/edit','ProfileController@edit');
 Route::post('profile/edit','ProfileController@update');
 Route::get('profile/','ProfileController@index');
 Route::get('profile/{userId}','ProfileController@show');
-
 
 // Login routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
