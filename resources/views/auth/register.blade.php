@@ -4,8 +4,9 @@
 @section('title', 'Registration')
 
 @section('content')
+    <body ng-app="Register">
     <div ng-controller="AppCtrl" layout="column">
-        <md-content md-theme="docs-dark" layout-padding layout="row" layout-sm="column" layout-align="center center">
+        <md-content layout-padding layout="row" layout-sm="column" layout-align="center center">
             <form method="POST" action="register">
                 {!! csrf_field() !!}
                 <div layout layout-sm="column">
