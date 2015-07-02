@@ -13,7 +13,7 @@
                     <span flex="50">
                         <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in getMatches(searchText)" md-item-text="item.display">
                             <md-item-template>
-                                <span md-highlight-text="searchText">@@{{item.display}}</span>
+                                <span md-highlight-text="searchText">@{{item.display}}</span>
                             </md-item-template>
                             <md-not-found>
                                 No matches found.
@@ -30,7 +30,7 @@
 
                 <div layout="column" id="testmargin">
                     <md-card layout>
-                        <img ng-src="{{ url('img/img.jpg') }}" class="md-card-image" alt="Washed Out" style="height: 350px;">
+                        <img ng-src="{{ url('api/image/'.$profile->photoBig) }}" class="md-card-image" alt="Washed Out" style="height: 500px;">
                         <md-card-content>
                             <h2 class="md-title">{{ $user->firstName }} {{ $user->lastName }}</h2>
                             <p>
