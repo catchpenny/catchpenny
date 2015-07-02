@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Files;
 use Storage;
 use Auth;
 use Image;
@@ -17,9 +18,10 @@ class ImageController extends Controller
      *
      * @return Response
      */
-    public function index($image, $type)
+    public function index($id)
     {
-        $contents = Storage::get('users/'.Auth::user()->id.'/img/'.$image.'.'.$type);
+        $image = Files::find($id);
+        $contents = Storage::get($image->path);
         return Image::make($contents)->response('png');
     }
 

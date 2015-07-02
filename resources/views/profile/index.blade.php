@@ -30,7 +30,7 @@
 
                 <div layout="column" id="testmargin">
                     <md-card layout>
-                        <img ng-src="{{ url('img/img.jpg') }}" class="md-card-image" alt="Washed Out" style="height: 350px;">
+                        <img ng-src="{{ url('api/image/'.$profile->photoBig) }}" class="md-card-image" alt="Washed Out" style="height: 500px;">
                         <md-card-content>
                             <h2 class="md-title">{{ $user->firstName }} {{ $user->lastName }}</h2>
                             <p>

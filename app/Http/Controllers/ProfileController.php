@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Image;
+use App\Files;
 use Storage;
 use Illuminate\Http\Request;
 use App\Profile;
@@ -65,14 +66,8 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $validator = $this->validator($request->all());
-
-        if ($request->hasFile('profilePhoto')) {
-            Storage::makeDirectory('users/'.Auth::user()->id.'/img');
-            Image::make($request->file('profilePhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/fooBig.jpeg');
-            Image::make($request->file('profilePhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/fooSmall.jpeg');
-            Image::make($request->file('profilePhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/fooMedium.jpeg');
-        }
+        $validator      = $this->validator($request->all());
+        $id             = Auth::user()->id;
 
         if ($validator->fails()) {
             $this->throwValidationException(
@@ -80,7 +75,29 @@ class ProfileController extends Controller
             );
         }
 
-        $instance = Profile::updateOrCreate([ 'id' => Auth::user()->id], $request->all());
+        if ($request->hasFile('profilePhoto')) {
+            $name                     = uniqid();
+            $request['photoBig']      = $this->savePhotoInFiles('users/'.$id.'/img/'.$name.'Big.jpeg',$id);
+            $request['photoMedium']   = $this->savePhotoInFiles('users/'.$id.'/img/'.$name.'Medium.jpeg',$id);
+            $request['photoSmall']    = $this->savePhotoInFiles('users/'.$id.'/img/'.$name.'Small.jpeg',$id);
+
+
+            Storage::makeDirectory('users/'.Auth::user()->id.'/img');
+            Image::make($request->file('profilePhoto'))->resize(1024, 768)->save('./../storage/app/users/'.$id.'/img/'.$name.'Big.jpeg');
+            Image::make($request->file('profilePhoto'))->resize(680, 480)->save('./../storage/app/users/'.$id.'/img/'.$name.'Small.jpeg');
+            Image::make($request->file('profilePhoto'))->resize(160, 120)->save('./../storage/app/users/'.$id.'/img/'.$name.'Medium.jpeg');
+        }
+
+        if ($request->hasFile('coverPhoto')) {
+            $name                   = uniqid();
+            $request['coverBig']    = $this->savePhotoInFiles('users/'.$id.'/img/'.$name.'Big.jpeg',$id);
+            $request['coverSmall']  = $this->savePhotoInFiles('users/'.$id.'/img/'.$name.'Small.jpeg',$id);;
+            Storage::makeDirectory('users/'.$id.'/img');
+            Image::make($request->file('coverPhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/'.$name.'Big.jpeg');
+            Image::make($request->file('coverPhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/'.$name.'small.jpeg');
+        }
+
+        $instance = Profile::updateOrCreate([ 'id' => $id], $request->all());
         return redirect('profile/edit');
     }
 
@@ -89,6 +106,13 @@ class ProfileController extends Controller
         return Validator::make($data, [
             'contactNumber' => 'numeric',
             'profilePhoto'  => 'mimes:jpeg,png',
+            'coverPhoto'    => 'mimes:jpeg,png',
         ]);
+    }
+
+    protected function savePhotoInFiles($path, $id)
+    {
+        $file           =  Files::create(['path'=> $path,'ownerId'=> $id]);
+        return $file->id;
     }
 }

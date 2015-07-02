@@ -13,7 +13,7 @@ class Profile extends Model
         'aboutMe',
         'relationshipStatus',
         'photoBig',
-        'photomedium',
+        'photoMedium',
         'photoSmall',
         'coverBig',
         'coverSmall',

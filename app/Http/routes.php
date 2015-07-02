@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('dashboard','DashboardController@index');
 Route::get('home','HomeController@index');
 
-Route::get('api/image/{id}/{type}','Api\ImageController@index');
+Route::get('api/image/{id}','Api\ImageController@index');
 
 Route::get('profile/edit','ProfileController@edit');
 Route::post('profile/edit','ProfileController@update');
