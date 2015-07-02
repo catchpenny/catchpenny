@@ -1,0 +1,22 @@
+md-whiteframe {
+     background: #fff;
+     margin: 20px;
+     padding: 10px;
+ }
+
+
+#testmargin{
+    padding: 10px;
+}
+
+md-toolbar{
+    background-color: #009688;
+}
+
+md-content {
+    background-color: #EEE;
+}
+
+md-input, md-input-container{
+    color: blue;
+}

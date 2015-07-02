@@ -13,17 +13,17 @@ class UsersProfile extends Migration
     public function up()
     {
         Schema::create('user_profile', function (Blueprint $table) {
-            $table->integer('userId')->unsigned();
+            $table->integer('id')->unique()->unsigned();
             $table->text("aboutMe");
-            $table->string("status");
+            $table->string("relationshipStatus");
             $table->string("photoBig");
+            $table->string("photoMedium");
             $table->string("photoSmall");
             $table->string("city");
             $table->string("country");
-            $table->string("contactEmail");
-            $table->tinyInteger("contactNumber");
+            $table->string("contactNumber");
             $table->timestamps();
-            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

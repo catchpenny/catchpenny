@@ -1,23 +1,56 @@
-<!-- resources/views/auth/login.blade.php -->
+@extends('material/template')
 
-<form method="POST" action="/auth/login">
-    {!! csrf_field() !!}
+@section('title', 'CatchPenny Project - Login')
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
+@section('content')
+    <body ng-app="OmniBar" class="fullbleed layout vertical">
+    <div ng-controller="AppCtrl" layout="column">
+        <md-content>
+            <div layout-fill layout="row" layout-align="center center">
+                <div flex hide-sm></div>
+                <div flex>
+
+
+                    <form name="loginForm" action="" method="post">
+                        {!! csrf_field() !!}
+                        @if (count($errors) > 0)
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                        <md-input-container>
+                            <label>Email</label>
+                            <input type="email" name="email" ng-model="email" required value="{{ old('email') }}">
+
+                            <div ng-messages="loginForm.email.$error" ng-show="loginForm.email.$dirty">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Password</label>
+                            <input type="password" name="password" ng-model="password" required minlength="6">
+
+                            <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
+                                <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container>
+                            <md-checkbox md-no-ink aria-label="Remember Me" ng-model="rememberMe" class="md-primary">
+                                <input type="checkbox" name="remember" ng-model="rememberMe" hide>
+                                Remember Me
+                            </md-checkbox>
+                        </md-input-container>
+                        <md-input-container>
+                            <md-button class="md-raised md-primary">Login</md-button>
+                        </md-input-container>
+                    </form>
+
+                </div>
+                <div flex hide-sm></div>
+            </div>
+        </md-content>
     </div>
-
-    <div>
-        Password
-        <input type="password" name="password" id="password">
-    </div>
-
-    <div>
-        <input type="checkbox" name="remember"> Remember Me
-    </div>
-
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
+    </body>
+@endsection

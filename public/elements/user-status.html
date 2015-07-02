@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+
+<dom-module id="user-status">
+    <style is="custom-style">
+        :host {
+            display: block;
+            margin: 20px;
+        }
+
+    </style>
+
+    <template>
+        <!--<paper-material elevation="1">-->
+            <!--<content id="header" select="h3"></content>-->
+            <!--<content id="mainContent" select="p"></content>-->
+        <!--</paper-material>-->
+
+        <md-whiteframe class="md-whiteframe-z5" layout layout-align="center center">
+
+            <div layout="column" style="width:100%;">
+                <md-list>
+                    <md-list-item class="md-2-line">
+                        <img ng-src="" class="md-avatar" alt="ProfilePhoto" />
+                        <div class="md-list-item-text">
+                            <content id="header" select="h3"></content>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A asperiores dignissimos id illo laborum laudantium, maiores nostrum odit, perferendis provident quo saepe ut vitae? Amet culpa debitis dolorem ducimus ea impedit itaque, libero magnam nihil omnis placeat possimus quasi, qui quia quidem quisquam repellat rerum sint sit, voluptas? Nihil, officia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, possimus?</p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+
+            </div>
+        </md-whiteframe>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'user-status'
+        });
+    </script>
+</dom-module>
