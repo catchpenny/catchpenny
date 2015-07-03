@@ -26,6 +26,9 @@
 
     app1.controller('AppCtrl', ['$scope', function($scope){}]);
 
+    var profileModel = angular.module('profileModel', ['ngMaterial']);
+    profileModel.controller('ProfileCtrl', ['$scope', '$http', function($scope, $http) {
 
+    }]);
 
 }());

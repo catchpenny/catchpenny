@@ -3,6 +3,7 @@
 @section('title', 'CatchPenny Project')
 
 @section('content')
+    <body ng-app="profileModel" ng-controller="profileCtrl">
     <div ng-controller="AppCtrl">
         <div layout="column" layout-fill>
             <md-toolbar>
@@ -99,4 +100,5 @@
             </md-content>
         </div>
     </div>
+    </body>
 @endsection
