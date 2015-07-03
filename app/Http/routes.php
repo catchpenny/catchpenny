@@ -21,8 +21,9 @@ Route::get('home','HomeController@index');
 // Api Get Requests
 Route::get('api/image/{id}','Api\ImageController@index');
 Route::get('api/profile','Api\ProfileController@index');
-Route::get('api/follow/add/{id}','Api\ProfileController@addFollower');
-Route::get('api/follow/remove/{id}','Api\ProfileController@removeFollower');
+Route::get('api/friend/request/{id}','Api\ProfileController@request');
+Route::get('api/friend/remove/{id}','Api\ProfileController@remove');
+Route::get('api/friend/accept/{id}','Api\ProfileController@accept');
 
 // Api Post Requests
 Route::post('api/post/create/','Api\PostController@create');

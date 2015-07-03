@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -27,7 +28,6 @@ class ProfileController extends Controller
     {
         $profile = Profile::findOrNew(Auth::user()->id);
         $user    = Auth::user();
-        //$user = array_except($user, 'email, status');
         return Response::json(array('profile' => $profile, 'user' => $user));
     }
 
@@ -52,6 +52,7 @@ class ProfileController extends Controller
         if($id!=Auth::user()->id){
             $instance = Following::where('userOneId', Auth::user()->id)->where('userTwoId', $id)->delete();
             //return $instance;
+            return redirect('profile/'.$id);
         }
     }
 
@@ -59,6 +60,7 @@ class ProfileController extends Controller
     {
         if($id!=Auth::user()->id) {
             $instance = Following::firstOrCreate(['userOneId' => Auth::user()->id, 'userTwoId' => $id]);
+            return redirect('profile/'.$id);
         }
     }
 }

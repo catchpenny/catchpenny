@@ -50,8 +50,11 @@
                             @if ($profile->self)
                                 <a href="{{ url('profile/edit') }}"><md-button>Edit</md-button></a>
                             @else
-                                <a href="{{ url('api/follow/add') }}/{{$user->id}}"><md-button class="md-raised md-primary">Follow</md-button></a>
-                                <a href="{{ url('api/follow/remove') }}/{{$user->id}}"><md-button>Unfollow</md-button></a>
+                                @if ($user->following)
+                                    <a href="{{ url('api/follow/remove') }}/{{$user->id}}"><md-button>Unfollow</md-button></a>
+                                @else
+                                    <a href="{{ url('api/follow/add') }}/{{$user->id}}"><md-button class="md-raised md-primary">Follow</md-button></a>
+                                @endif
                             @endif
                         </div>
                     </md-card>

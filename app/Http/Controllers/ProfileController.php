@@ -43,9 +43,13 @@ class ProfileController extends Controller
     public function show($id)
     {
         $profile  = Profile::findOrNew($id);
-        if(Auth::user()->id == $id)
+        if(Auth::user()->id == $id) {
             $profile['self'] = true;
+        }
         $user     = User::findOrFail($id);
+        if($this->findIfFollowing($id)){
+            $user['following'] = true;
+        }
         return view("profile.index", compact('profile','user'));
     }
 
@@ -118,5 +122,14 @@ class ProfileController extends Controller
     {
         $file           =  Files::create(['path'=> $path,'ownerId'=> $id]);
         return $file->id;
+    }
+
+    protected function findIfFollowing($id)
+    {
+        $instance = \App\Following::where('userOneId', Auth::user()->id)->where('userTwoId', $id)->first();
+        if($instance)
+            return true;
+        else
+            return false;
     }
 }
