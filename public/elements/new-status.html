@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+
+<dom-module id="new-status">
+    <style is="custom-style">
+        :host {
+            display: block;
+        }
+
+    </style>
+
+    <template>
+        <md-card>
+        <form name="status" action="" method="post">
+            <md-input-container flex>
+                <label>What is on your mind?</label>
+                <input type="text" name="mainContent"/>
+            </md-input-container>
+            <md-input-container>
+                <md-button class="md-raised md-primary">Post</md-button>
+            </md-input-container>
+        </form>
+        </md-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'new-status'
+        });
+    </script>
+</dom-module>

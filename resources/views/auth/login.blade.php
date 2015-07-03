@@ -3,11 +3,12 @@
 @section('title', 'CatchPenny Project - Login')
 
 @section('content')
-<div ng-controller="AppCtrl" layout="column">
-    <md-content>
-        <div layout-fill layout="row" layout-align="center center">
-            <div flex hide-sm></div>
-            <div flex>
+    <body ng-app="OmniBar" class="fullbleed layout vertical">
+    <div ng-controller="AppCtrl" layout="column">
+        <md-content>
+            <div layout-fill layout="row" layout-align="center center">
+                <div flex hide-sm></div>
+                <div flex>
 
 
                     <form name="loginForm" action="" method="post">
@@ -22,6 +23,7 @@
                         <md-input-container>
                             <label>Email</label>
                             <input type="email" name="email" ng-model="email" required value="{{ old('email') }}">
+
                             <div ng-messages="loginForm.email.$error" ng-show="loginForm.email.$dirty">
                                 <div ng-message="required">This is required!</div>
                             </div>
@@ -29,6 +31,7 @@
                         <md-input-container>
                             <label>Password</label>
                             <input type="password" name="password" ng-model="password" required minlength="6">
+
                             <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
                                 <div ng-message="required">This is required!</div>
                             </div>
@@ -44,9 +47,10 @@
                         </md-input-container>
                     </form>
 
+                </div>
+                <div flex hide-sm></div>
             </div>
-            <div flex hide-sm></div>
-        </div>
-    </md-content>
-</div>
+        </md-content>
+    </div>
+    </body>
 @endsection

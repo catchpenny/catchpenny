@@ -3,6 +3,7 @@
 @section('title', 'CatchPenny Project - Login')
 
 @section('content')
+    <body ng-app="Register">
     <div ng-controller="AppCtrl" layout="column">
         <div layout-fill>
             <md-content>
@@ -55,7 +56,6 @@
                             <div layout layout-sm="column" layout-align="center">
                                 <md-button class="md-raised" type="submit">Submit</md-button>
                             </div>
-                            {{--<md-button class="md-raised md-warn" style="min-width: 10em;">Login</md-button>--}}
                         </form>
                         @if(count($errors) > 0)
                             <ul>
