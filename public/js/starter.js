@@ -26,8 +26,11 @@
 
     app1.controller('AppCtrl', ['$scope', function($scope){}]);
 
+   /*
+    *   Profile App Model and Controller
+    */
     var profileModel = angular.module('profileModel', ['ngMaterial']);
-        profileModel.controller('AppCtrl', ['$scope','$http', function($scope, $http){
+        profileModel.controller('profileCtrl', ['$scope','$http', function($scope, $http){
 
             //var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
             //promise.then(function(response){
