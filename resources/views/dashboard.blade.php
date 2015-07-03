@@ -1,51 +1,56 @@
 @extends('material/template')
 
-
-
 @section('title', 'CatchPenny Project')
 
 @section('content')
+    <link rel="import" href="{{ url('elements/omni-bar-tall.html') }}">
+    <link rel="import" href="{{ url('elements/new-status.html') }}">
     <body ng-app="OmniBar" class="fullbleed layout vertical">
-    <div ng-controller="AppCtrl" layout="column">
-        <md-content>
-            <div layout-fill layout="row" layout-align="center center">
-                <div flex hide-sm></div>
-                <div flex>
+    <div ng-controller="AppCtrl">
+        <omni-bar>
+            <paper-icon-button src="{{ url('api/image/') }}/{{ $profile->photoSmall }}"></paper-icon-button>
+            <div layout="column" layout-fill>
+                <md-content class="md-padding">
+                    <div layout="row">
+                        <div flex="20" hide-sm>
+                            <md-whiteframe class="md-whiteframe-z1" layout>
+                                <span>.md-whiteframe-z2</span>
+                            </md-whiteframe>
+                        </div>
+                        <div flex>
+                            <div layout="column" layout-fill>
+                                <new-status></new-status>
+                                <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
 
+                                    <div layout="column" style="width:100%;">
+                                        <md-list>
+                                            <md-list-item class="md-2-line">
+                                                <img ng-src="http://www.worthwild.com/assets/img-mas-02-73410a2b7c925f01866e68f4651510a0.jpg"
+                                                     class="md-avatar" alt="@{{todos[0].who}}"/>
 
-                    <form name="newStatus" action="{{ url('api/post/create/') }}" method="post">
-                        {!! csrf_field() !!}
-                        @if (count($errors) > 0)
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                                                <div class="md-list-item-text">
+                                                    <h3>Sam Jackson</h3>
 
-                        <md-whiteframe class="md-whiteframe-z2" layout layout-align="center center">
+                                                    <p>just now</p>
 
-                            <div layout="column">
-                                <md-input-container>
-                                    <label>Whats on your mind....</label>
-                                    <input type="text" name="status" ng-model="status" required
-                                           value="{{ old('status') }}">
+                                                    <p>Hey Guys I am New To CatchPenny Project</p>
+                                                </div>
+                                            </md-list-item>
+                                        </md-list>
 
-                                    <div ng-messages="newStatus.status.$error" ng-show="newStatus.status.$dirty">
-                                        <div ng-message="required">This is required!</div>
                                     </div>
-                                </md-input-container>
-                                <md-input-container>
-                                    <md-button class="md-raised md-primary">Post</md-button>
-                                </md-input-container>
+                                </md-whiteframe>
                             </div>
-                        </md-whiteframe>
-                    </form>
-
-                </div>
-                <div flex hide-sm></div>
+                        </div>
+                        <div flex="20" hide-sm>
+                            <md-whiteframe class="md-whiteframe-z2" layout>
+                                <span>.md-whiteframe-z2</span>
+                            </md-whiteframe>
+                        </div>
+                    </div>
+                </md-content>
             </div>
-        </md-content>
+        </omni-bar>
     </div>
     </body>
 

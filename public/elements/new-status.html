@@ -9,17 +9,23 @@
     </style>
 
     <template>
-        <md-card>
-        <form name="status" action="" method="post">
-            <md-input-container flex>
-                <label>What is on your mind?</label>
-                <input type="text" name="mainContent"/>
-            </md-input-container>
+        <md-whiteframe class="md-whiteframe-z2" layout="column">
             <md-input-container>
-                <md-button class="md-raised md-primary">Post</md-button>
+                <label>Whats on your mind....</label>
+                <input type="text" name="status" ng-model="status" required
+                       value="{{ old('status') }}">
+
+                <div ng-messages="newStatus.status.$error" ng-show="newStatus.status.$dirty">
+                    <div ng-message="required">This is required!</div>
+                </div>
             </md-input-container>
-        </form>
-        </md-card>
+            <div layout="row">
+                <span flex></span>
+                <md-input-container>
+                    <md-button class="md-raised">Post</md-button>
+                </md-input-container>
+            </div>
+        </md-whiteframe>
     </template>
 
     <script>

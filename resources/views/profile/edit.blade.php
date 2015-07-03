@@ -3,7 +3,7 @@
 @section('title', 'CatchPenny Project')
 
 @section('content')
-    <div ng-controller="AppCtrl">
+    <div ng-app="profileModel" ng-controller="profileCtrl">
         <div layout="column" layout-fill>
             <md-toolbar>
                 <div class="md-toolbar-tools">

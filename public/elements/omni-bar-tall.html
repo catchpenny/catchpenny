@@ -33,12 +33,11 @@
                 <div class="bottom" layout horizontal>
                     <paper-icon-button icon="communication:message"></paper-icon-button>
                     <paper-icon-button icon="social:notifications"></paper-icon-button>
-                    <paper-icon-button icon="icons:build"></paper-icon-button>
+                    <!--<paper-icon-button icon="icons:build"></paper-icon-button>-->
+                    <content id="icon" select="paper-icon-button"></content>
                 </div>
             </paper-toolbar>
-
-            <div class="body" style="height: 2000px;">
-            </div>
+            <content id="mainContent" select="*"></content>
         </paper-header-panel>
 
     </template>

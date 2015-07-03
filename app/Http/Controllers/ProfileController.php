@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\User;
 use Image;
 use App\Files;
@@ -31,7 +32,10 @@ class ProfileController extends Controller
         $profile         = Profile::findOrNew(Auth::user()->id);
         $profile['self'] = true;
         $user            = Auth::user();
-        return view("profile.index", compact('profile', 'user'));
+        $posts = Post::where('ownerId', Auth::user()->id)
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        return view("profile.index", compact('profile', 'user', 'posts'));
     }
 
     /**
@@ -42,11 +46,11 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $profile  = Profile::findOrFail($id);
+        $profile  = Profile::findOrNew($id);
         if(Auth::user()->id == $id)
             $profile['self'] = true;
         $user     = User::findOrFail($id);
-        return view("profile.index", compact('profile','user'));
+        return view("profile.index", compact('profile', 'user's));
     }
 
     /**
