@@ -8,7 +8,7 @@
     //    .module('MyApp', ['ngMaterial'])
     //    .controller('AppCtrl', function($scope) {});
 
-    app.config(['$httpProvider', function ($httpProvider) {
+    omniBarApp.config(['$httpProvider', function ($httpProvider) {
         //$httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
     }]);
 
