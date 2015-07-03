@@ -1,7 +1,7 @@
 
 (function(){
 
-    var app = angular.module('OmniBar', ['ngMaterial']);
+    var omniBarApp = angular.module('OmniBar', ['ngMaterial']);
     var app1 = angular.module('Register', ['ngMaterial']);
 
     //var app = angular
@@ -12,7 +12,7 @@
         //$httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
     }]);
 
-    app.controller('AppCtrl', ['$scope','$http', function($scope, $http){
+    omniBarApp.controller('AppCtrl', ['$scope','$http', function($scope, $http){
 
         var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
         promise.then(function(response){

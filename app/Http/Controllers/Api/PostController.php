@@ -43,7 +43,6 @@ class PostController extends Controller
         }
 
         $instance = Post::create(['content' => $request['status'], 'ownerId' => Auth::user()->id, 'type' => 'status']);
-
         return redirect('dashboard');
     }
 
@@ -98,7 +97,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $instance = Post::where('ownerId', Auth::user()->id)->find($id)->delete();
+        return redirect('dashboard');
     }
 
     protected function validator(array $data)
