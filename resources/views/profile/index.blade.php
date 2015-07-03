@@ -30,7 +30,7 @@
 
                 <div layout="column" id="testmargin">
                     <md-card layout>
-                        <img ng-src="{{ url('api/image/'.$profile->photoBig) }}" class="md-card-image" alt="Washed Out" style="height: 500px;">
+                        <img ng-src="{{ url('api/image/'.$profile->coverBig) }}" class="md-card-image" alt="Washed Out" style="height: 500px;">
                         <md-card-content>
                             <h2 class="md-title">{{ $user->firstName }} {{ $user->lastName }}</h2>
                             <p>
@@ -47,15 +47,29 @@
                             </p>
                         </md-card-content>
                         <div class="md-actions" layout="row" layout-align="end center">
-                            <a href="{{ url('profile/edit') }}"><md-button>Edit</md-button></a>
+                            @if ($profile->self)
+                                <a href="{{ url('profile/edit') }}"><md-button>Edit</md-button></a>
+                            @else
+                                <a href="{{ url('api/follow/add') }}/{{$user->id}}"><md-button class="md-raised md-primary">Follow</md-button></a>
+                                <a href="{{ url('api/follow/remove') }}/{{$user->id}}"><md-button>Unfollow</md-button></a>
+                            @endif
                         </div>
-                        </md-card>
+                    </md-card>
                 </div>
                 <div layout="row">
                     <div flex="20" hide-sm>
-                        <md-whiteframe class="md-whiteframe-z1" layout>
-                            <span>.md-whiteframe-z2</span>
-                        </md-whiteframe>
+                        <md-card layout>
+                            <img ng-src="{{ url('api/image/') }}/{{ $profile->photoMedium }}" class="md-card-image" alt="Washed Out" style="height: 150px;">
+                            <md-card-content>
+                                <h2 class="md-title">{{ $user->firstName . ' ' . $user->lastName }}</h2>
+                                <p>
+                                    {{ $profile->aboutMe }}
+                                </p>
+                            </md-card-content>
+                            <div class="md-actions" layout="row" layout-align="end center">
+                                <a href="{{ url('profile/edit') }}"><md-button>Edit</md-button></a>
+                            </div>
+                        </md-card>
                     </div>
                     <div flex>
                         <div layout="column" layout-fill>

@@ -18,8 +18,6 @@ Route::get('/', function () {
 Route::get('dashboard','DashboardController@index');
 Route::get('home','HomeController@index');
 
-Route::get('api/image/{id}','Api\ImageController@index');
-
 Route::get('profile/edit','ProfileController@edit');
 Route::post('profile/edit','ProfileController@update');
 Route::get('profile/','ProfileController@index');
@@ -33,3 +31,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+Route::get('api/image/{id}','Api\ImageController@index');
+Route::get('api/profile','Api\ProfileController@index');
+Route::get('api/follow/add/{id}','Api\ProfileController@addFollower');
+Route::get('api/follow/remove/{id}','Api\ProfileController@removeFollower');

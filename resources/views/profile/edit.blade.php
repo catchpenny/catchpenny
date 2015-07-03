@@ -52,22 +52,22 @@
                                             </div>
                                             <md-input-container>
                                                 <label>About Me</label>
-                                                <input type="text" name="aboutMe" value="{{ $profile->aboutMe }}"/>
+                                                <input type="text" name="aboutMe"  ng-model="data.profile.aboutMe"/>
                                             </md-input-container>
                                             <md-input-container>
                                                 <label>Relationship Status</label>
-                                                <input type="text" name="relationshipStatus" value="{{ $profile->relationshipStatus }}"/>
+                                                <input type="text" name="relationshipStatus" ng-model="data.profile.relationshipStatus" value="{{ $profile->relationshipStatus }}"/>
                                             </md-input-container>
                                             <md-input-container>
                                                 <label>Contact</label>
-                                                <input type="text" name="contactNumber" value="{{ $profile->contactNumber }}"/>
+                                                <input type="text" name="contactNumber" ng-model="data.profile.contactNumber" value="{{ $profile->contactNumber }}"/>
                                             </md-input-container>
                                             <md-input-container>
                                                 <label>City</label>
-                                                <input type="text" name="city" value="{{ $profile->city }}"/>                                            </md-input-container>
+                                                <input type="text" name="city" ng-model="data.profile.city" value="{{ $profile->city }}"/>                                            </md-input-container>
                                             <md-input-container>
                                                 <label>Country</label>
-                                                <input type="text" name="country" value="{{ $profile->country }}"/>
+                                                <input type="text" name="country" ng-model="data.profile.country" value="{{ $profile->country }}"/>
                                             </md-input-container>
                                             <md-input-container>
                                                 <md-button class="md-raised md-primary">Save Changes</md-button>

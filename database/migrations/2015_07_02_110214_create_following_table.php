@@ -12,7 +12,12 @@ class CreateFollowingTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('following', function (Blueprint $table) {
+            $table->integer('userOneId')->unsigned();
+            $table->integer('userTwoId')->unsigned();
+            $table->foreign('userOneId')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('userTwoId')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**
@@ -22,6 +27,6 @@ class CreateFollowingTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('following');
     }
 }

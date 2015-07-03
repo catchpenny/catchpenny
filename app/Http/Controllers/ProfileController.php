@@ -28,9 +28,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profile = Profile::findOrNew(Auth::user()->id);
-        $user    = Auth::user();
-        return view("profile.index", compact('profile','user'));
+        $profile         = Profile::findOrNew(Auth::user()->id);
+        $profile['self'] = true;
+        $user            = Auth::user();
+        return view("profile.index", compact('profile', 'user'));
     }
 
     /**
@@ -42,8 +43,10 @@ class ProfileController extends Controller
     public function show($id)
     {
         $profile  = Profile::findOrFail($id);
+        if(Auth::user()->id == $id)
+            $profile['self'] = true;
         $user     = User::findOrFail($id);
-        return view("profile.show", compact('profile','user'));
+        return view("profile.index", compact('profile','user'));
     }
 
     /**
@@ -93,7 +96,7 @@ class ProfileController extends Controller
             $request['coverBig']    = $this->savePhotoInFiles('users/'.$id.'/img/'.$name.'Big.jpeg',$id);
             $request['coverSmall']  = $this->savePhotoInFiles('users/'.$id.'/img/'.$name.'Small.jpeg',$id);;
             Storage::makeDirectory('users/'.$id.'/img');
-            Image::make($request->file('coverPhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/'.$name.'Big.jpeg');
+            Image::make($request->file('coverPhoto'))->resize(1024, 768)->save('./../storage/app/users/'.Auth::user()->id.'/img/'.$name.'Big.jpeg');
             Image::make($request->file('coverPhoto'))->resize(300, 200)->save('./../storage/app/users/'.Auth::user()->id.'/img/'.$name.'small.jpeg');
         }
 
