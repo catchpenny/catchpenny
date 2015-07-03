@@ -30,7 +30,7 @@ Route::post('api/post/create/','Api\PostController@create');
 // Api Profile Requests
 Route::get('profile','ProfileController@index');
 Route::get('profile/edit','ProfileController@edit');
-Route::get('profile/{userId}','ProfileController@show');
+Route::get('profile/{id}','ProfileController@show');
 Route::post('profile/edit','ProfileController@update');
 
 // Login routes...

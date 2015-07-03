@@ -14,17 +14,32 @@
 
     omniBarApp.controller('AppCtrl', ['$scope','$http', function($scope, $http){
 
-        var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
-        promise.then(function(response){
-            $scope.data = response.data;
-        });
-        promise.error(function(reason){
-            $scope.error = "Could Not fetch the user";
-        });
+        //var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
+        //promise.then(function(response){
+        //    $scope.data = response.data;
+        //});
+        //promise.error(function(reason){
+        //    $scope.error = "Could Not fetch the user";
+        //});
 
     }]);
 
     app1.controller('AppCtrl', ['$scope', function($scope){}]);
+
+    var profileModel = angular.module('profileModel', ['ngMaterial']);
+        profileModel.controller('AppCtrl', ['$scope','$http', function($scope, $http){
+
+            //var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
+            //promise.then(function(response){
+            //    $scope.data = response.data;
+            //});
+            //promise.error(function(reason){
+            //    $scope.error = "Could Not fetch the user";
+            //});
+
+        }]);
+
+
 
 
 

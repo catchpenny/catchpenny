@@ -42,7 +42,7 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $profile  = Profile::findOrFail($id);
+        $profile  = Profile::findOrNew($id);
         if(Auth::user()->id == $id)
             $profile['self'] = true;
         $user     = User::findOrFail($id);
