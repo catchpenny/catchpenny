@@ -40,10 +40,6 @@
             //    $scope.error = "Could Not fetch the user";
             //});
 
-        }]);
-
-
-
-
+    }]);
 
 }());

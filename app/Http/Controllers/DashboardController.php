@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Profile;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,9 @@ class DashboardController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function temp()
     {
-        //
+        return view('temp.temp');
     }
 
     /**
