@@ -39,6 +39,11 @@ class DashboardController extends Controller
         return view('temp.temp');
     }
 
+    public function temp2()
+    {
+        return view('temp.temp');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -9,6 +9,14 @@ md-whiteframe {
     padding: 10px;
 }
 
+/*md-card{*/
+    /*background-color: #EEE;*/
+/*}*/
+
+md-list-item:hover {
+    background-color: #eee;
+}
+
 md-toolbar{
 
 }

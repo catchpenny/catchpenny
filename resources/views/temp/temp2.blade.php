@@ -10,7 +10,7 @@
 
 
         <div layout="row" layout-fill>
-             {{--Left SideBar --}}
+            {{--Left SideBar --}}
 
             <div flex="20">
 
@@ -23,23 +23,23 @@
                 </md-toolbar>
                 <md-content style=" background-color: #006064;" layout-fill>
 
-                        <div layout-fill layout="row" layout-align="center start">
-                            <div flex layout-padding>
-                                <md-button>Home</md-button>
-                                <md-card  style="background-color: #00838F;">
-                                    <md-card-content>
+                    <div layout-fill layout="row" layout-align="center start">
+                        <div flex layout-padding>
+                            <md-button>Home</md-button>
+                            <md-card  style="background-color: #00838F;">
+                                <md-card-content>
 
-                                    </md-card-content>
-                                </md-card>
+                                </md-card-content>
+                            </md-card>
 
-                                <md-card  style="background-color: #00838F;">
-                                    <img ng-src="http://pre05.deviantart.net/602b/th/pre/i/2012/078/c/7/sherlock_in_profile_by_beth193-d4t924h.jpg" alt=""/>
-                                    <md-card-content>
-                                        <h2 class="md-title">Sam Jackson</h2>
-                                    </md-card-content>
-                                </md-card>
-                            </div>
+                            <md-card  style="background-color: #00838F;">
+                                <img ng-src="http://pre05.deviantart.net/602b/th/pre/i/2012/078/c/7/sherlock_in_profile_by_beth193-d4t924h.jpg" alt=""/>
+                                <md-card-content>
+                                    <h2 class="md-title">Sam Jackson</h2>
+                                </md-card-content>
+                            </md-card>
                         </div>
+                    </div>
 
                 </md-content>
             </div>
