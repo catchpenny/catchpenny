@@ -48,4 +48,12 @@
 
     }]);
 
+    /*
+     *   Domain App Controller
+     */
+    var domain = angular.module('domain', ['ngMaterial']);
+    domain.controller('domainCtrl', ['$scope', function($scope){
+        $scope.text = "Test text";
+    }]);
+
 }());
