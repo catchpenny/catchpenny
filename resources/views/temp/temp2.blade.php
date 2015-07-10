@@ -24,6 +24,24 @@
             <div flex="20">abcd</div>
             <div flex>
                 <md-content>
+                    <md-card>
+                        <md-toolbar>
+
+                        </md-toolbar>
+                        <md-card-content>
+                            <md-list>
+                                <md-subheader class="md-no-sticky">3 line item</md-subheader>
+                                <md-list-item class="md-3-line">
+                                    <img src="http://www.fanphobia.net/uploads/actors/2882/matt-ryan-actor-profile-picture.jpg" class="md-avatar" />
+                                    <div class="md-list-item-text">
+                                        <h3> item.who</h3>
+                                        <p> item.notes </p>
+                                    </div>
+                                </md-list-item>
+                                <md-divider ></md-divider>
+                            </md-list>
+                        </md-card-content>
+                    </md-card>
                 </md-content>
             </div>
             <div flex="20">abcd</div>
