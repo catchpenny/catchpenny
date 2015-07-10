@@ -6,7 +6,7 @@ body{
     overflow: auto;
 }
 
-md-toolbar{
+#topToolbar{
     position: fixed !important;
     min-height: 9% !important;
     max-height: 9% !important;

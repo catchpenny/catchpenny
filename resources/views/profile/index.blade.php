@@ -61,20 +61,11 @@
                                     <md-button>Edit</md-button>
                                 </a>
                             @else
-<<<<<<< HEAD
                                 @if ($user->following)
                                     <a href="{{ url('api/follow/remove') }}/{{$user->id}}"><md-button>Unfollow</md-button></a>
                                 @else
                                     <a href="{{ url('api/follow/add') }}/{{$user->id}}"><md-button class="md-raised md-primary">Follow</md-button></a>
                                 @endif
-=======
-                                <a href="{{ url('api/follow/add') }}/{{$user->id}}">
-                                    <md-button class="md-raised md-primary">Follow</md-button>
-                                </a>
-                                <a href="{{ url('api/follow/remove') }}/{{$user->id}}">
-                                    <md-button>Unfollow</md-button>
-                                </a>
->>>>>>> 66f768d21165d67ef5064701bc308157ba9e0016
                             @endif
                         </div>
                     </md-card>
