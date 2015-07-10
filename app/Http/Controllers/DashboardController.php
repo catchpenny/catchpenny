@@ -41,7 +41,7 @@ class DashboardController extends Controller
 
     public function temp2()
     {
-        return view('temp.temp');
+        return view('temp.temp2');
     }
 
     /**

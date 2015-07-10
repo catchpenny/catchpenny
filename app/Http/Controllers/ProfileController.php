@@ -35,7 +35,8 @@ class ProfileController extends Controller
         $posts = Post::where('ownerId', Auth::user()->id)
             ->orderBy('updated_at', 'desc')
             ->get();
-        return view("profile.index", compact('profile', 'user', 'posts'));
+//        return view("profile.index", compact('profile', 'user', 'posts'));
+        return view("temp.temp2", compact('profile', 'user', 'posts'));
     }
 
     /**
@@ -72,7 +73,8 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         $profile = Profile::findOrNew(Auth::user()->id);
-        return view("profile.edit", compact('profile'));
+        $user            = Auth::user();
+        return view("profile.edit", compact('profile', 'user'));
     }
 
     /**

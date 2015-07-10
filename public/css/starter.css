@@ -1,3 +1,7 @@
+.mainBody {
+    background-color: #EEE;
+}
+
 md-whiteframe {
      background: #fff;
      margin: 20px;
@@ -18,11 +22,36 @@ md-list-item:hover {
 }
 
 md-toolbar{
-
 }
 
 md-content {
-    background-color: #EEE;
+    background-color: #EEE
+}
+
+#widgets {
+    z-index: 2;
+    margin-top: -15%;
+    /*margin-bottom: 10%;*/
+    margin-left: 5%;
+}
+
+#profilePic {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+#wrapper {
+    height: 69%;
+    overflow: auto;
+}
+
+md-fab-speed-dial {
+    position: fixed;
+    top: 80%;
+    right: 20%;
 }
 
 md-input, md-input-container{

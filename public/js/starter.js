@@ -13,6 +13,12 @@
     }]);
 
     omniBarApp.controller('AppCtrl', ['$scope','$http', function($scope, $http){
+        $scope.items = [
+            { name: 'Overview'},
+            { name: 'Work and Education'},
+            { name: 'Contact and Basic Info'},
+            { name: 'Details'}
+        ];
 
         //var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
         //promise.then(function(response){
