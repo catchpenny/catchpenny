@@ -7,10 +7,10 @@
     //var app = angular
     //    .module('MyApp', ['ngMaterial'])
     //    .controller('AppCtrl', function($scope) {});
-
-    omniBarApp.config(['$httpProvider', function ($httpProvider) {
-        //$httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
-    }]);
+    //
+    //omniBarApp.config(['$httpProvider', function ($httpProvider) {
+    //    //$httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+    //}]);
 
     omniBarApp.controller('AppCtrl', ['$scope','$http', function($scope, $http){
         $scope.items = [
