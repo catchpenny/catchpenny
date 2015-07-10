@@ -28,33 +28,33 @@
                     <span flex></span>
                     <md-content flex="70">
                         <md-card>
-                            <img src="{{ url('api/image/') }}/{{ $profile->coverBig }}" alt="Cover Picture"/>
+                            <img src="{{ url('api/image/') }}/{{ $profile->coverBig }}" alt="Cover Picture" style="height: 350px"/>
                             <div id="widgets">
                                 <img id="profilePic" src="{{ url('api/image/') }}/{{ $profile->photoSmall }}" alt="Profile Picture"/>
 
                                 {{-- FAB NOT WORKING --}}
 
-                                {{--<md-fab-speed-dial md-open="true" md-direction="right" ng-class="md-fling">--}}
-                                {{--<md-fab-trigger>--}}
-                                {{--<md-button aria-label="menu" class="md-fab md-warn">--}}
-                                {{--<i class="material-icons">menu</i>--}}
-                                {{--</md-button>--}}
-                                {{--</md-fab-trigger>--}}
-                                {{--<md-fab-actions>--}}
-                                {{--<md-button aria-label="twitter"--}}
-                                {{--class="md-fab md-raised md-mini">--}}
-                                {{--<i class="material-icons">add</i>--}}
-                                {{--</md-button>--}}
-                                {{--<md-button aria-label="facebook"--}}
-                                {{--class="md-fab md-raised md-mini">--}}
-                                {{--<i class="material-icons">remove</i>--}}
-                                {{--</md-button>--}}
-                                {{--<md-button aria-label="Google hangout"--}}
-                                {{--class="md-fab md-raised md-mini">--}}
-                                {{--<i class="material-icons">clear</i>--}}
-                                {{--</md-button>--}}
-                                {{--</md-fab-actions>--}}
-                                {{--</md-fab-speed-dial>--}}
+                                <md-fab-speed-dial md-open="true" md-direction="right" ng-class="md-fling">
+                                <md-fab-trigger>
+                                <md-button aria-label="menu" class="md-fab md-warn">
+                                <i class="material-icons">menu</i>
+                                </md-button>
+                                </md-fab-trigger>
+                                <md-fab-actions>
+                                <md-button aria-label="twitter"
+                                class="md-fab md-raised md-mini">
+                                <i class="material-icons">add</i>
+                                </md-button>
+                                <md-button aria-label="facebook"
+                                class="md-fab md-raised md-mini">
+                                <i class="material-icons">remove</i>
+                                </md-button>
+                                <md-button aria-label="Google hangout"
+                                class="md-fab md-raised md-mini">
+                                <i class="material-icons">clear</i>
+                                </md-button>
+                                </md-fab-actions>
+                                </md-fab-speed-dial>
                             </div>
                             <md-card-content>
                                 <div layout="row">
