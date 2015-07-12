@@ -52,8 +52,32 @@
      *   Domain App Controller
      */
     var domain = angular.module('domain', ['ngMaterial']);
-    domain.controller('domainCtrl', ['$scope', function($scope){
-        $scope.text = "Test text";
+    domain.controller('domainCtrl', ['$scope','$mdDialog', function($scope,$mdDialog){
+        $scope.showDialog = function(ev) {
+            $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'domain/create',
+                parent: angular.element(document.body),
+                targetEvent: ev
+            })
+                .then(function(answer) {
+                    $scope.alert = 'You said the information was "' + answer + '".';
+                }, function() {
+                    $scope.alert = 'You cancelled the dialog.';
+                });
+        };
     }]);
+
+    function DialogController($scope, $mdDialog) {
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+        };
+    }
 
 }());

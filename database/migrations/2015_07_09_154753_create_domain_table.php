@@ -16,10 +16,10 @@ class CreateDomainTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->integer('created_by')->unique()->unsigned();
-            $table->boolean('official');
-            $table->boolean('status');
-            $table->integer('invite_code', 4)->unique();
+            $table->integer('created_by')->unsigned();
+            $table->boolean('official')->default(false);
+            $table->boolean('status')->default(true);
+            $table->string('invite_code')->unique();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

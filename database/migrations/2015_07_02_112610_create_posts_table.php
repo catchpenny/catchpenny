@@ -20,7 +20,6 @@ class CreatePostsTable extends Migration
             $table->integer('ownerId')->unsigned();
             $table->integer('belongsTo')->unsigned();
             $table->foreign('ownerId')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('belongsTo')->references('id')->on('channel')->onDelete('cascade');
             $table->timestamps();
         });
     }

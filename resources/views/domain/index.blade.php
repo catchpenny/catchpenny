@@ -30,7 +30,10 @@
                 <div flex>
                     <md-content>
                         <md-card>
-
+                            @foreach($domains as $domain)
+                                <h2>{{ $domain->name }}</h2>
+                                <p>{{ $domain->description }}</p>
+                            @endforeach
                         </md-card>
                     </md-content>
                 </div>
@@ -49,8 +52,8 @@
                                     <p>Domain 1</p>
                                     <p>Domain 2</p>
                                 </md-card-content>
-                                <div class="row">
-                                    <a href="#"><md-button class="md-raised md-primary">Add New</md-button></a>
+                                <div layout="row" layout-align="center center">
+                                    <md-button ng-click="showDialog($event)" class="md-raised md-primary">Add New</md-button>
                                 </div>
                             </md-card>
                             <md-card>

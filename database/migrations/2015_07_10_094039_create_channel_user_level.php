@@ -13,8 +13,8 @@ class CreateChannelUserLevel extends Migration
     public function up()
     {
         Schema::create('channel_user_level', function (Blueprint $table) {
-            $table->integer('userId');
-            $table->integer('channelId');
+            $table->integer('userId')->unique()->unsigned();
+            $table->integer('channelId')->unique()->unsigned();
             $table->boolean('level');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('channelId')->references('id')->on('channel')->onDelete('cascade');
