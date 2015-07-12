@@ -5,9 +5,12 @@ body{
 md-content{
     background-color: #EEEEEE;
 }
-
+p{
+    font-size: 15px;
+}
 #wrapper {
     overflow: auto;
+    height: 100%;
 }
 
 #topToolbar{

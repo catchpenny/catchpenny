@@ -2,58 +2,57 @@
 (function(){
 
     var omniBarApp = angular.module('OmniBar', ['ngMaterial']);
-    var app1 = angular.module('Register', ['ngMaterial']);
 
-    //var app = angular
-    //    .module('MyApp', ['ngMaterial'])
-    //    .controller('AppCtrl', function($scope) {});
-    //
-    //omniBarApp.config(['$httpProvider', function ($httpProvider) {
-    //    //$httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
-    //}]);
+    omniBarApp.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    }]);
 
-    omniBarApp.controller('AppCtrl', ['$scope','$http', function($scope, $http){
-        $scope.items = [
-            { name: 'Overview'},
-            { name: 'Work and Education'},
-            { name: 'Contact and Basic Info'},
-            { name: 'Details'}
-        ];
+    omniBarApp.controller('AppCtrl', ['$scope','$http','$timeout','$q','$log','$mdDialog', function($scope, $http, $timeout, $q, $log, $mdDialog){
 
-        //var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
-        //promise.then(function(response){
-        //    $scope.data = response.data;
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////Search///////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+        var self = this;
+        self.simulateQuery = false;
+        self.isDisabled    = false;
+        self.querySearch   = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange   = searchTextChange;
+
+        function querySearch (query) {
+
+            var promise      = $http.get('http://localhost/html/catchpenny/public/search/'+query);
+            self.results = promise.then(function(response){
+                return response.data;
+            });
+
+            if (self.simulateQuery) {
+                deferred = $q.defer();
+                $timeout(function () { deferred.resolve( self.results ); }, Math.random() * 1000, false);
+                return deferred.promise;
+            } else {
+                return self.results;
+            }
+        }
+
+        function searchTextChange(text) {
+            $log.info('Text changed to ' + text);
+        }
+        function selectedItemChange(item) {
+            $log.info('Item changed to ' + JSON.stringify(item));
+
+        }
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////Search///////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+        //$http({
+        //    method  : 'POST',
+        //    url     : '/shop',
+        //    data    :  $scope.itemEntry,  // pass in data as strings
+        //    headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
         //});
-        //promise.error(function(reason){
-        //    $scope.error = "Could Not fetch the user";
-        //});
+
 
     }]);
-
-    app1.controller('AppCtrl', ['$scope', function($scope){}]);
-
-   /*
-    *   Profile App Model and Controller
-    */
-    var profileModel = angular.module('profileModel', ['ngMaterial']);
-        profileModel.controller('profileCtrl', ['$scope','$http', function($scope, $http){
-
-            //var promise      = $http.get('http://localhost/html/catchpenny/public/api/profile');
-            //promise.then(function(response){
-            //    $scope.data = response.data;
-            //});
-            //promise.error(function(reason){
-            //    $scope.error = "Could Not fetch the user";
-            //});
-
-    }]);
-
-    /*
-     *   Domain App Controller
-     */
-    var domain = angular.module('domain', ['ngMaterial']);
-    domain.controller('domainCtrl', ['$scope', function($scope){
-        $scope.text = "Test text";
-    }]);
-
 }());

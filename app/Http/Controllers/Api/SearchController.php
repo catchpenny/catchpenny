@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-
+use App\User;
+use Illuminate\Support\Facades\DB;
+use App\Profile;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -20,66 +22,32 @@ class SearchController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($query, Request $request)
     {
-        //
-    }
+        if ($request->ajax())
+        {
+            if($query){
+                $result  = User::where('firstName','LIKE', '%'.$query.'%')
+                    ->orWhere('lastName','LIKE', '%'.$query.'%')
+                    ->orWhere('email','LIKE', '%'.$query.'%')
+                    ->orderBy('firstName', 'desc')
+                    ->take(10)
+                    ->select('id', 'firstName', 'lastName')
+                    ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+                if($result->isEmpty()){
+                    $result  = DB::select('SELECT id, firstName, lastName FROM users WHERE concat_ws('.'" "'.',firstName,lastName) like "%'.$query.'%"');
+                }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+                return $result;
+            }else{
+                return false;
+            }
+        }
     }
 }

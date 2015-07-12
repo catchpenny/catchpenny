@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 //temp
 Route::get('temp','DashboardController@temp');
+Route::get('channel',function(){ return view('temp.channel'); });
 Route::get('temp2','DashboardController@temp2');
 
 
@@ -44,6 +45,10 @@ Route::get('domain','DomainController@index');
 Route::get('domain/{name}','DomainController@show');
 Route::get('domain/{name}/edit','DomainController@edit');
 Route::post('domain/{name}/edit','DomainController@update');
+
+// Searching
+Route::get('search/{query}', 'Api\SearchController@show');
+
 
 // Login routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
