@@ -45,14 +45,80 @@
 ///////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////Search///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+    }]);
 
-        //$http({
-        //    method  : 'POST',
-        //    url     : '/shop',
-        //    data    :  $scope.itemEntry,  // pass in data as strings
-        //    headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
-        //});
+    var domain = angular.module('domain', ['ngMaterial']);
+
+    domain.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    }]);
+
+    domain.controller('domainCtrl', ['$scope','$http','$mdDialog','$mdToast','$q','$timeout',
+        function($scope,$http,$mdDialog,$mdToast,$q,$timeout,movieService){
+
+        $scope.showDialog = function(ev) {
+            $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'domain/create',
+                parent: angular.element(document.body),
+                targetEvent: ev
+            })
+                .then(function(answer) {
+                    console.log(answer);
+                }, function() {
+                    console.log("exit form");
+                });
+        };
+
+
+        function DialogController($scope, $mdDialog) {
+            $scope.nameError = '';
+            $scope.mustHide = true;
+            $scope.hide = function() {
+                $mdDialog.hide();
+            };
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+            $scope.domainCreateSubmit = function(data) {
+                $scope.mustHide = false;
+                var promise = domainCreateSubmitFormAjax(data);
+                promise.then(function(res){
+                    $mdDialog.hide('successfully exiting');
+                    $scope.mustHide = true;
+                },function(res){
+                    $scope.nameError = res.name;
+                    $scope.descriptionError = res.description;
+                    $scope.mustHide = true;
+                });
+
+            $scope.sleep = function (milliseconds) {
+                    var start = new Date().getTime();
+                    for (var i = 0; i < 1e7; i++) {
+                        if ((new Date().getTime() - start) > milliseconds){
+                            break;
+                        }
+                    }
+                }
+            };
+        }
+
+        domainCreateSubmitFormAjax = function(data){
+
+                var deferred = $q.defer();
+                var promise = $http.post('domain/create',data)
+                    .success(function(res){
+                        deferred.resolve(res);
+                    }).error(function(res) {
+                        deferred.reject(res);
+                    });
+                return deferred.promise;
+        };
+
 
 
     }]);
+
+
 }());
+

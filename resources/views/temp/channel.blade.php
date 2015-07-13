@@ -3,11 +3,10 @@
 @section('title', 'CatchPenny Project')
 
 @section('content')
-    <body ng-app="OmniBar"  >
-    <div ng-controller="AppCtrl as ctrl" >
-
+    <body ng-app="OmniBar">
+    <div>
         <md-content style="height: 100%;">
-            <div style="height: 10%;">
+            <div ng-controller="AppCtrl as ctrl"  style="height: 10%;">
                 <md-toolbar>
                     <div class="md-toolbar-tools">
                         <span flex="20">CatchPenny</span>
@@ -33,6 +32,12 @@
                     </div>
                 </md-toolbar>
             </div>
+
+
+            {{--end of toolbar--}}
+
+
+
             <md-content style="height: 90%" layout="row">
                 <div flex="20">
                     abvd

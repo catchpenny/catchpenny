@@ -21,11 +21,20 @@ class UserTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'firstName' => 'sam',
-            'lastName' => 'jackson 2',
-            'email' => 'sam2@gmail.com',
+            'firstName' => 'kristen',
+            'lastName' => 'grey',
+            'email' => 'kristen@gmail.com',
+            'gender' => 'female',
+            'dateOfBirth' => '1993-05-11',
+            'password' => bcrypt('secret'),
+        ]);
+
+        DB::table('users')->insert([
+            'firstName' => 'joey',
+            'lastName' => 'tribiany',
+            'email' => 'joey@gmail.com',
             'gender' => 'male',
-            'dateOfBirth' => '2000-06-06',
+            'dateOfBirth' => '2000-09-02',
             'password' => bcrypt('secret'),
         ]);
 

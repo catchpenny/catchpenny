@@ -41,10 +41,12 @@ Route::get('profile/{id}','ProfileController@show');
 Route::post('profile/edit','ProfileController@update');
 
 // Domain Requests
+Route::get('domain/create', function(){ return view('domain.create'); });
+Route::post('domain/create', 'DomainController@registerDomain');
 Route::get('domain','DomainController@index');
-Route::get('domain/{name}','DomainController@show');
-Route::get('domain/{name}/edit','DomainController@edit');
-Route::post('domain/{name}/edit','DomainController@update');
+Route::get('domain/{id}','DomainController@show');
+Route::get('domain/{id}/edit','DomainController@edit');
+Route::post('domain/{id}/edit','DomainController@update');
 
 // Searching
 Route::get('search/{query}', 'Api\SearchController@show');

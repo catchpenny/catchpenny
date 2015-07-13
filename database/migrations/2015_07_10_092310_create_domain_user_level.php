@@ -13,8 +13,8 @@ class CreateDomainUserLevel extends Migration
     public function up()
     {
         Schema::create('domain_user_level', function (Blueprint $table) {
-            $table->integer('userId');
-            $table->integer('domainId');
+            $table->integer('userId')->unsigned();
+            $table->integer('domainId')->unsigned();
             $table->boolean('level');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('domainId')->references('id')->on('domain')->onDelete('cascade');

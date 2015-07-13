@@ -13,6 +13,7 @@ class Domain extends Model
         'description',
         'created_by',
         'official',
-        'status'
+        'status',
+        'invite_code'
     ];
 }

@@ -12,11 +12,11 @@
                     <div class="md-toolbar-tools">
                         <span flex="20">CatchPenny</span>
                     <span flex>
-                        <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                                         md-items="item in getMatches(searchText)"
-                                         md-item-text="item.display">
-                            <span md-highlight-text="searchText">@{{item.display}}</span>
-                        </md-autocomplete>
+                        {{--<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"--}}
+                                         {{--md-items="item in getMatches(searchText)"--}}
+                                         {{--md-item-text="item.display">--}}
+                            {{--<span md-highlight-text="searchText">@{{item.display}}</span>--}}
+                        {{--</md-autocomplete>--}}
                     </span>
                         <span flex="20">Sam Jackson</span>
                     </div>
@@ -30,7 +30,10 @@
                 <div flex>
                     <md-content>
                         <md-card>
-
+                            @foreach($domains as $domain)
+                                <h2>{{ $domain->name }}</h2>
+                                <p>{{ $domain->description }}</p>
+                            @endforeach
                         </md-card>
                     </md-content>
                 </div>
@@ -47,10 +50,9 @@
                                 </md-toolbar>
                                 <md-card-content>
                                     <p>Domain 1</p>
-                                    <p>Domain 2</p>
                                 </md-card-content>
-                                <div class="row">
-                                    <a href="#"><md-button class="md-raised md-primary">Add New</md-button></a>
+                                <div layout="row" layout-align="center center">
+                                    <md-button ng-click="showDialog($event)" class="md-raised md-primary">Add New</md-button>
                                 </div>
                             </md-card>
                             <md-card>
@@ -59,11 +61,11 @@
                                         <h2 class="md-title">Channels</h2>
                                     </div>
                                 </md-toolbar>
-                                <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                                                 md-items="item in getMatches(searchText)"
-                                                 md-item-text="item.display">
-                                    <span md-highlight-text="searchText">@{{item.display}}</span>
-                                </md-autocomplete>
+                                {{--<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"--}}
+                                                 {{--md-items="item in getMatches(searchText)"--}}
+                                                 {{--md-item-text="item.display">--}}
+                                    {{--<span md-highlight-text="searchText">@{{item.display}}</span>--}}
+                                {{--</md-autocomplete>--}}
                                 <md-card-content>
                                     <p>
                                         #general

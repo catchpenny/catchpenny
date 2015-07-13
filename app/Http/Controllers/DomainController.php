@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\User;
+use App\Domain;
+use App\DomainUserLevel;
 use Validator;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DomainController extends Controller
@@ -24,18 +23,26 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        return view("domain.index", compact('user'));
+        $domains = Domain::all();
+        return view("domain.index", compact('domains'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @param array $data
+     * @return Domain
      */
-    public function create()
+    public function create(array $data, $id)
     {
-        //
+        $invite_code = $this->generateInviteCode($data['name']);
+
+        return Domain::create([
+            'name'          => $data['name'],
+            'description'   => $data['description'],
+            'created_by'    => $id,
+            'invite_code'   => $invite_code
+        ]);
     }
 
     /**
@@ -90,5 +97,45 @@ class DomainController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:30',
+            'description' => 'required|max:255',
+        ]);
+    }
+
+    protected function generateInviteCode($name)
+    {
+        $code = str_replace(' ', '', (substr(uniqid(), 0, 7) . substr(md5($name), 0, 6)));
+        return $code;
+    }
+
+    public function registerDomain(Request $request)
+    {
+        $user = Auth::user()->id;
+        $data = $request->all();
+
+        $validator = $this->validator($data);
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+//        $domain = $this->create($data, $user);
+//
+//        DomainUserLevel::create([
+//            'userId'   => $user,
+//            'domainId' => $domain->id,
+//            'level'    => 0
+//        ]);
+
+        //return $domain;
+        return "yo";
+        //return redirect()->action('DomainController@index');
     }
 }
