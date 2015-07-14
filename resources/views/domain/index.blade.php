@@ -30,10 +30,10 @@
                 <div flex>
                     <md-content>
                         <md-card>
-                            @foreach($domains as $domain)
-                                <h2>{{ $domain->name }}</h2>
-                                <p>{{ $domain->description }}</p>
-                            @endforeach
+                            {{--@foreach($domains as $domain)--}}
+                                {{--<h2>{{ $domain->name }}</h2>--}}
+                                {{--<p>{{ $domain->description }}</p>--}}
+                            {{--@endforeach--}}
                         </md-card>
                     </md-content>
                 </div>
@@ -43,20 +43,24 @@
                     <div layout="row" layout-align="center start">
                         <div flex layout-padding>
                             <md-card>
-                                <md-toolbar>
+                                <md-toolbar id="tool-bar">
                                     <div class="md-toolbar-tools">
                                         <h2 class="md-title">Domains</h2>
                                     </div>
                                 </md-toolbar>
                                 <md-card-content>
-                                    <p>Domain 1</p>
+                                    @foreach($domains as $domain)
+                                        <p>{{ $domain->name }}</p>
+                                    @endforeach
+                                    <div id="domains"></div>
                                 </md-card-content>
-                                <div layout="row" layout-align="center center">
-                                    <md-button ng-click="showDialog($event)" class="md-raised md-primary">Add New</md-button>
+                                <md-divider></md-divider>
+                                <div layout="row" layout-align="end end">
+                                    <md-button ng-click="showDialog($event)">Add New</md-button>
                                 </div>
                             </md-card>
                             <md-card>
-                                <md-toolbar>
+                                <md-toolbar id="tool-bar">
                                     <div class="md-toolbar-tools">
                                         <h2 class="md-title">Channels</h2>
                                     </div>

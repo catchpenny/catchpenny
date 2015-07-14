@@ -19,15 +19,6 @@
     <form name="domainCreateSubmitForm" method="post" ng-show="mustHide">
         <md-dialog-content>
             <div>
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
                 <md-input-container>
                     <label>Name</label>

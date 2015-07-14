@@ -126,16 +126,14 @@ class DomainController extends Controller
             );
         }
 
-//        $domain = $this->create($data, $user);
-//
-//        DomainUserLevel::create([
-//            'userId'   => $user,
-//            'domainId' => $domain->id,
-//            'level'    => 0
-//        ]);
+        $domain = $this->create($data, $user);
 
-        //return $domain;
-        return "yo";
-        //return redirect()->action('DomainController@index');
+        DomainUserLevel::create([
+            'userId'   => $user,
+            'domainId' => $domain->id,
+            'level'    => 0
+        ]);
+
+        return $domain;
     }
 }
