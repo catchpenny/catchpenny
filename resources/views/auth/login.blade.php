@@ -3,8 +3,8 @@
 @section('title', 'CatchPenny Project - Login')
 
 @section('content')
-    <body ng-app="OmniBar" class="fullbleed layout vertical">
-    <div ng-controller="AppCtrl" layout="column">
+    <body ng-app="mainApp" class="fullbleed layout vertical">
+    <div ng-controller="appCtrl" layout="column">
         <md-content>
             <div layout-fill layout="row" layout-align="center center">
                 <div flex hide-sm></div>

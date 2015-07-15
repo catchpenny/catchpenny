@@ -3,8 +3,8 @@
 @section('title', 'CatchPenny Project - Login')
 
 @section('content')
-    <body ng-app="Register">
-    <div ng-controller="AppCtrl" layout="column">
+    <body ng-app="mainApp">
+    <div ng-controller="appCtrl" layout="column">
         <div layout-fill>
             <md-content>
                 <div layout-fill layout="row" layout-align="center center">

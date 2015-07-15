@@ -1,13 +1,17 @@
 
 (function(){
 
-    var omniBarApp = angular.module('OmniBar', ['ngMaterial']);
+    var mainApp = angular.module('mainApp', ['ngMaterial']);
 
-    omniBarApp.config(['$httpProvider', function($httpProvider) {
+    mainApp.config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }]);
 
-    omniBarApp.controller('AppCtrl', ['$scope','$http','$timeout','$q','$log','$mdDialog', function($scope, $http, $timeout, $q, $log, $mdDialog){
+    mainApp.controller('appCtrl', ['$scope', function($scope){
+
+    }]);
+
+    mainApp.controller('omniBarCtrl', ['$scope','$http','$timeout','$q','$log','$mdDialog', function($scope, $http, $timeout, $q, $log, $mdDialog){
 
 ///////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////Search///////////////////////////////////////
@@ -21,7 +25,7 @@
 
         function querySearch (query) {
 
-            var promise      = $http.get('http://localhost/html/catchpenny/public/search/'+query);
+            var promise      = $http.get('search/'+query);
             self.results = promise.then(function(response){
                 return response.data;
             });
@@ -47,13 +51,13 @@
 ///////////////////////////////////////////////////////////////////////////////
     }]);
 
-    var domain = angular.module('domain', ['ngMaterial']);
+    //var domain = angular.module('domain', ['ngMaterial']);
+    //
+    //domain.config(['$httpProvider', function($httpProvider) {
+    //    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    //}]);
 
-    domain.config(['$httpProvider', function($httpProvider) {
-        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-    }]);
-
-    domain.controller('domainCtrl', ['$scope','$http','$mdDialog','$mdToast','$q',
+    mainApp.controller('domainCtrl', ['$scope','$http','$mdDialog','$mdToast','$q',
         function($scope,$http,$mdDialog,$mdToast,$q){
 
 
@@ -119,6 +123,42 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////Domain Dialog///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+    }]);
+
+    mainApp.controller('channelPostsCtrl', ['$scope','$http','$timeout','$q','$log', function($scope, $http, $timeout, $q, $log){
+
+        $scope.createNewPost = function(post){
+            console.log(post);
+            //var promise = postCreateSubmitFormAjax(post);
+            //promise.then(function(res){
+            //    //console.log(JSON.stringify(res));
+            //    appendToDomains(res);
+            //    $mdDialog.hide('successfully exiting');
+            //    $scope.mustHide = true;
+            //},function(res){
+            //    $scope.nameError = res.name;
+            //    $scope.descriptionError = res.description;
+            //    $scope.mustHide = true;
+            //});
+        };
+
+        appendToDomains =  function(data){
+
+            var myEl = angular.element( document.querySelector( '#domains' ) );
+            myEl.append('<p>'+ data.name +'<p>');
+        };
+
+        postCreateSubmitFormAjax = function(data){
+
+            var deferred = $q.defer();
+            var promise = $http.post('domain/create',data)
+                .success(function(res){
+                    deferred.resolve(res);
+                }).error(function(res) {
+                    deferred.reject(res);
+                });
+            return deferred.promise;
+        };
     }]);
 
 }());
