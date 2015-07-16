@@ -41,8 +41,8 @@ Route::get('profile/{id}','ProfileController@show');
 Route::post('profile/edit','ProfileController@update');
 
 // Domain Requests
-Route::get('domain/create', function(){ return view('domain.create'); });
-Route::post('domain/create', 'DomainController@registerDomain');
+Route::get('modal/domain/create', function(){ return view('domain.create'); });
+Route::post('api/domain/create', 'Api\DomainController@registerDomain');
 Route::get('domain','DomainController@index');
 Route::get('domain/{id}','DomainController@show');
 Route::get('domain/{id}/edit','DomainController@edit');

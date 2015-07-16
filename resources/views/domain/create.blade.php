@@ -1,5 +1,5 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<md-dialog aria-label="Domain">
+<md-dialog aria-label="Domain" style="height: 400px; width: 400px;">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>Create New Domain</h2>

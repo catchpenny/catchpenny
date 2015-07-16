@@ -67,7 +67,7 @@
             $scope.showDialog = function(ev) {
                 $mdDialog.show({
                     controller: DialogController,
-                    templateUrl: 'domain/create',
+                    templateUrl: 'modal/domain/create',
                     parent: angular.element(document.body),
                     targetEvent: ev
                 })
@@ -112,7 +112,7 @@
             domainCreateSubmitFormAjax = function(data){
 
                     var deferred = $q.defer();
-                    var promise = $http.post('domain/create',data)
+                    var promise = $http.post('api/domain/create',data)
                         .success(function(res){
                             deferred.resolve(res);
                         }).error(function(res) {

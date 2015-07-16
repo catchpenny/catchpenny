@@ -14,13 +14,13 @@ class CreateChannelsTable extends Migration
     {
         Schema::create('channel', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('domainId')->unique()->unsigned();
+            $table->integer('domainId')->unsigned();
             $table->string('name');
             $table->string('description');
-            $table->integer('created_by')->unique()->unsigned();
+            $table->integer('created_by')->unsigned();
             $table->boolean('official');
             $table->boolean('status');
-            $table->integer('invite_code')->unique();
+            $table->string('invite_code')->unique();
             $table->foreign('domainId')->references('id')->on('domain')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
