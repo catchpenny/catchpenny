@@ -47,6 +47,9 @@ Route::get('domain','DomainController@index');
 Route::get('domain/{id}','DomainController@show');
 Route::get('domain/{id}/edit','DomainController@edit');
 Route::post('domain/{id}/edit','DomainController@update');
+//temp in domain
+Route::get('domain/join/{id}', 'DomainController@joinDomain');
+
 
 // Searching
 Route::get('search/{query}', 'Api\SearchController@show');

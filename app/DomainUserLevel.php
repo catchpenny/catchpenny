@@ -13,4 +13,5 @@ class DomainUserLevel extends Model
         'domainId',
         'level'
     ];
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain;
+use App\Channel;
 use App\DomainUserLevel;
 use Validator;
 use App\Http\Requests;
@@ -23,7 +24,14 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains = Domain::all();
+        $userId = Auth::user()->id;
+        $domains = array();
+        $domainSubscribed = DomainUserLevel::where('userId', $userId)->get();
+
+        foreach ($domainSubscribed as $domainId) {
+            array_push($domains, Domain::where('id', $domainId['domainId'])->first());
+        }
+
         return view("domain.index", compact('domains'));
     }
 
@@ -38,10 +46,10 @@ class DomainController extends Controller
         $invite_code = $this->generateInviteCode($data['name']);
 
         return Domain::create([
-            'name'          => $data['name'],
-            'description'   => $data['description'],
-            'created_by'    => $id,
-            'invite_code'   => $invite_code
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'created_by' => $id,
+            'invite_code' => $invite_code
         ]);
     }
 
@@ -63,7 +71,8 @@ class DomainController extends Controller
      */
     public function show($id)
     {
-        //
+        $channels = Channel::where('domainId', $id)->get();
+        return view('domain.channel', compact('channels'));
     }
 
     /**
@@ -129,11 +138,24 @@ class DomainController extends Controller
         $domain = $this->create($data, $user);
 
         DomainUserLevel::create([
-            'userId'   => $user,
+            'userId' => $user,
             'domainId' => $domain->id,
-            'level'    => 0
+            'level' => 0
         ]);
 
         return $domain;
+    }
+
+    public function joinDomain($id)
+    {
+        $userId = Auth::user()->id;
+
+        DomainUserLevel::create([
+            'userId' => $userId,
+            'domainId' => $id,
+            'level' => 1
+        ]);
+
+        return redirect('domain/' . $id);
     }
 }

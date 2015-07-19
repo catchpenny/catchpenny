@@ -51,11 +51,6 @@
 ///////////////////////////////////////////////////////////////////////////////
     }]);
 
-    //var domain = angular.module('domain', ['ngMaterial']);
-    //
-    //domain.config(['$httpProvider', function($httpProvider) {
-    //    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-    //}]);
 
     mainApp.controller('domainCtrl', ['$scope','$http','$mdDialog','$mdToast','$q',
         function($scope,$http,$mdDialog,$mdToast,$q){
@@ -120,12 +115,20 @@
                         });
                     return deferred.promise;
             };
+
+
+            $scope.domainLoad = function(data) {
+
+                console.log(data);
+
+            };
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////Domain Dialog///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
     }]);
 
-    mainApp.controller('channelPostsCtrl', ['$scope','$http','$timeout','$q','$log', function($scope, $http, $timeout, $q, $log){
+    mainApp.controller('channelCtrl', ['$scope','$http','$timeout','$q','$log', function($scope, $http, $timeout, $q, $log){
 
         $scope.createNewPost = function(post){
             console.log(post);
@@ -142,23 +145,23 @@
             //});
         };
 
-        appendToDomains =  function(data){
-
-            var myEl = angular.element( document.querySelector( '#domains' ) );
-            myEl.append('<p>'+ data.name +'<p>');
-        };
-
-        postCreateSubmitFormAjax = function(data){
-
-            var deferred = $q.defer();
-            var promise = $http.post('domain/create',data)
-                .success(function(res){
-                    deferred.resolve(res);
-                }).error(function(res) {
-                    deferred.reject(res);
-                });
-            return deferred.promise;
-        };
+        //appendToDomains =  function(data){
+        //
+        //    var myEl = angular.element( document.querySelector( '#domains' ) );
+        //    myEl.append('<p>'+ data.name +'<p>');
+        //};
+        //
+        //postCreateSubmitFormAjax = function(data){
+        //
+        //    var deferred = $q.defer();
+        //    var promise = $http.post('domain/create',data)
+        //        .success(function(res){
+        //            deferred.resolve(res);
+        //        }).error(function(res) {
+        //            deferred.reject(res);
+        //        });
+        //    return deferred.promise;
+        //};
     }]);
 
 }());
