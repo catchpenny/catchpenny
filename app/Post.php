@@ -13,6 +13,7 @@ class Post extends Model
         'content',
         'type',
         'image',
-        'ownerId'
+        'ownerId',
+        'belongsTo'
     ];
 }

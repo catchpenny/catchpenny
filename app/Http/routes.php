@@ -15,11 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//temp
-Route::get('temp','DashboardController@temp');
-Route::get('channel',function(){ return view('temp.channel'); });
-Route::get('temp2','DashboardController@temp2');
-
 
 Route::get('dashboard','DashboardController@index');
 Route::get('home','HomeController@index');
@@ -32,7 +27,7 @@ Route::get('api/friend/remove/{id}','Api\ProfileController@remove');
 Route::get('api/friend/accept/{id}','Api\ProfileController@accept');
 
 // Api Post Requests
-Route::post('api/post/create/','Api\PostController@create');
+Route::post('api/post/create/belongsTo/{id}','Api\PostController@create');
 
 // Profile Requests
 Route::get('profile','ProfileController@index');
@@ -44,7 +39,8 @@ Route::post('profile/edit','ProfileController@update');
 Route::get('modal/domain/create', function(){ return view('domain.create'); });
 Route::post('api/domain/create', 'Api\DomainController@registerDomain');
 Route::get('domain','DomainController@index');
-Route::get('domain/{id}','DomainController@show');
+Route::get('domain/{domainId}','DomainController@show');
+Route::get('domain/{domainId}/channel/{channelId}','DomainController@show');
 Route::get('domain/{id}/edit','DomainController@edit');
 Route::post('domain/{id}/edit','DomainController@update');
 //temp in domain

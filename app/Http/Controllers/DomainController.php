@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain;
 use App\Channel;
+use App\Post;
 use App\DomainUserLevel;
 use Validator;
 use App\Http\Requests;
@@ -36,24 +37,6 @@ class DomainController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @param array $data
-     * @return Domain
-     */
-    public function create(array $data, $id)
-    {
-        $invite_code = $this->generateInviteCode($data['name']);
-
-        return Domain::create([
-            'name' => $data['name'],
-            'description' => $data['description'],
-            'created_by' => $id,
-            'invite_code' => $invite_code
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -69,10 +52,19 @@ class DomainController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show($domainId, $channelId = null)
     {
-        $channels = Channel::where('domainId', $id)->get();
-        return view('domain.channel', compact('channels'));
+        $userId = Auth::user()->id;
+        if(DomainUserLevel::where('userId',$userId)->where('domainId',$domainId)->first()){
+            $channels = Channel::where('domainId', $domainId)->get();
+            $domain   = Domain::where('id',$domainId)->first();
+            if(!$channelId){
+                $channelId = $domain->generalId;
+            }
+            $posts = Post::where('belongsTo', $channelId)->get();
+            return view('domain.channel', compact('channels','domain','posts'));
+        }
+        return 'user does not belong to this domain';
     }
 
     /**
@@ -108,44 +100,7 @@ class DomainController extends Controller
         //
     }
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:30',
-            'description' => 'required|max:255',
-        ]);
-    }
-
-    protected function generateInviteCode($name)
-    {
-        $code = str_replace(' ', '', (substr(uniqid(), 0, 7) . substr(md5($name), 0, 6)));
-        return $code;
-    }
-
-    public function registerDomain(Request $request)
-    {
-        $user = Auth::user()->id;
-        $data = $request->all();
-
-        $validator = $this->validator($data);
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        $domain = $this->create($data, $user);
-
-        DomainUserLevel::create([
-            'userId' => $user,
-            'domainId' => $domain->id,
-            'level' => 0
-        ]);
-
-        return $domain;
-    }
-
+    //temporary
     public function joinDomain($id)
     {
         $userId = Auth::user()->id;

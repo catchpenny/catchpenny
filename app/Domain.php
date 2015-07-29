@@ -14,6 +14,7 @@ class Domain extends Model
         'created_by',
         'official',
         'status',
-        'invite_code'
+        'invite_code',
+        'generalId'
     ];
 }

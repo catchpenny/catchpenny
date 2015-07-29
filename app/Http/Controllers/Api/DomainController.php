@@ -82,8 +82,7 @@ class DomainController extends Controller
             'level'    => 0
         ]);
 
-
-        Channel::create([
+        $general = Channel::create([
             'name'          => 'general',
             'description'   => 'this channel is for general talks',
             'created_by'    => $user,
@@ -92,7 +91,7 @@ class DomainController extends Controller
         ]);
 
 
-        Channel::create([
+        $random = Channel::create([
             'name'          => 'random',
             'description'   => 'this channel is for random talks',
             'created_by'    => $user,
@@ -100,6 +99,9 @@ class DomainController extends Controller
             'invite_code'   => uniqid()
 
         ]);
+
+        $domain->generalId = $general->id;
+        $domain->save();
 
         return $domain;
     }

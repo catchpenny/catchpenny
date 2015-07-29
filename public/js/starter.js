@@ -10,7 +10,8 @@
     mainApp.controller('appCtrl', ['$scope', function($scope){
 
     }]);
-
+//=============================================================================
+//=============================================================================
     mainApp.controller('omniBarCtrl', ['$scope','$http','$timeout','$q','$log','$mdDialog', function($scope, $http, $timeout, $q, $log, $mdDialog){
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -51,7 +52,8 @@
 ///////////////////////////////////////////////////////////////////////////////
     }]);
 
-
+//=============================================================================
+//=============================================================================
     mainApp.controller('domainCtrl', ['$scope','$http','$mdDialog','$mdToast','$q',
         function($scope,$http,$mdDialog,$mdToast,$q){
 
@@ -101,7 +103,7 @@
             appendToDomains =  function(data){
 
                 var myEl = angular.element( document.querySelector( '#domains' ) );
-                myEl.append('<p>'+ data.name +'<p>');
+                myEl.append('<p><a href="domain/'+ data.id +'">'+ data.name +'</a><p>');
             };
 
             domainCreateSubmitFormAjax = function(data){
@@ -128,10 +130,34 @@
 ///////////////////////////////////////////////////////////////////////////////
     }]);
 
+//=============================================================================
+//=============================================================================
     mainApp.controller('channelCtrl', ['$scope','$http','$timeout','$q','$log', function($scope, $http, $timeout, $q, $log){
 
-        $scope.createNewPost = function(post){
+
+        var self = this;
+        self.simulateQuery = false;
+        self.isDisabled    = false;
+        //self.querySearch   = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange   = searchTextChange;
+
+        self.createNewPost = function(post) {
             console.log(post);
+            return [];
+        }
+
+        function searchTextChange(text) {
+            $log.info('Text changed to ' + text);
+        }
+        function selectedItemChange(item) {
+            $log.info('Item changed to ' + JSON.stringify(item));
+
+        }
+
+        //$scope.createNewPost = function(post){
+        //    console.log(post);
+            //return false;
             //var promise = postCreateSubmitFormAjax(post);
             //promise.then(function(res){
             //    //console.log(JSON.stringify(res));
@@ -143,7 +169,7 @@
             //    $scope.descriptionError = res.description;
             //    $scope.mustHide = true;
             //});
-        };
+        //};
 
         //appendToDomains =  function(data){
         //

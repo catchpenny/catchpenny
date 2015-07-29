@@ -43,7 +43,8 @@
     </md-toolbar>
 
     <md-content layout="row">
-        <md-content flex="20">
+        <div flex="5"></div>
+        <md-content flex="15">
             <md-list>
                 <md-list-item>
                     <a>
@@ -112,19 +113,44 @@
                             <div class="inset">
                                 <md-icon>settings</md-icon>
                             </div>
+                            <div class="inset">Connect Account</div>
+                        </md-item-content>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                    <a>
+                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                            <div class="inset">
+                                <md-icon>settings</md-icon>
+                            </div>
+                            <div class="inset">Apps</div>
+                        </md-item-content>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                    <a>
+                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                            <div class="inset">
+                                <md-icon>settings</md-icon>
+                            </div>
+                            <div class="inset">Services</div>
+                        </md-item-content>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                    <a>
+                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                            <div class="inset">
+                                <md-icon>settings</md-icon>
+                            </div>
                             <div class="inset">Settings</div>
                         </md-item-content>
                     </a>
                 </md-list-item>
             </md-list>
         </md-content>
-        <md-content flex layout="column">
-
-            {{--<md-toolbar>--}}
-
-            {{--</md-toolbar>--}}
-
-            <md-content>
+        <md-content flex layout="column" style="background-color: white !important;">
+            <md-content style="background-color: white !important;">
                 <md-list>
                     <md-list-item class="md-2-line">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Benedict_Cumberbatch_filming_Sherlock_cropped.jpg"
@@ -219,69 +245,36 @@
                     </form>
             </md-content>
         </md-content>
-        <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="right"
-                    md-is-locked-open="$mdMedia('gt-md')">
-            <md-toolbar class="md-tall md-hue-2">
-                <span flex></span>
+        {{--<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="right"--}}
+                    {{--md-is-locked-open="$mdMedia('gt-md')">--}}
+        {{--</md-sidenav>--}}
+        <md-content flex="20">
 
-                <div layout="column" class="md-toolbar-tools-bottom inset">
-                    <span></span>
+        <md-card ng-controller="domainCtrl">
+        <md-toolbar id="tool-bar">
+        <div class="md-toolbar-tools">
+        <h2 class="md-title">Domains</h2>
+        </div>
+        </md-toolbar>
+        <md-card-content style="max-height: 150px; overflow: auto">
+        @foreach($domains as $domain)
+        <p>
+        <a ng-click="domainLoad('{{ $domain->id }}')">
+        {{ $domain->name }}
+        </a>
+        </p>
+        @endforeach
+        <p id="domains"></p>
+        </md-card-content>
+        <md-divider></md-divider>
+        <div layout="row" layout-align="end end">
+        <md-button ng-click="showDialog($event)">Add New</md-button>
+        </div>
+        </md-card>
+        </md-content>
+        <md-content flex="25">
 
-                    <div>Domain</div>
-                    <div>domain@catchpenny.com</div>
-                </div>
-            </md-toolbar>
-            <md-list>
-                <md-item ng-repeat="item in menu">
-                    <a>
-                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                            <div class="inset">
-                                <ng-md-icon icon="@{{item.icon}}"></ng-md-icon>
-                            </div>
-                            <div class="inset">@{{item.title}}
-                            </div>
-                        </md-item-content>
-                    </a>
-                </md-item>
-                <md-divider></md-divider>
-                <md-subheader>Management</md-subheader>
-                <md-item ng-repeat="item in admin">
-                    <a>
-                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                            <div class="inset">
-                                <ng-md-icon icon="@{{item.icon}}"></ng-md-icon>
-                            </div>
-                            <div class="inset">@{{item.title}}
-                            </div>
-                        </md-item-content>
-                    </a>
-                </md-item>
-            </md-list>
-        </md-sidenav>
-        {{--<md-content flex="20">--}}
-
-        {{--<md-card ng-controller="domainCtrl">--}}
-        {{--<md-toolbar id="tool-bar">--}}
-        {{--<div class="md-toolbar-tools">--}}
-        {{--<h2 class="md-title">Domains</h2>--}}
-        {{--</div>--}}
-        {{--</md-toolbar>--}}
-        {{--<md-card-content style="max-height: 150px; overflow: auto">--}}
-        {{--@foreach($domains as $domain)--}}
-        {{--<p>--}}
-        {{--<a ng-click="domainLoad('{{ $domain->id }}')">--}}
-        {{--{{ $domain->name }}--}}
-        {{--</a>--}}
-        {{--</p>--}}
-        {{--@endforeach--}}
-        {{--<p id="domains"></p>--}}
-        {{--</md-card-content>--}}
-        {{--<md-divider></md-divider>--}}
-        {{--<div layout="row" layout-align="end end">--}}
-        {{--<md-button ng-click="showDialog($event)">Add New</md-button>--}}
-        {{--</div>--}}
-        {{--</md-card>--}}
-        {{--</md-content>--}}
+        </md-content>
     </md-content>
     </body>
 @endsection
