@@ -245,9 +245,7 @@
                     </form>
             </md-content>
         </md-content>
-        {{--<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="right"--}}
-                    {{--md-is-locked-open="$mdMedia('gt-md')">--}}
-        {{--</md-sidenav>--}}
+
         <md-content flex="20">
 
         <md-card ng-controller="domainCtrl">
@@ -272,9 +270,9 @@
         </div>
         </md-card>
         </md-content>
-        <md-content flex="25">
-
-        </md-content>
+        <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="right"
+        md-is-locked-open="$mdMedia('gt-md')">
+        </md-sidenav>
     </md-content>
     </body>
 @endsection
