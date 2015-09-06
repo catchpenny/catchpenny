@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain;
+use App\Channel;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -14,9 +15,13 @@ class ChannelController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($did, $cid)
     {
-        //
+        $domain  = Domain::find($did);
+        $channel = Channel::find($cid);
+        $channels = Channel::where('domainId',$did)->get();
+
+        return view('channel.indexBS', compact('domain', 'channel', 'channels'));
     }
 
     /**

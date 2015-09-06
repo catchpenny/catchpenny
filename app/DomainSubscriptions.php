@@ -4,14 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DomainUserLevel extends Model
+class DomainSubscriptions extends Model
 {
-    protected $table = 'domain_user_level';
+    protected $table = 'domain_subscriptions';
 
     protected $fillable = [
         'userId',
         'domainId',
         'level'
     ];
-
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Domain;
-use App\DomainUserLevel;
+use App\DomainSubscriptions;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -25,7 +25,7 @@ class HomeController extends Controller
         $userId = Auth::user()->id;
         $user =  Auth::user();
         $domains = array();
-        $domainSubscribed = DomainUserLevel::where('userId', $userId)->get();
+        $domainSubscribed = DomainSubscriptions::where('userId', $userId)->get();
 
         foreach ($domainSubscribed as $domainId) {
             array_push($domains, Domain::where('id', $domainId['domainId'])->first());

@@ -21,10 +21,13 @@ Route::get('settings','SettingsController@index');
 //Domains Related Routes
 Route::get('domain/create', 'DomainController@create');
 Route::post('domain/create', 'DomainController@store');
-Route::get('d/{id}/c/{id}', 'DomainController@index');
-Route::get('d/{id}', 'DomainController@index');
+Route::get('d/{id}/settings', 'DomainController@edit');
+Route::post('d/{id}/settings', 'DomainController@update');
 
-
+//Channel Routes
+Route::get('d/{did}/c/{cid}/settings', 'ChannelController@edit');
+Route::post('d/{did}/c/{cid}/settings', 'ChannelController@update');
+Route::get('d/{did}/c/{cid}', 'ChannelController@index');
 
 
 /*

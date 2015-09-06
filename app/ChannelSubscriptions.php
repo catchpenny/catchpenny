@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ChannelUserLevel extends Model
+class ChannelSubscriptions extends Model
 {
     //
 }

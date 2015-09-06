@@ -3,10 +3,10 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDomainSubscriptionTable extends Migration
+class CreateDomainSubscriptionsTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations
      *
      * @return void
      */

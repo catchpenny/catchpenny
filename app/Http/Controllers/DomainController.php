@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain;
-use App\DomainUserLevel;
+use App\DomainSubscriptions;
 use App\Channel;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -18,16 +18,6 @@ class DomainController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -39,7 +29,6 @@ class DomainController extends Controller
 
     public function store(CreateDomainRequest $request)
     {
-        //validation
 
         $input = $request->all();
         $user = Auth::user()->id;
@@ -53,7 +42,7 @@ class DomainController extends Controller
             'invite_code'   => $invite_code
         ]);
 
-        DomainUserLevel::create([
+        DomainSubscriptions::create([
             'userId'   => $user,
             'domainId' => $domain->id,
             'level'    => 0
@@ -63,8 +52,7 @@ class DomainController extends Controller
             'name'          => 'general',
             'description'   => 'this channel is for general talks',
             'created_by'    => $user,
-            'domainId' => $domain->id,
-            'invite_code'   => uniqid()
+            'domainId' => $domain->id
         ]);
 
 
@@ -72,8 +60,7 @@ class DomainController extends Controller
             'name'          => 'random',
             'description'   => 'this channel is for random talks',
             'created_by'    => $user,
-            'domainId' => $domain->id,
-            'invite_code'   => uniqid()
+            'domainId' => $domain->id
 
         ]);
 
@@ -82,6 +69,22 @@ class DomainController extends Controller
 
         $request->session()->flash('alert-success', 'Domain was successful created!!');
         return redirect('domain/create');
+    }
+
+    public function edit($did)
+    {
+        $domain  = Domain::find($did);
+        $channels = Channel::where('domainId',$did)->get();
+
+        return view('domain.settingsBS', compact('domain', 'channels'));
+    }
+
+    public function update($did, CreateDomainRequest $request)
+    {
+        $input = $request->all();
+        Domain::where('id',$did)->update(['name' => $input['name'], 'description' => $input['description']]);
+        $request->session()->flash('alert-success', 'Domain successfully updated!!');
+        return redirect('d/'.$did.'/settings');
     }
 
 }
