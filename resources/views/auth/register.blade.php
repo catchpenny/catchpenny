@@ -4,9 +4,9 @@
 
 @section('content')
     <body ng-app="mainApp">
-    <div ng-controller="appCtrl" layout="column">
+    <div ng-controller="appCtrl" layout-fill layout="column">
         <div layout-fill>
-            <md-content>
+            <md-content layout-fill>
                 <div layout-fill layout="row" layout-align="center center">
                     <div flex hide-sm></div>
                     <div flex>

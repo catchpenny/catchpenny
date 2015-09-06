@@ -12,8 +12,8 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'firstName' => 'sam',
-            'lastName' => 'jackson',
+            'firstName' => 'Sam',
+            'lastName' => 'Jackson',
             'email' => 'sam@gmail.com',
             'gender' => 'male',
             'dateOfBirth' => '2000-06-06',
@@ -21,8 +21,8 @@ class UserTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'firstName' => 'kristen',
-            'lastName' => 'grey',
+            'firstName' => 'Kristen',
+            'lastName' => 'Grey',
             'email' => 'kristen@gmail.com',
             'gender' => 'female',
             'dateOfBirth' => '1993-05-11',
@@ -30,8 +30,8 @@ class UserTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'firstName' => 'joey',
-            'lastName' => 'tribiany',
+            'firstName' => 'Joey',
+            'lastName' => 'Tribiany',
             'email' => 'joey@gmail.com',
             'gender' => 'male',
             'dateOfBirth' => '2000-09-02',

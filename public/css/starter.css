@@ -1,10 +1,10 @@
-/*body{*/
-    /*background-color: #EEEEEE !important;*/
-/*}*/
-
-md-content{
-    background-color: #EEEEEE;
+body{
+    background-color: #EEEEEE !important;
 }
+
+/*md-content{*/
+    /*background-color: #EEEEEE;*/
+/*}*/
 /*#wrapper {*/
     /*overflow: auto;*/
     /*height: 100%;*/

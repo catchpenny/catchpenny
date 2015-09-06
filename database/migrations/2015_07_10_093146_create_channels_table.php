@@ -20,7 +20,6 @@ class CreateChannelsTable extends Migration
             $table->integer('created_by')->unsigned();
             $table->boolean('official');
             $table->boolean('status');
-            $table->string('invite_code')->unique();
             $table->foreign('domainId')->references('id')->on('domain')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

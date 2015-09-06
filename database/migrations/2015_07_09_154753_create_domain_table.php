@@ -19,6 +19,7 @@ class CreateDomainTable extends Migration
             $table->integer('created_by')->unsigned();
             $table->boolean('official')->default(false);
             $table->boolean('status')->default(true);
+            $table->tinyInteger('visibility')->default(0);
             $table->string('invite_code')->unique();
             $table->integer('generalId')->unique();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

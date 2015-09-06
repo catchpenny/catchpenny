@@ -32,4 +32,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    // Mutators
+    public function setFirstNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setGenderAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }

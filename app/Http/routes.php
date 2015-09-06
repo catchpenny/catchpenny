@@ -15,41 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('dashboard','DashboardController@index');
 Route::get('home','HomeController@index');
+Route::get('settings','SettingsController@index');
 
-// Api Get Requests
-Route::get('api/image/{id}','Api\ImageController@index');
-Route::get('api/profile','Api\ProfileController@index');
-Route::get('api/friend/request/{id}','Api\ProfileController@request');
-Route::get('api/friend/remove/{id}','Api\ProfileController@remove');
-Route::get('api/friend/accept/{id}','Api\ProfileController@accept');
-
-// Api Post Requests
-Route::post('api/post/create/belongsTo/{id}','Api\PostController@create');
-
-// Profile Requests
-Route::get('profile','ProfileController@index');
-Route::get('profile/edit','ProfileController@edit');
-Route::get('profile/{id}','ProfileController@show');
-Route::post('profile/edit','ProfileController@update');
-
-// Domain Requests
-Route::get('modal/domain/create', function(){ return view('domain.create'); });
-Route::post('api/domain/create', 'Api\DomainController@registerDomain');
-Route::get('domain','DomainController@index');
-Route::get('domain/{domainId}','DomainController@show');
-Route::get('domain/{domainId}/channel/{channelId}','DomainController@show');
-Route::get('domain/{id}/edit','DomainController@edit');
-Route::post('domain/{id}/edit','DomainController@update');
-//temp in domain
-Route::get('domain/join/{id}', 'DomainController@joinDomain');
+//Domains Related Routes
+Route::get('domain/create', 'DomainController@create');
+Route::post('domain/create', 'DomainController@store');
+Route::get('d/{id}/c/{id}', 'DomainController@index');
+Route::get('d/{id}', 'DomainController@index');
 
 
-// Searching
-Route::get('search/{query}', 'Api\SearchController@show');
 
+
+/*
+ *  Competed Routes
+ */
 
 // Login routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -59,3 +39,22 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+
+//old
+// Image
+Route::get('api/image/{id}','Api\ImageController@index');
+
+// Domain Requests
+//Route::post('domain/create', 'DomainController@create');
+//Route::get('modal/domain/create', function(){ return view('domain.create'); });
+//Route::post('api/domain/create', 'Api\DomainController@registerDomain');
+//Route::get('domain','DomainController@index');
+//Route::get('domain/{domainId}','DomainController@show');
+//Route::get('domain/{domainId}/channel/{channelId}','DomainController@show');
+//Route::get('domain/{id}/edit','DomainController@edit');
+//Route::post('domain/{id}/edit','DomainController@update');
+
+
+// Searching
+Route::get('search/{query}', 'Api\SearchController@show');

@@ -4,13 +4,12 @@
 
 @section('content')
     <body ng-app="mainApp" class="fullbleed layout vertical">
-    <div ng-controller="appCtrl" layout="column">
-        <md-content>
+    <div ng-controller="appCtrl" layout-fill layout="column">
+        <md-content layout-fill>
             <div layout-fill layout="row" layout-align="center center">
                 <div flex hide-sm></div>
                 <div flex>
-
-
+                    {{--form start--}}
                     <form name="loginForm" action="" method="post">
                         {!! csrf_field() !!}
                         @if (count($errors) > 0)
@@ -46,7 +45,7 @@
                             <md-button class="md-raised md-primary">Login</md-button>
                         </md-input-container>
                     </form>
-
+                    {{--form end--}}
                 </div>
                 <div flex hide-sm></div>
             </div>

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Domain;
-use App\Channel;
-use App\Post;
 use App\DomainUserLevel;
-use Validator;
+use App\Channel;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateDomainRequest;
 use Illuminate\Support\Facades\Auth;
 
 class DomainController extends Controller
@@ -25,15 +24,7 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $userId = Auth::user()->id;
-        $domains = array();
-        $domainSubscribed = DomainUserLevel::where('userId', $userId)->get();
 
-        foreach ($domainSubscribed as $domainId) {
-            array_push($domains, Domain::where('id', $domainId['domainId'])->first());
-        }
-
-        return view("domain.index", compact('domains'));
     }
 
     /**
@@ -41,76 +32,56 @@ class DomainController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function create()
     {
-        //
+        return view('domain.createBS');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($domainId, $channelId = null)
+    public function store(CreateDomainRequest $request)
     {
-        $userId = Auth::user()->id;
-        if(DomainUserLevel::where('userId',$userId)->where('domainId',$domainId)->first()){
-            $channels = Channel::where('domainId', $domainId)->get();
-            $domain   = Domain::where('id',$domainId)->first();
-            if(!$channelId){
-                $channelId = $domain->generalId;
-            }
-            $posts = Post::where('belongsTo', $channelId)->get();
-            return view('domain.channel', compact('channels','domain','posts'));
-        }
-        return 'user does not belong to this domain';
-    }
+        //validation
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $input = $request->all();
+        $user = Auth::user()->id;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
+        $invite_code = str_replace(' ', '', (substr(uniqid(), 0, 7) . substr(md5($input['name']), 0, 6)));
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    //temporary
-    public function joinDomain($id)
-    {
-        $userId = Auth::user()->id;
-
-        DomainUserLevel::create([
-            'userId' => $userId,
-            'domainId' => $id,
-            'level' => 1
+        $domain = Domain::create([
+            'name'          => $input['name'],
+            'description'   => $input['description'],
+            'created_by'    => $user,
+            'invite_code'   => $invite_code
         ]);
 
-        return redirect('domain/' . $id);
+        DomainUserLevel::create([
+            'userId'   => $user,
+            'domainId' => $domain->id,
+            'level'    => 0
+        ]);
+
+        $general = Channel::create([
+            'name'          => 'general',
+            'description'   => 'this channel is for general talks',
+            'created_by'    => $user,
+            'domainId' => $domain->id,
+            'invite_code'   => uniqid()
+        ]);
+
+
+        $random = Channel::create([
+            'name'          => 'random',
+            'description'   => 'this channel is for random talks',
+            'created_by'    => $user,
+            'domainId' => $domain->id,
+            'invite_code'   => uniqid()
+
+        ]);
+
+        $domain->generalId = $general->id;
+        $domain->save();
+
+        $request->session()->flash('alert-success', 'Domain was successful created!!');
+        return redirect('domain/create');
     }
+
 }
