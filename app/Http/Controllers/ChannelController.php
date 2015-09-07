@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Domain;
 use App\Channel;
+use App\ChannelSubscriptions;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -17,10 +19,23 @@ class ChannelController extends Controller
      */
     public function index($did, $cid)
     {
-        $domain  = Domain::find($did);
-        $channel = Channel::find($cid);
-        $channels = Channel::where('domainId',$did)->get();
+        // check if domain joined
+        // check if channel exists
+        // check if channel is subscribed to receive notification
 
+//        $usersId  = ChannelSubscriptions::where('channelId',$cid)->get();
+//        $users    = User::find($usersId);
+//
+//        $channel = Channel::find($cid);
+//        foreach($channel->users as $user)
+//        {
+//            dd($user);
+//        }
+//        dd();
+        //dd($channel->users);
+        $domain   = Domain::find($did);
+        $channel  = Channel::find($cid);
+        $channels = Channel::where('domainId',$did)->get();
         return view('channel.indexBS', compact('domain', 'channel', 'channels'));
     }
 

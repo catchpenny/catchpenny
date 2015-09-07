@@ -13,7 +13,7 @@ class Domain extends Model
         'description',
         'created_by',
         'official',
-        'status',
+        'privacy',
         'invite_code',
         'generalId'
     ];

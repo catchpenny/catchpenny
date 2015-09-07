@@ -17,4 +17,9 @@ class Channel extends Model
         'status',
         'invite_code'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'channel_subscriptions');
+    }
 }

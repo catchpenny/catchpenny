@@ -19,15 +19,6 @@
                     </ul>
                 @endif
 
-                <div class="flash-message">
-                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                        @if(Session::has('alert-' . $msg))
-
-                            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                        @endif
-                    @endforeach
-                </div> <!-- end .flash-message -->
-
                 <form method="POST" action="">
                     <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="form-group">
@@ -37,6 +28,24 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Domain Description: </label>
                         <input type="text" class="form-control" id="description" name="description" placeholder="Domain Description">
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="privacy" id="privacy" value="0" checked>
+                            Public
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="privacy" id="privacy" value="1">
+                            Protected
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="privacy" id="privacy" value="2">
+                            Private
+                        </label>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>

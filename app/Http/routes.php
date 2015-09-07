@@ -23,6 +23,7 @@ Route::get('domain/create', 'DomainController@create');
 Route::post('domain/create', 'DomainController@store');
 Route::get('d/{id}/settings', 'DomainController@edit');
 Route::post('d/{id}/settings', 'DomainController@update');
+Route::post('d/{id}/destroy', 'DomainController@destroy');
 
 //Channel Routes
 Route::get('d/{did}/c/{cid}/settings', 'ChannelController@edit');

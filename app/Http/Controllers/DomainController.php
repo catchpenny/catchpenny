@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Domain;
 use App\DomainSubscriptions;
 use App\Channel;
+use Carbon\Carbon;
+use App\ChannelSubscriptions;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateDomainRequest;
@@ -39,7 +41,8 @@ class DomainController extends Controller
             'name'          => $input['name'],
             'description'   => $input['description'],
             'created_by'    => $user,
-            'invite_code'   => $invite_code
+            'invite_code'   => $invite_code,
+            'privacy'       => $input['privacy']
         ]);
 
         DomainSubscriptions::create([
@@ -52,17 +55,15 @@ class DomainController extends Controller
             'name'          => 'general',
             'description'   => 'this channel is for general talks',
             'created_by'    => $user,
-            'domainId' => $domain->id
+            'domainId'      => $domain->id
         ]);
 
-
-        $random = Channel::create([
-            'name'          => 'random',
-            'description'   => 'this channel is for random talks',
-            'created_by'    => $user,
-            'domainId' => $domain->id
-
+        ChannelSubscriptions::create([
+            'userId'        => $user,
+            'channelId'     => $general->id,
+            'lastRead'      => Carbon::now()
         ]);
+
 
         $domain->generalId = $general->id;
         $domain->save();
@@ -74,17 +75,41 @@ class DomainController extends Controller
     public function edit($did)
     {
         $domain  = Domain::find($did);
-        $channels = Channel::where('domainId',$did)->get();
-
-        return view('domain.settingsBS', compact('domain', 'channels'));
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
+                $channels = Channel::where('domainId', $did)->get();
+                return view('domain.settingsBS', compact('domain', 'channels'));
+        } else{
+            dd(404);
+        }
     }
 
     public function update($did, CreateDomainRequest $request)
     {
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
         $input = $request->all();
-        Domain::where('id',$did)->update(['name' => $input['name'], 'description' => $input['description']]);
+        Domain::where('id',$did)->update(['name' => $input['name'], 'description' => $input['description'], 'privacy' => $input['privacy']]);
         $request->session()->flash('alert-success', 'Domain successfully updated!!');
         return redirect('d/'.$did.'/settings');
+        } else{
+            dd(404);
+        }
+    }
+
+    public function destroy($did, Request $request)
+    {
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
+            Domain::destroy($did);
+            $request->session()->flash('alert-success', 'Domain deleted successfully');
+            return redirect('home');
+        } else{
+            dd(404);
+        }
     }
 
 }

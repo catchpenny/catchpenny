@@ -24,8 +24,9 @@ class CreateDomainRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|max:30',
+            'name'        => 'required|max:30',
             'description' => 'required|max:255',
+            'privacy'     => 'required|digits_between:1,2'
         ];
     }
 }

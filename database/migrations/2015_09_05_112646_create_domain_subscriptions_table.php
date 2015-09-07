@@ -15,7 +15,7 @@ class CreateDomainSubscriptionsTable extends Migration
         Schema::create('domain_subscriptions', function (Blueprint $table) {
             $table->integer('userId')->unsigned();
             $table->integer('domainId')->unsigned();
-            $table->boolean('level');
+            $table->tinyInteger('level')->default(1);
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('domainId')->references('id')->on('domain')->onDelete('cascade');
             $table->timestamps();
