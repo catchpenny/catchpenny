@@ -20,6 +20,6 @@ class Channel extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'channel_subscriptions');
+        return $this->belongsToMany('App\User', 'channel_subscriptions', 'channelId', 'userId');
     }
 }

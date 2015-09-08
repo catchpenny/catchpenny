@@ -32,6 +32,15 @@
                     </ul>
                 @endif
 
+                <div class="flash-message">
+                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                        @if(Session::has('alert-' . $msg))
+
+                            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                        @endif
+                    @endforeach
+                </div> <!-- end .flash-message -->
+
                 <h4>Settings</h4>
 
                 <form method="POST" action="">
@@ -74,14 +83,6 @@
                     </div>
                 </form>
                 <br>
-                <form method="POST" action="{{ url('d/'.$domain->id.'/destroy') }}">
-                    <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
-                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                    <div class="btn-group" role="group">
-                        <button type="submit" class="btn btn-default">Delete Domain</button>
-                    </div>
-                    </div>
-                </form>
             </div>
             <div class="col-md-3">.col-md-3</div>
         </div>

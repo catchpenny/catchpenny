@@ -112,4 +112,58 @@ class DomainController extends Controller
         }
     }
 
+    public function editUsers($did)
+    {
+        $domain  = Domain::find($did);
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
+            $channels = Channel::where('domainId', $did)->get();
+            return view('domain.settingsBS', compact('domain', 'channels'));
+        } else{
+            dd(404);
+        }
+    }
+
+    public function updateUsers($did, CreateDomainRequest $request)
+    {
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
+            $input = $request->all();
+            Domain::where('id',$did)->update(['name' => $input['name'], 'description' => $input['description'], 'privacy' => $input['privacy']]);
+            $request->session()->flash('alert-success', 'Domain successfully updated!!');
+            return redirect('d/'.$did.'/settings');
+        } else{
+            dd(404);
+        }
+    }
+
+    public function editChannels($did)
+    {
+        $domain  = Domain::find($did);
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
+            $channels = Channel::where('domainId', $did)->get();
+            return view('domain.settings.channelsBS', compact('domain', 'channels'));
+        } else{
+            dd(404);
+        }
+    }
+
+    public function updateChannels($did, CreateDomainRequest $request)
+    {
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
+            $input = $request->all();
+            Domain::where('id',$did)->update(['name' => $input['name'], 'description' => $input['description'], 'privacy' => $input['privacy']]);
+            $request->session()->flash('alert-success', 'Domain successfully updated!!');
+            return redirect('d/'.$did.'/settings');
+        } else{
+            dd(404);
+        }
+    }
+
 }

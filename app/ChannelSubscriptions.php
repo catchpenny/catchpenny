@@ -13,10 +13,4 @@ class ChannelSubscriptions extends Model
         'channelId',
         'lastRead'
     ];
-
-    public function users()
-    {
-        return $this->belongsToMany('App\User');
-    }
-
 }

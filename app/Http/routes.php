@@ -21,6 +21,8 @@ Route::get('settings','SettingsController@index');
 //Domains Related Routes
 Route::get('domain/create', 'DomainController@create');
 Route::post('domain/create', 'DomainController@store');
+Route::get('d/{id}/settings/users', 'DomainController@editUsers');
+Route::get('d/{id}/settings/channels', 'DomainController@editChannels');
 Route::get('d/{id}/settings', 'DomainController@edit');
 Route::post('d/{id}/settings', 'DomainController@update');
 Route::post('d/{id}/destroy', 'DomainController@destroy');

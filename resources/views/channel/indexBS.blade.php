@@ -12,13 +12,19 @@
                         <h1> {{ $domain->name }} </h1>
                     </a>
                     <h4> {{ $domain->description }} </h4>
-                    <p><a href=" {{ url('d/'. $domain->id .'/settings') }} ">Settings</a></p>
+                    @if(App\DomainSubscriptions::where('userId',$currentUser->id)->where('domainId',$domain->id)->select('level')->first()->level==0)
+                        <p><a href=" {{ url('d/'. $domain->id .'/settings') }} ">Settings</a></p>
+                    @endif
                 </div>
                 <div>
                     @foreach($channels as $channel)
                         <h4>
                             <a href=" {{ url('d/'.$channel->domainId.'/c/'.$channel->id) }}">
-                                {{ '#'.$channel->name }}
+                                @if( $currentChannel->id == $channel->id )
+                                    <b>{{ '#'.$channel->name }}</b>
+                                @else
+                                    {{ '#'.$channel->name }}
+                                @endif
                             </a>
                         </h4>
                     @endforeach
@@ -26,14 +32,14 @@
             </div>
             <div class="col-md-6">
                 <div class="page-header">
-                    <h1> {{ '#'.$channel->name }} </h1>
-                    <h4> {{ $channel->description }} </h4>
+                    <h1> {{ '#'.$currentChannel->name }} </h1>
+                    <h4> {{ $currentChannel->description }} </h4>
                 </div>
             </div>
             <div class="col-md-3">
-                {{--@foreach($users as $user)--}}
-                    {{--<a href=""> {{ }}</a>--}}
-                {{--@endforeach--}}
+                @foreach($channel->users as $user)
+                {{ $user->firstName . ' ' . $user->lastName}}
+                @endforeach
             </div>
         </div>
     </div>
