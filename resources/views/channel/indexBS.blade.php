@@ -12,9 +12,7 @@
                         <h1> {{ $domain->name }} </h1>
                     </a>
                     <h4> {{ $domain->description }} </h4>
-                    @if(App\DomainSubscriptions::where('userId',$currentUser->id)->where('domainId',$domain->id)->select('level')->first()->level==0)
-                        <p><a href=" {{ url('d/'. $domain->id .'/settings') }} ">Settings</a></p>
-                    @endif
+                    <p><a href=" {{ url('d/'. $domain->id .'/settings') }} ">Settings</a></p>
                 </div>
                 <div>
                     @foreach($channels as $channel)
@@ -32,13 +30,15 @@
             </div>
             <div class="col-md-6">
                 <div class="page-header">
-                    <h1> {{ '#'.$currentChannel->name }} </h1>
-                    <h4> {{ $currentChannel->description }} </h4>
+                    <h1>{{ '#'.$currentChannel->name }} <small>{{ $currentChannel->description }}</small></h1>
                 </div>
             </div>
             <div class="col-md-3">
+                <div class="page-header">
+                    <h3> Channel Members </h3>
+                </div>
                 @foreach($channel->users as $user)
-                {{ $user->firstName . ' ' . $user->lastName}}
+                    <h4> {{ $user->firstName . ' ' . $user->lastName}} </h4>
                 @endforeach
             </div>
         </div>

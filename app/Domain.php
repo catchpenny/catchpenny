@@ -17,4 +17,9 @@ class Domain extends Model
         'invite_code',
         'generalId'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'domain_subscriptions', 'domainId', 'userId');
+    }
 }
