@@ -14,7 +14,7 @@
             </ul>
         @endif
 
-        <form method="POST" action="">
+        <form method="POST" action="{{ url('d/'. $domain->id .'/c/create') }}">
             <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
             <div class="form-group">
                 <label for="exampleInputEmail1">Create New Channel: </label>
@@ -27,15 +27,17 @@
             </div>
         </form>
         <br><br>
-        <h4>Current Channels:</h4>
-        <table class="table table-hover">
-            @foreach($channels as $channel)
-                <tr>
-                    <td>
-                        {{ $channel->name }} <button class="btn btn-default pull-right">Settings</button>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Channels
+            </div>
+            <ul class="list-group">
+                @foreach($channels as $channel)
+                    <li class="list-group-item">
+                        {{ $channel->name }} <span class=" pull-right">Settings</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
 
 @endsection

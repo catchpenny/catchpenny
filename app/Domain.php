@@ -22,4 +22,19 @@ class Domain extends Model
     {
         return $this->belongsToMany('App\User', 'domain_subscriptions', 'domainId', 'userId');
     }
+
+    public function usersInvited()
+    {
+        return $this->belongsToMany('App\User', 'domain_invitations', 'domainId', 'userId');
+    }
+
+    public function usersBlocked()
+    {
+        return $this->belongsToMany('App\User', 'domain_subscriptions', 'domainId', 'userId')->wherePivot('level',-1);
+    }
+
+    public function usersRequests()
+    {
+        return $this->belongsToMany('App\User', 'domain_invitations', 'domainId', 'userId');
+    }
 }

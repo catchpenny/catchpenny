@@ -17,14 +17,13 @@
                 </div>
                 <div>
                     <h4>Join The Channel:</h4>
-                    <form method="POST" action="{{ url('d/'.$domain->id. '/request') }}">
+                    Request Has Been Already Sent
+                    <form method="POST" action="{{ url('d/'.$domain->id. '/requestDestroy') }}">
                         <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                             <div class="btn-group" role="group">
                                 @if($domain->privacy==0)
-                                    <button type="submit" class="btn btn-default">Join Now</button>
-                                @else
-                                    <button type="submit" class="btn btn-default">Request To Join</button>
+                                    <button type="submit" class="btn btn-default">Cancel Request</button>
                                 @endif
                             </div>
                         </div>

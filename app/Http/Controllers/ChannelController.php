@@ -26,23 +26,19 @@ class ChannelController extends Controller
         // Handle privacy
 
         $domain   = Domain::find($did);
-        //check if domain exists
         if(!$domain){
             dd(404);
         }
 
         $currentChannel  = Channel::find($cid);
-
-        // check if channel exists
         if(!$currentChannel){
             dd(404);
         }
 
-        //check if domain not joined
         if(!DomainSubscriptions::where('domainId',$did)->where('userId', Auth::user()->id)->first())
         {
            if($domain->privacy!=2){
-               return view('domain.joinBS',compact('domain')); //return form for joining
+               return redirect('/d/'.$domain->id.'/request');
            } else {
                dd(404);
            }

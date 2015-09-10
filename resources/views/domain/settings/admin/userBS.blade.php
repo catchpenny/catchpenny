@@ -14,7 +14,7 @@
         </ul>
     @endif
 
-    <form method="POST" action="">
+    <form method="POST" action="{{ url('d/'.$domain->id.'/invite') }}">
         <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
         <div class="form-group">
             <label for="exampleInputEmail1">Invite New User: </label>
@@ -27,11 +27,53 @@
         </div>
     </form>
     <br><br>
-    <h4>Current Users:</h4>
-    <table class="table table-hover">
-        @foreach($domain->users as $user)
-            {{ $user->firstName . ' ' . $user->lastName}}
-        @endforeach
-    </table>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Active Users
+        </div>
+        <ul class="list-group">
+            @foreach($domain->users as $user)
+                <li class="list-group-item">
+                    {{ $user->firstName . ' ' . $user->lastName}}
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Users Invited
+        </div>
+        <ul class="list-group">
+            @foreach($domain->usersInvited as $user)
+                <li class="list-group-item">
+                    {{ $user->firstName . ' ' . $user->lastName}}
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Users Requests
+        </div>
+        <ul class="list-group">
+            {{--@foreach($domain->usersRequested as $user)--}}
+                {{--<li class="list-group-item">--}}
+                    {{--{{ $user->firstName . ' ' . $user->lastName}}--}}
+                {{--</li>--}}
+            {{--@endforeach--}}
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Users Blocked
+        </div>
+        <ul class="list-group">
+            {{--@foreach($domain->usersBlocked as $user)--}}
+                {{--<li class="list-group-item">--}}
+                    {{--{{ $user->firstName . ' ' . $user->lastName}}--}}
+                {{--</li>--}}
+            {{--@endforeach--}}
+        </ul>
+    </div>
 
 @endsection

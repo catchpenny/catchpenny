@@ -8,6 +8,7 @@ use App\Domain;
 use App\DomainSubscriptions;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Notifications;
 
 class HomeController extends Controller
 {
@@ -22,14 +23,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $userId = Auth::user()->id;
         $user =  Auth::user();
         $domains = array();
-        $domainSubscribed = DomainSubscriptions::where('userId', $userId)->get();
+        $domainSubscribed = DomainSubscriptions::where('userId', $user->id)->get();
 
         foreach ($domainSubscribed as $domainId) {
             array_push($domains, Domain::where('id', $domainId['domainId'])->first());
         }
-        return view('home.homeBS', compact('domains', 'user'));
+
+        $notifications = Notifications::where('forId',$user->id)->get();
+
+        return view('home.homeBS', compact('domains', 'notifications'));
     }
 }

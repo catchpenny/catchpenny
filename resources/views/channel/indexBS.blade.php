@@ -34,12 +34,33 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="page-header">
-                    <h3> Channel Members </h3>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Users
+                    </div>
+                    <ul class="list-group">
+                        @foreach($channel->users as $user)
+                            <li class="list-group-item">
+                                 {{ $user->firstName . ' ' . $user->lastName}}
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                @foreach($channel->users as $user)
-                    <h4> {{ $user->firstName . ' ' . $user->lastName}} </h4>
-                @endforeach
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Notifications
+                    </div>
+                    <ul class="list-group">
+                        {{--@foreach($channel->users as $user)--}}
+                            {{--<li class="list-group-item">--}}
+                                {{--{{ $user->firstName . ' ' . $user->lastName}}--}}
+                            {{--</li>--}}
+                        {{--@endforeach--}}
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
