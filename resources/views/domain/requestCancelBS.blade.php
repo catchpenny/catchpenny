@@ -17,17 +17,28 @@
                 </div>
                 <div>
                     <h4>Join The Channel:</h4>
+                    @if($domainRequest)
                     Request Has Been Already Sent
-                    <form method="POST" action="{{ url('d/'.$domain->id. '/requestDestroy') }}">
-                        <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                             <div class="btn-group" role="group">
-                                @if($domain->privacy==0)
-                                    <button type="submit" class="btn btn-default">Cancel Request</button>
-                                @endif
+                                <a href="{{ url('d/'.$domain->id. '/request/'.$currentUser->id.'/cancel') }}"><button type="submit" class="btn btn-default">Cancel Request</button></a>
                             </div>
                         </div>
-                    </form>
+                    @endif
+                    @if($domainInvite)
+                        Domain Invitation
+                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ url('d/'.$domain->id. '/request/'.$currentUser->id.'/accept') }}"><button type="submit" class="btn btn-default">Confirm Invitation</button></a>
+                                </div>
+                            </div>
+                        <br><br>
+                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ url('d/'.$domain->id.'/invite/cancel') }}"><button type="submit" class="btn btn-default">Cancel Invitation</button></a>
+                                </div>
+                            </div>
+                    @endif
                 </div>
             </div>
             <div class="col-md-3">

@@ -32,10 +32,10 @@ Route::get('d/{did}/invite/accept', 'DomainController@inviteAccept');
 Route::get('d/{did}/invite/cancel', 'DomainController@inviteCancel');
 
 Route::get('d/{did}/request', 'DomainController@request');
-Route::post('d/{did}/request', 'DomainController@registerUser');
+Route::get('d/{did}/request/register', 'DomainController@registerRequest');
 Route::post('d/{did}/requestDestroy', 'DomainController@registerDestroy');
-Route::get('d/{did}/request/accept', 'DomainController@requestAccept');
-Route::get('d/{did}/request/Cancel', 'DomainController@requestCancel');
+Route::get('d/{did}/request/{uid}/accept', 'DomainController@requestAccept');
+Route::get('d/{did}/request/{uid}/cancel', 'DomainController@requestCancel');
 
 Route::get('d/{did}/settings/users', 'DomainController@editUsers');
 Route::post('d/{did}/settings/users', 'DomainController@editUsers');

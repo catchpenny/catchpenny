@@ -33,8 +33,8 @@ class Domain extends Model
         return $this->belongsToMany('App\User', 'domain_subscriptions', 'domainId', 'userId')->wherePivot('level',-1);
     }
 
-    public function usersRequests()
+    public function usersRequested()
     {
-        return $this->belongsToMany('App\User', 'domain_invitations', 'domainId', 'userId');
+        return $this->belongsToMany('App\User', 'domain_requests', 'domainId', 'userId');
     }
 }

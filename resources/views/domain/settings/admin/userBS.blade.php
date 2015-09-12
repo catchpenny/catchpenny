@@ -56,11 +56,11 @@
             Users Requests
         </div>
         <ul class="list-group">
-            {{--@foreach($domain->usersRequested as $user)--}}
-                {{--<li class="list-group-item">--}}
-                    {{--{{ $user->firstName . ' ' . $user->lastName}}--}}
-                {{--</li>--}}
-            {{--@endforeach--}}
+            @foreach($domain->usersRequested as $user)
+                <li class="list-group-item">
+                    {{ $user->firstName . ' ' . $user->lastName}}
+                </li>
+            @endforeach
         </ul>
     </div>
     <div class="panel panel-default">
@@ -68,11 +68,11 @@
             Users Blocked
         </div>
         <ul class="list-group">
-            {{--@foreach($domain->usersBlocked as $user)--}}
-                {{--<li class="list-group-item">--}}
-                    {{--{{ $user->firstName . ' ' . $user->lastName}}--}}
-                {{--</li>--}}
-            {{--@endforeach--}}
+            @foreach($domain->usersBlocked as $user)
+                <li class="list-group-item">
+                    {{ $user->firstName . ' ' . $user->lastName}}
+                </li>
+            @endforeach
         </ul>
     </div>
 

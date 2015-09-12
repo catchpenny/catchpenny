@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DomainSubscriptions;
 use App\Notifications;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -43,9 +44,15 @@ class NotificationController extends Controller
 
     public function cancel($nid)
     {
-        $notification = Notifications::where('forId', Auth::user()->id)->find($nid);
+        $notification = Notifications::find($nid);
 
         if($notification){
+
+            $user = Auth::user();
+
+            if($notification->forId == $user->id){
+
+            }elseif(DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->forId)->select('level')->first()===0)
             $notification->delete();
             return redirect($notification->cancel);
         }else{
@@ -55,7 +62,7 @@ class NotificationController extends Controller
 
     public function destroy($nid)
     {
-        $notification = Notifications::where('forId', Auth::user()->id)->find($nid);
+        $notification = Notifications::find($nid);
 
         if($notification){
             $notification->delete();
