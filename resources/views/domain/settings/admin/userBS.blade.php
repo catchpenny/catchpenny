@@ -75,6 +75,20 @@
             @endforeach
         </ul>
     </div>
+
+    <form method="POST" action="{{ url('d/'.$domain->id.'/ban') }}">
+        <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Ban User From Domain: </label>
+            <input type="text" class="form-control" id="name" name="username" placeholder="Username">
+        </div>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-default">Ban</button>
+            </div>
+        </div>
+    </form>
+    <br>
     <div class="panel panel-default">
         <div class="panel-heading">
             Users Blocked
@@ -83,7 +97,11 @@
             @foreach($domain->usersBlocked as $user)
                 <li class="list-group-item">
                     {{ $user->firstName . ' ' . $user->lastName}}
-                    <span class="pull-right">Remove</span>
+                    <span class="pull-right">
+                        <a href="{{ url('d/'.$domain->id.'/banremove/'.$user->id) }}">
+                            Remove
+                        </a>
+                    </span>
                 </li>
             @endforeach
         </ul>

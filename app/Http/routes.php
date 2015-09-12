@@ -32,6 +32,9 @@ Route::get('d/{did}/invite/accept', 'DomainController@inviteAccept');
 Route::get('d/{did}/invite/cancel', 'DomainController@inviteCancel');
 Route::get('d/{did}/invite/{uid}/destroy', 'DomainController@inviteDestroy');
 
+Route::post('d/{did}/ban', 'DomainController@ban');
+Route::get('d/{did}/banremove/{uid}', 'DomainController@banRemove');
+
 Route::get('d/{did}/request', 'DomainController@request');
 Route::get('d/{did}/request/register', 'DomainController@registerRequest');
 Route::post('d/{did}/requestDestroy', 'DomainController@registerDestroy');

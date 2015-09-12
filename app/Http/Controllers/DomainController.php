@@ -294,6 +294,84 @@ class DomainController extends Controller
         }
     }
 
+    public function ban($did, Request $request)
+    {
+        //delete user if already in domain
+        $input = $request->all();
+
+        $domain  = Domain::find($did);
+        if(!$domain) {
+            dd(404);
+        }
+
+        $userToBan = User::where('email', $input['username'])->first();
+
+        if(!$userToBan){
+            return redirect('d/'.$did.'/settings/users')->with('alert-danger', 'username does not exists');
+        }
+
+        if(DomainSubscriptions::where('domainId',$did)->where('userId',Auth::user()->id)->select('level')->first()->level==0){
+
+            $domainInvite  = domainInvitations::where('userId',$userToBan->id)->where('domainId',$did)->first();
+            $domainRequest = domainRequests::where('userId',$userToBan->id)->where('domainId',$did)->first();
+
+            if($domainInvite){
+                Notifications::where('deleteOnAction',$domainInvite->id)->delete();
+                $domainInvite->delete();
+            }
+            if($domainRequest){
+                DomainNotifications::where('deleteOnAction',$domainRequest->id)->delete();
+                $domainRequest->delete();
+            }
+
+            $domainSubscription = DomainSubscriptions::where('userId',$userToBan->id)->where('domainId',$did)->first();
+
+            if($domainSubscription){
+                // delete notification for user from this domain domain only
+                $channels = Channel::where('domainId',$did)->get();
+                foreach($channels as $channel) {
+                    ChannelSubscriptions::where('userId', $userToBan->id)->where('channelId', $channel->id)->delete();
+                }
+                DomainSubscriptions::where('userId',$userToBan->id)->where('domainId',$did)->update(['level' => -1]);
+
+            }else{
+                DomainSubscriptions::create([
+                    'userId' => $userToBan->id,
+                    'domainId' => $did,
+                    'level' => -1,
+                    'status' => -1
+                ]);
+            }
+
+            return redirect('d/'.$did.'/settings/users')->with('alert-success', 'User Was Added To Ban List');
+            }else{
+                dd(404);
+            }
+    }
+
+    public function banRemove($did, $uid)
+    {
+        $domain  = Domain::find($did);
+        if(!$domain) {
+            dd(404);
+        }
+
+        if(DomainSubscriptions::where('domainId',$did)->where('userId',Auth::user()->id)->select('level')->first()->level==0){
+
+            $level = DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->select('level')->first();
+            if($level)
+            {
+                if($level->level==-1){
+                    DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->delete();
+                    return redirect('d/'.$did.'/settings/users')->with('alert-success', 'User Removed From Ban List');
+                }
+            }
+
+        }else{
+            dd(404);
+        }
+    }
+
     public function notification($did)
     {
         $domain  = Domain::find($did);
