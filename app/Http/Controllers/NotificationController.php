@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index($nid)
     {
         $notification = Notifications::where('toId',Auth::user()->id)->find($nid);

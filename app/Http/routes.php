@@ -30,6 +30,7 @@ Route::post('domain/create', 'DomainController@store');
 Route::post('d/{did}/invite', 'DomainController@invite');
 Route::get('d/{did}/invite/accept', 'DomainController@inviteAccept');
 Route::get('d/{did}/invite/cancel', 'DomainController@inviteCancel');
+Route::get('d/{did}/invite/{uid}/destroy', 'DomainController@inviteDestroy');
 
 Route::get('d/{did}/request', 'DomainController@request');
 Route::get('d/{did}/request/register', 'DomainController@registerRequest');

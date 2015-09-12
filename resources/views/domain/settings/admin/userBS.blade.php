@@ -34,7 +34,12 @@
         <ul class="list-group">
             @foreach($domain->users as $user)
                 <li class="list-group-item">
-                    {{ $user->firstName . ' ' . $user->lastName}} <span class="pull-right">Settings</span>
+                    {{ $user->firstName . ' ' . $user->lastName}}
+                    <span class="pull-right">
+                        <a href="{{ url() }}">
+                            Settings
+                        </a>
+                    </span>
                 </li>
             @endforeach
         </ul>
@@ -47,6 +52,9 @@
             @foreach($domain->usersInvited as $user)
                 <li class="list-group-item">
                     {{ $user->firstName . ' ' . $user->lastName}}
+                    <span class="pull-right">
+                        <a href="{{ url('d/'.$domain->id.'/invite/'.$user->id.'/destroy') }}">Cancel</a>
+                    </span>
                 </li>
             @endforeach
         </ul>
@@ -59,6 +67,10 @@
             @foreach($domain->usersRequested as $user)
                 <li class="list-group-item">
                     {{ $user->firstName . ' ' . $user->lastName}}
+                    <span class="pull-right">
+                        <a href="{{ url('d/'.$domain->id.'/request/'.$user->id.'/accept') }}">Accept</a>
+                        <a href="{{ url('d/'.$domain->id.'/request/'.$user->id.'/cancel') }}">Cancel</a>
+                    </span>
                 </li>
             @endforeach
         </ul>
@@ -71,6 +83,7 @@
             @foreach($domain->usersBlocked as $user)
                 <li class="list-group-item">
                     {{ $user->firstName . ' ' . $user->lastName}}
+                    <span class="pull-right">Remove</span>
                 </li>
             @endforeach
         </ul>

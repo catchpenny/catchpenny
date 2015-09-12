@@ -271,7 +271,27 @@ class DomainController extends Controller
         }else{
             dd(404);
         }
+    }
 
+    public function inviteDestroy($did, $uid)
+    {
+        $domain  = Domain::find($did);
+        if(!$domain) {
+            dd(404);
+        }
+
+        if(DomainSubscriptions::where('domainId',$did)->where('userId',Auth::user()->id)->select('level')->first()->level==0){
+            $domainInvite = domainInvitations::where('userId',$uid)->where('domainId',$did)->first();
+            if($domainInvite){
+                Notifications::where('deleteOnAction',$domainInvite->id)->delete();
+                $domainInvite->delete();
+                return redirect('d/'.$did.'/settings/users')->with('alert-success', 'Invitation Canceled');
+            }else{
+                dd(404);
+            }
+        }else{
+            dd(404);
+        }
     }
 
     public function notification($did)
@@ -529,10 +549,5 @@ class DomainController extends Controller
             dd(404);
         }
     }
-
-
-
-
-
 
 }
