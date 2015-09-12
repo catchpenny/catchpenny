@@ -34,7 +34,7 @@
         <ul class="list-group">
             @foreach($domain->users as $user)
                 <li class="list-group-item">
-                    {{ $user->firstName . ' ' . $user->lastName}}
+                    {{ $user->firstName . ' ' . $user->lastName}} <span class="pull-right">Settings</span>
                 </li>
             @endforeach
         </ul>
