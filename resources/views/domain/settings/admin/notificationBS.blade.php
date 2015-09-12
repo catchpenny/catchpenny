@@ -15,19 +15,19 @@
                         {{--{{ $notification->read }}--}}
                         {{--{{ $notification->type }}--}}
                         @if($notification->url)
-                            <a href="{{ 'n/'.$notification->id }}">
+                            <a href="{{ 'dn/'.$notification->id }}">
                                 {{ $notification->data }}
                             </a>
                         @else
                             {{ $notification->data }}
                         @endif
                         <br>
-                        <a href=" {{ url('n/'.$notification->id.'/delete') }}">Delete</a>
+                        <a href=" {{ url('dn/'.$notification->id.'/delete') }}">Delete</a>
                         @if($notification->accept)
-                            <a href=" {{ url('n/'.$notification->id.'/accept') }}">Accept</a>
+                            <a href=" {{ url('dn/'.$notification->id.'/accept') }}">Accept</a>
                         @endif
                         @if($notification->cancel)
-                            <a href=" {{ url('n/'.$notification->id.'/cancel') }}">Cancel</a>
+                            <a href=" {{ url('dn/'.$notification->id.'/cancel') }}">Cancel</a>
                         @endif
                     </li>
                 @endforeach

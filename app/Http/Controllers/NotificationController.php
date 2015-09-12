@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DomainSubscriptions;
 use App\Notifications;
+use App\DomainNotifications;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -18,22 +19,12 @@ class NotificationController extends Controller
      */
     public function index($nid)
     {
-
-        $notification = Notifications::find($nid);
-        $user = Auth::user();
-
-        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->forId)->select('level')->first();
+        $notification = Notifications::where('toId',Auth::user()->id)->find($nid);
 
         if($notification){
-            if($notification->forId == $user->id){
                 $notification->read = 1;
                 $notification->save();
                 return redirect($notification->url);
-            }elseif($level->level==0) {
-                $notification->read = 1;
-                $notification->save();
-                return redirect($notification->url);
-            }
         }else{
             dd(404);
         }
@@ -41,59 +32,96 @@ class NotificationController extends Controller
 
     public function accept($nid)
     {
-        $notification = Notifications::find($nid);
-        $user = Auth::user();
-
-        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->forId)->select('level')->first();
+        $notification = Notifications::where('toId',Auth::user()->id)->find($nid);
 
         if($notification){
-            if($notification->forId == $user->id){
-                $notification->delete();
-                return redirect($notification->accept);
-            }elseif($level->level==0) {
-                $notification->delete();
-                return redirect($notification->accept);
-            }
-        }else{
+            $notification->delete();
+            return redirect($notification->accept);
+        }else {
             dd(404);
         }
     }
 
     public function cancel($nid)
     {
-        $notification = Notifications::find($nid);
-        $user = Auth::user();
-
-        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->forId)->select('level')->first();
+        $notification = Notifications::where('toId',Auth::user()->id)->find($nid);
 
         if($notification){
-            if($notification->forId == $user->id){
-                $notification->delete();
-                return redirect($notification->cancel);
-            }elseif($level->level==0) {
-                $notification->delete();
-                return redirect($notification->cancel);
-            }
-        }else{
+            $notification->delete();
+            return redirect($notification->cancel);
+        }else {
             dd(404);
         }
     }
 
     public function destroy($nid)
     {
-        $notification = Notifications::find($nid);
+        $notification = Notifications::where('toId',Auth::user()->id)->find($nid);
+        if($notification){
+            $notification->delete();
+            return redirect('home')->with('alert-success', 'Notification Deleted');
+        }else {
+            dd(404);
+        }
+    }
+
+    public function indexDomain($nid)
+    {
+
+        $notification = DomainNotifications::find($nid);
         $user = Auth::user();
 
-        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->forId)->select('level')->first();
+        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->toId)->select('level')->first();
 
-        if($notification){
-            if($notification->forId == $user->id){
-                $notification->delete();
-                return redirect('home')->with('alert-success', 'Notification Deleted');
-            }elseif($level->level==0) {
-                $notification->delete();
-                return redirect('d/'.$notification->forId.'/settings/notifications')->with('alert-success', 'Notification Deleted');
-            }
+        if($notification && $level->level==0){
+            $notification->read = 1;
+            $notification->save();
+            return redirect($notification->url);
+        }else{
+            dd(404);
+        }
+    }
+
+    public function acceptDomain($nid)
+    {
+        $notification = DomainNotifications::find($nid);
+        $user = Auth::user();
+
+        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->toId)->select('level')->first();
+
+        if($notification && $level->level==0){
+            $notification->delete();
+            return redirect($notification->accept);
+        }else{
+            dd(404);
+        }
+    }
+
+    public function cancelDomain($nid)
+    {
+        $notification = DomainNotifications::find($nid);
+        $user = Auth::user();
+
+        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->toId)->select('level')->first();
+
+        if($notification && $level->level==0){
+            $notification->delete();
+            return redirect($notification->cancel);
+        }else{
+            dd(404);
+        }
+    }
+
+    public function destroyDomain($nid)
+    {
+        $notification = DomainNotifications::find($nid);
+        $user = Auth::user();
+
+        $level = DomainSubscriptions::where('userId',$user->id)->where('domainId',$notification->toId)->select('level')->first();
+
+        if($notification && $level->level==0){
+            $notification->delete();
+            return redirect('d/'.$notification->toId.'/settings/notifications')->with('alert-success', 'Notification Deleted');
         }else{
             dd(404);
         }

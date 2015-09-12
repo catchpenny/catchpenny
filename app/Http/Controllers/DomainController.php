@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications;
 use App\DomainInvitations;
 use App\DomainRequests;
+use App\DomainNotifications;
 
 class DomainController extends Controller
 {
@@ -122,7 +123,7 @@ class DomainController extends Controller
     }
 
     public function destroy($did, Request $request)
-    {   // destroy completely only if domain is empty
+    {
         // check if no admins present
         $domain  = Domain::find($did);
         if(!$domain) {
@@ -132,13 +133,22 @@ class DomainController extends Controller
         $userId  = Auth::user()->id;
         DomainSubscriptions::where('userId', $userId)->where('domainId', $did)->delete();
         $channels = Channel::where('domainId',$did)->get();
-        foreach($channels as $channel){
-            ChannelSubscriptions::where('userId', $userId)->where('channelId', $channel->id)->delete();
-        }
+
 
 
         if(!DomainSubscriptions::where('domainId', $domain->id)->first()){
             Domain::where('id',$did)->delete();
+            foreach($channels as $channel){
+                ChannelSubscriptions::where('userId', $userId)->where('channelId', $channel->id)->delete();
+            }
+        }else{
+            $admins = DomainSubscriptions::where('domainId', $domain->id)->where('level', 0)->first();
+            if(!$admins){
+                Domain::where('id',$did)->delete();
+                foreach($channels as $channel){
+                    ChannelSubscriptions::where('userId', $userId)->where('channelId', $channel->id)->delete();
+                }
+            }
         }
 
         $request->session()->flash('alert-success', 'Domain left');
@@ -168,7 +178,7 @@ class DomainController extends Controller
         //test this....if request exist add user automatically
         $domainRequest = domainRequests::where('userId',$userInvited->id)->where('domainId',$did)->first();
         if($domainRequest){
-            Notifications::where('forId',$domain->id)->where('fromId',$userInvited->id)->delete();
+            DomainNotifications::where('toId',$domain->id)->where('fromId',$userInvited->id)->delete();
             $domainRequest->delete();
 
             DomainSubscriptions::create([
@@ -203,8 +213,9 @@ class DomainController extends Controller
 
             Notifications::create([
                 'data' =>$user->firstName.' '.$user->lastName.' has invited to join '.$domain->name,
-                'forId'   => $userInvited->id,
-                'fromId'  => $domainInvite->id,
+                'toId'   => $userInvited->id,
+                'deleteOnAction'=> $domainInvite->id,
+                'fromId'  => $domain->id,
                 'url'  => 'd/'.$domain->id.'/join',
                 'accept'=>'d/'.$domain->id.'/invite/accept',
                 'cancel'=>'d/'.$domain->id.'/invite/cancel'
@@ -223,7 +234,7 @@ class DomainController extends Controller
         $user = Auth::user();
         $domainInvite = domainInvitations::where('userId',$user->id)->where('domainId',$did)->first();
         if($domainInvite){
-            Notifications::where('fromId',$domainInvite->id)->delete();
+            Notifications::where('deleteOnAction',$domainInvite->id)->delete();
             $domainInvite->delete();
 
             DomainSubscriptions::create([
@@ -254,7 +265,7 @@ class DomainController extends Controller
         $user = Auth::user();
         $domainInvite = domainInvitations::where('userId',$user->id)->where('domainId',$did)->first();
         if($domainInvite){
-            Notifications::where('fromId',$domainInvite->id)->delete();
+            Notifications::where('deleteOnAction',$domainInvite->id)->delete();
             $domainInvite->delete();
             return redirect('home')->with('alert-success', 'Invitation Canceled');
         }else{
@@ -269,7 +280,7 @@ class DomainController extends Controller
         if(!$domain) {
             dd(404);
         }
-        $notifications = Notifications::where('forId',$did)->get();
+        $notifications = DomainNotifications::where('toId',$did)->get();
         return view('domain.settings.admin.notificationBS', compact('domain', 'notifications'));
     }
 
@@ -286,7 +297,7 @@ class DomainController extends Controller
         //test this..if invite exists just add the user
         $domainInvite = domainInvitations::where('userId',$user->id)->where('domainId',$did)->first();
         if($domainInvite){
-            Notifications::where('fromId',$domainInvite->id)->delete();
+            Notifications::where('deleteOnAction',$domainInvite->id)->delete();
             $domainInvite->delete();
 
             DomainSubscriptions::create([
@@ -338,10 +349,11 @@ class DomainController extends Controller
                     'userId'   => $user->id
                 ]);
 
-                Notifications::create([
+                DomainNotifications::create([
                     'data' =>$user->firstName.' '.$user->lastName.' has requested to join '.$domain->name,
                     'fromId'   => $user->id,
-                    'forId'  => $domain->id,
+                    'toId'  => $domain->id,
+                    'deleteOnAction' => $domainRequest->id,
                     'url'  => 'user/'.$user->id,
                     'accept'=>'d/'.$domain->id.'/request/'.$user->id.'/accept',
                     'cancel'=>'d/'.$domain->id.'/request/'.$user->id.'/cancel'
@@ -394,7 +406,7 @@ class DomainController extends Controller
         $user = Auth::user();
         $domainRequest = domainRequests::where('userId',$uid)->where('domainId',$did)->first();
         if($domainRequest){
-            Notifications::where('fromId',$uid)->where('forId',$domain->id)->delete();
+            DomainNotifications::where('deleteOnAction',$domainRequest->id)->delete();
             $domainRequest->delete();
 
             DomainSubscriptions::create([
@@ -426,7 +438,7 @@ class DomainController extends Controller
         $domainRequest = DomainRequests::where('userId',$uid)->where('domainId',$did)->first();
 
         if($domainRequest){
-            Notifications::where('forId',$domain->id)->where('fromId',$uid)->delete();
+            DomainNotifications::where('deleteOnAction',$domainRequest->id)->delete();
             $domainRequest->delete();
             if($uid==Auth::user()->id){
                 return redirect('d/'.$domain->id.'/request')->with('alert-success', 'Request Canceled');

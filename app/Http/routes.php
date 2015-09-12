@@ -59,6 +59,10 @@ Route::get('n/{nid}','NotificationController@index');
 Route::get('n/{nid}/accept','NotificationController@accept');
 Route::get('n/{nid}/cancel','NotificationController@cancel');
 Route::get('n/{nid}/delete','NotificationController@destroy');
+Route::get('dn/{nid}','NotificationController@indexDomain');
+Route::get('dn/{nid}/accept','NotificationController@acceptDomain');
+Route::get('dn/{nid}/cancel','NotificationController@cancelDomain');
+Route::get('dn/{nid}/delete','NotificationController@destroyDomain');
 
 
 // Login routes...

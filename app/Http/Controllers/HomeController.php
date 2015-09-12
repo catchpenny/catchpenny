@@ -31,7 +31,7 @@ class HomeController extends Controller
             array_push($domains, Domain::where('id', $domainId['domainId'])->first());
         }
 
-        $notifications = Notifications::where('forId',$user->id)->get();
+        $notifications = Notifications::where('toId',$user->id)->get();
 
         return view('home.homeBS', compact('domains', 'notifications'));
     }

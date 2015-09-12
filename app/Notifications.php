@@ -10,7 +10,8 @@ class Notifications extends Model
 
     protected $fillable = [
         'fromId',
-        'forId',
+        'toId',
+        'deleteOnAction',
         'data',
         'url',
         'read',
