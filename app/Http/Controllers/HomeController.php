@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $user =  Auth::user();
         $domains = array();
-        $domainSubscribed = DomainSubscriptions::where('userId', $user->id)->get();
+        $domainSubscribed = DomainSubscriptions::where('userId', $user->id)->where('level','!=','-1')->get();
 
         foreach ($domainSubscribed as $domainId) {
             array_push($domains, Domain::where('id', $domainId['domainId'])->first());

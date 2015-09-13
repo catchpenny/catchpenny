@@ -34,18 +34,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     // Mutators
-    public function setFirstNameAttribute($value)
+    public function setfirstNameAttribute($value)
     {
-        return ucfirst($value);
+        $this->attributes['firstName'] = ucfirst($value);
     }
 
-    public function setLastNameAttribute($value)
+    public function setlastNameAttribute($value)
     {
-        return ucfirst($value);
+        $this->attributes['lastName'] = ucfirst($value);
     }
 
-    public function setGenderAttribute($value)
+    public function setgenderAttribute($value)
     {
-        return ucfirst($value);
+        $this->attributes['gender'] = ucfirst($value);
     }
 }

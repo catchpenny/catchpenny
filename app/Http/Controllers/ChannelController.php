@@ -35,7 +35,7 @@ class ChannelController extends Controller
             dd(404);
         }
 
-        if(!DomainSubscriptions::where('domainId',$did)->where('userId', Auth::user()->id)->first())
+        if(!DomainSubscriptions::where('domainId',$did)->where('userId', Auth::user()->id)->where('level','!=','-1')->first())
         {
            if($domain->privacy!=2){
                return redirect('/d/'.$domain->id.'/request');

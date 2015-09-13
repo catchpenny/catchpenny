@@ -29,7 +29,7 @@
                         Domain Invitation
                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                 <div class="btn-group" role="group">
-                                    <a href="{{ url('d/'.$domain->id. '/request/'.$currentUser->id.'/accept') }}"><button type="submit" class="btn btn-default">Confirm Invitation</button></a>
+                                    <a href="{{ url('d/'.$domain->id. '/invite/accept') }}"><button type="submit" class="btn btn-default">Confirm Invitation</button></a>
                                 </div>
                             </div>
                         <br><br>
