@@ -29,6 +29,26 @@
     <br><br>
     <div class="panel panel-default">
         <div class="panel-heading">
+            Moderators
+        </div>
+        <ul class="list-group">
+            @foreach($domain->moderators as $user)
+                <li class="list-group-item">
+                    {{ $user->firstName . ' ' . $user->lastName}}
+                    <span class="pull-right">
+                        @if($user->id != $currentUser->id)
+                            <a href="{{ url('d/'.$domain->id.'/settings/user/'.$user->id) }}">
+                                Settings
+                            </a>
+                        @endif
+                    </span>
+
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
             Active Users
         </div>
         <ul class="list-group">
@@ -36,10 +56,15 @@
                 <li class="list-group-item">
                     {{ $user->firstName . ' ' . $user->lastName}}
                     <span class="pull-right">
-                        <a href="{{ url() }}">
+                        @if($domain->created_by != $user->id)
+                        <a href="{{ url('d/'.$domain->id.'/settings/user/'.$user->id) }}">
                             Settings
                         </a>
+                        @else
+                            Administrator
+                        @endif
                     </span>
+
                 </li>
             @endforeach
         </ul>

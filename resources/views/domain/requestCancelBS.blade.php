@@ -35,7 +35,7 @@
                         <br><br>
                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                 <div class="btn-group" role="group">
-                                    <a href="{{ url('d/'.$domain->id.'/invite/cancel') }}"><button type="submit" class="btn btn-default">Cancel Invitation</button></a>
+                                    <a href="{{ url('d/'.$domain->id.'/invite/'.$currentUser->id.'/destroy') }}"><button type="submit" class="btn btn-default">Cancel Invitation</button></a>
                                 </div>
                             </div>
                     @endif

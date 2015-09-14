@@ -18,18 +18,12 @@ Route::get('/', function () {
 Route::get('home','HomeController@index');
 Route::get('settings','SettingsController@index');
 
-//Domains Related Routes
-/*
- *
- */
-
 //Domains
 Route::get('domain/create', 'DomainController@create');
 Route::post('domain/create', 'DomainController@store');
 
 Route::post('d/{did}/invite', 'DomainController@invite');
 Route::get('d/{did}/invite/accept', 'DomainController@inviteAccept');
-Route::get('d/{did}/invite/cancel', 'DomainController@inviteCancel');
 Route::get('d/{did}/invite/{uid}/destroy', 'DomainController@inviteDestroy');
 
 Route::post('d/{did}/ban', 'DomainController@ban');
@@ -41,8 +35,9 @@ Route::post('d/{did}/requestDestroy', 'DomainController@registerDestroy');
 Route::get('d/{did}/request/{uid}/accept', 'DomainController@requestAccept');
 Route::get('d/{did}/request/{uid}/cancel', 'DomainController@requestCancel');
 
-Route::get('d/{did}/settings/users', 'DomainController@editUsers');
-Route::post('d/{did}/settings/users', 'DomainController@editUsers');
+Route::get('d/{did}/settings/user/{uid}', 'DomainController@editUser');
+Route::post('d/{did}/settings/user/{uid}', 'DomainController@updateUser');
+Route::get('d/{did}/settings/users', 'DomainController@users');
 Route::get('d/{did}/settings/channels', 'DomainController@editChannels');
 Route::get('d/{did}/settings/notifications', 'DomainController@notification');
 Route::get('d/{did}/settings', 'DomainController@edit');

@@ -87,8 +87,8 @@ class DomainController extends Controller
 
         $userId  = Auth::user()->id;
         $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
-        if($level){
-                if($level->level==0){
+        if($level && $level->level!= -1){
+                if($level->level==0 || $level->level == 1){
                     return view('domain.settings.admin.generalBS', compact('domain','channel'));
                 }else{
                     return view('domain.settings.generalBS', compact('domain'));
@@ -107,49 +107,46 @@ class DomainController extends Controller
 
         $userId  = Auth::user()->id;
         $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
-        if($level){
-            if($level->level==0){
+        if($level && ($level->level==0 || $level->level == 1)){
                 $input = $request->all();
                 Domain::where('id',$did)->update(['name' => $input['name'], 'description' => $input['description'], 'privacy' => $input['privacy']]);
                 $request->session()->flash('alert-success', 'Domain successfully updated!!');
                 return redirect('d/'.$did.'/settings');
-            }else{
-                $request->session()->flash('alert-success', 'Domain successfully updated!!');
-                return redirect('d/'.$did.'/settings');
-            }
-        } else{
-            dd(404);
         }
+        dd(404);
     }
 
     public function destroy($did, Request $request)
     {
-        // no admins present condition
+        // check if admin is quiting then delete domain
         $domain  = Domain::find($did);
         if(!$domain) {
             dd(404);
         }
 
         $userId  = Auth::user()->id;
-        DomainSubscriptions::where('userId', $userId)->where('domainId', $did)->delete();
-        $channels = Channel::where('domainId',$did)->get();
-        foreach($channels as $channel){
-            ChannelSubscriptions::where('userId', $userId)->where('channelId', $channel->id)->delete();
-        }
+        $domainSubscription = DomainSubscriptions::where('userId', $userId)->where('domainId', $did)->first();
+        if($domainSubscription){
 
+            $channels = Channel::where('domainId',$did)->get();
 
-        if(!DomainSubscriptions::where('domainId', $domain->id)->first()){
-            Domain::where('id',$did)->delete();
-
-        }else{
-            $admins = DomainSubscriptions::where('domainId', $domain->id)->where('level', 0)->first();
-            if(!$admins){
+            if($domainSubscription->level==0){
+                foreach($channels as $channel){
+                    ChannelSubscriptions::where('channelId', $channel->id)->delete();
+                }
                 Domain::where('id',$did)->delete();
-            }
-        }
+                $request->session()->flash('alert-success', 'Domain deleted');
 
-        $request->session()->flash('alert-success', 'Domain left');
-        return redirect('home');
+            }elseif($domainSubscription->level==1||$domainSubscription->level==2){
+                DomainSubscriptions::where('userId', $userId)->where('domainId', $did)->delete();
+                foreach($channels as $channel){
+                    ChannelSubscriptions::where('userId', $userId)->where('channelId', $channel->id)->delete();
+                }
+                $request->session()->flash('alert-success', 'Domain left');
+            }
+            return redirect('home');
+        }
+        dd(404);
     }
 
     public function invite($did, Request $request)
@@ -162,71 +159,77 @@ class DomainController extends Controller
             dd(404);
         }
         $user = Auth::user();
-        $userInvited = User::where('email', $input['username'])->first();
 
-        if(!$userInvited){
-            return redirect('d/'.$did.'/settings/users')->with('alert-danger', 'username does not exists');
-        }
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && ($level->level==0 || $level->level == 1)){
 
-        $domainRequest = domainRequests::where('userId',$userInvited->id)->where('domainId',$did)->first();
-        if($domainRequest){
-            DomainNotifications::where('toId',$domain->id)
-                                ->where('fromId',$userInvited->id)
-                                ->where('type',0)
-                                ->where('deleteOnAction',$domainRequest->id)->delete();
-            $domainRequest->delete();
+            $userInvited = User::where('email', $input['username'])->first();
 
-            DomainSubscriptions::create([
-                'userId'   => $userInvited->id,
-                'domainId' => $domain->id,
-                'level'    => 1,
-                'status'   => 1
-            ]);
-
-            ChannelSubscriptions::create([
-                'userId'        => $userInvited->id,
-                'channelId'     => $domain->generalId,
-                'lastRead'      => Carbon::now()
-            ]);
-
-            return redirect('d/'.$domain->id.'/settings/users')->with('alert-success', 'User Joined Successful');
-        }
-
-        if(DomainInvitations::where('userId',$userInvited->id)->where('domainId',$did)->first()){
-            return redirect('d/'.$did.'/settings/users')->with('alert-warning', 'username already invited');
-        }
-
-        $level = DomainSubscriptions::where('userId',$userInvited->id)->where('domainId',$did)->select('level')->first();
-
-        if($level){
-
-            if($level->level==-1){
-                return redirect('d/'.$did.'/settings/users')->with('alert-warning', 'user is banned. to invite remove user from ban list');
-
+            if (!$userInvited) {
+                return redirect('d/' . $did . '/settings/users')->with('alert-danger', 'username does not exists');
             }
-            else {
-                return redirect('d/' . $did . '/settings/users')->with('alert-warning', 'username already present');
+
+            $domainRequest = domainRequests::where('userId', $userInvited->id)->where('domainId', $did)->first();
+            if ($domainRequest) {
+                DomainNotifications::where('toId', $domain->id)
+                    ->where('fromId', $userInvited->id)
+                    ->where('type', 0)
+                    ->where('deleteOnAction', $domainRequest->id)->delete();
+                $domainRequest->delete();
+
+                DomainSubscriptio([
+                    'userId' => $userInvited->id,
+                    'domainId' => $domain->id,
+                    'level' => 2,
+                    'status' => 1
+                ]);
+
+                ChannelSubscriptions::create([
+                    'userId' => $userInvited->id,
+                    'channelId' => $domain->generalId,
+                    'lastRead' => Carbon::now()
+                ]);
+
+                return redirect('d/' . $domain->id . '/settings/users')->with('alert-success', 'User Joined Successful');
             }
-        } else{
 
-            $domainInvite = DomainInvitations::create([
-                'domainId' => $domain->id,
-                'userId'   => $userInvited->id
-            ]);
+            if (DomainInvitations::where('userId', $userInvited->id)->where('domainId', $did)->first()) {
+                return redirect('d/' . $did . '/settings/users')->with('alert-warning', 'username already invited');
+            }
 
-            Notifications::create([
-                'data' =>$user->firstName.' '.$user->lastName.' has invited to join '.$domain->name,
-                'toId'   => $userInvited->id,
-                'deleteOnAction'=> $domainInvite->id,
-                'fromId'  => $domain->id,
-                'type'   =>1,
-                'url'  => 'd/'.$domain->id.'/join',
-                'accept'=>'d/'.$domain->id.'/invite/accept',
-                'cancel'=>'d/'.$domain->id.'/invite/cancel'
-            ]);
+            $level = DomainSubscriptions::where('userId', $userInvited->id)->where('domainId', $did)->select('level')->first();
 
-            return redirect('d/'.$did.'/settings/users')->with('alert-success', 'Request Sent');
+            if ($level) {
+
+                if ($level->level == -1) {
+                    return redirect('d/' . $did . '/settings/users')->with('alert-warning', 'user is banned. to invite remove user from ban list');
+
+                } else {
+                    return redirect('d/' . $did . '/settings/users')->with('alert-warning', 'username already present');
+                }
+            } else {
+
+                $domainInvite = DomainInvitations::create([
+                    'domainId' => $domain->id,
+                    'userId' => $userInvited->id
+                ]);
+
+                Notifications::create([
+                    'data' => $user->firstName . ' ' . $user->lastName . ' has invited to join ' . $domain->name,
+                    'toId' => $userInvited->id,
+                    'deleteOnAction' => $domainInvite->id,
+                    'fromId' => $domain->id,
+                    'type' => 1,
+                    'url' => 'd/' . $domain->id . '/join',
+                    'accept' => 'd/' . $domain->id . '/invite/accept',
+                    'cancel' => 'd/' . $domain->id . '/invite/cancel'
+                ]);
+
+                return redirect('d/' . $did . '/settings/users')->with('alert-success', 'Request Sent');
+            }
         }
+        dd(404);
     }
 
     public function inviteAccept($did)
@@ -248,7 +251,7 @@ class DomainController extends Controller
             DomainSubscriptions::create([
                 'userId'   => $user->id,
                 'domainId' => $domain->id,
-                'level'    => 1,
+                'level'    => 2,
                 'status'   => 1
             ]);
 
@@ -259,29 +262,8 @@ class DomainController extends Controller
             ]);
 
             return redirect('d/'.$domain->id.'/c/'.$domain->generalId)->with('alert-success', 'Join Successful');
-        }else{
-            dd(404);
         }
-    }
-
-    public function inviteCancel($did)
-    {
-        $domain  = Domain::find($did);
-        if(!$domain) {
-            dd(404);
-        }
-        $user = Auth::user();
-        $domainInvite = domainInvitations::where('userId',$user->id)->where('domainId',$did)->first();
-        if($domainInvite){
-            Notifications::where('fromId',$domain->id)
-                            ->where('toId',$user->id)
-                            ->where('type',1)
-                            ->where('deleteOnAction',$domainInvite->id)->delete();
-            $domainInvite->delete();
-            return redirect('home')->with('alert-success', 'Invitation Canceled');
-        }else{
-            dd(404);
-        }
+        dd(404);
     }
 
     public function inviteDestroy($did, $uid)
@@ -291,26 +273,30 @@ class DomainController extends Controller
             dd(404);
         }
 
-        if(DomainSubscriptions::where('domainId',$did)->where('userId',Auth::user()->id)->select('level')->first()->level==0){
-            $domainInvite = domainInvitations::where('userId',$uid)->where('domainId',$did)->first();
-            if($domainInvite){
-                Notifications::where('fromId',$did)
-                                ->where('toId',$uid)
-                                ->where('type',1)
-                                ->where('deleteOnAction',$domainInvite->id)->delete();
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if(($level && ($level->level==0 || $level->level == 1))||($uid==$userId)) {
+            $domainInvite = domainInvitations::where('userId', $uid)->where('domainId', $did)->first();
+            if ($domainInvite) {
+                Notifications::where('fromId', $did)
+                    ->where('toId', $uid)
+                    ->where('type', 1)
+                    ->where('deleteOnAction', $domainInvite->id)->delete();
                 $domainInvite->delete();
-                return redirect('d/'.$did.'/settings/users')->with('alert-success', 'Invitation Canceled');
-            }else{
-                dd(404);
+                if ($userId == $uid) {
+                    return redirect('home')->with('alert-success', 'Invitation Canceled');
+                }
+                return redirect('d/' . $did . '/settings/users')->with('alert-success', 'Invitation Canceled');
             }
-        }else{
-            dd(404);
         }
+        dd(404);
+
     }
 
     public function ban($did, Request $request)
     {
         //validate
+        // check if user to ban is admin
         $input = $request->all();
 
         $domain  = Domain::find($did);
@@ -324,7 +310,15 @@ class DomainController extends Controller
             return redirect('d/'.$did.'/settings/users')->with('alert-danger', 'username does not exists');
         }
 
-        if(DomainSubscriptions::where('domainId',$did)->where('userId',Auth::user()->id)->select('level')->first()->level==0){
+        if(DomainSubscriptions::where('userId',$userToBan->id)->where('domainId',$did)->select('level')->first()){
+            if(DomainSubscriptions::where('userId',$userToBan->id)->where('domainId',$did)->select('level')->first()->level==0) {
+                dd(404);
+            }
+        }
+
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && ($level->level==0 || $level->level == 1)) {
 
             domainInvitations::where('userId',$userToBan->id)->where('domainId',$did)->delete();
             domainRequests::where('userId',$userToBan->id)->where('domainId',$did)->delete();
@@ -359,9 +353,8 @@ class DomainController extends Controller
                 return redirect('d/'.$did.'/settings/users')->with('alert-success', 'User Was Added To Ban List');
             }
 
-        }else{
-            dd(404);
         }
+        dd(404);
     }
 
     public function banRemove($did, $uid)
@@ -370,21 +363,20 @@ class DomainController extends Controller
         if(!$domain) {
             dd(404);
         }
-
-        if(DomainSubscriptions::where('domainId',$did)->where('userId',Auth::user()->id)->select('level')->first()->level==0){
-
-            $level = DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->select('level')->first();
-            if($level)
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && ($level->level==0 || $level->level == 1)) {
+            $banRemoveLevel = DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->select('level')->first();
+            if($banRemoveLevel)
             {
-                if($level->level==-1){
+                if($banRemoveLevel->level==-1){
                     DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->delete();
                     return redirect('d/'.$did.'/settings/users')->with('alert-success', 'User Removed From Ban List');
                 }
             }
 
-        }else{
-            dd(404);
         }
+        dd(404);
     }
 
     public function notification($did)
@@ -416,7 +408,7 @@ class DomainController extends Controller
             DomainSubscriptions::create([
                 'userId'   => $user->id,
                 'domainId' => $domain->id,
-                'level'    => 1,
+                'level'    => 2,
                 'status'   => 1
             ]);
 
@@ -450,7 +442,7 @@ class DomainController extends Controller
                 DomainSubscriptions::create([
                     'userId'   => $user->id,
                     'domainId' => $domain->id,
-                    'level'    => 1,
+                    'level'    => 2,
                     'status'   => 1
                 ]);
 
@@ -498,7 +490,6 @@ class DomainController extends Controller
         $domainInvite = domainInvitations::where('userId',$user->id)->where('domainId',$did)->first();
         $domainRequest = DomainRequests::where('userId',$user->id)->where('domainId',$did)->first();
         if($domainInvite || $domainRequest){
-            // ask user for conformation// show option to cancel request
             return view('domain.requestCancelBS',compact('domain','domainRequest','domainInvite'));
         }
 
@@ -523,37 +514,40 @@ class DomainController extends Controller
 
     public function requestAccept($did, $uid)
     {
-        // check if admin
         $domain  = Domain::find($did);
         if(!$domain) {
             dd(404);
         }
-        $user = Auth::user();
-        $domainRequest = domainRequests::where('userId',$uid)->where('domainId',$did)->first();
-        if($domainRequest){
-            DomainNotifications::where('fromId',$uid)
-                                ->where('toId',$did)
-                                ->where('type',0)
-                                ->where('deleteOnAction',$domainRequest->id)->delete();
-            $domainRequest->delete();
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && ($level->level==0 || $level->level == 1)) {
 
-            DomainSubscriptions::create([
-                'userId'   => $uid,
-                'domainId' => $domain->id,
-                'level'    => 1,
-                'status'   => 1
-            ]);
+            $domainRequest = domainRequests::where('userId',$uid)->where('domainId',$did)->first();
+            if($domainRequest){
+                DomainNotifications::where('fromId',$uid)
+                    ->where('toId',$did)
+                    ->where('type',0)
+                    ->where('deleteOnAction',$domainRequest->id)->delete();
+                $domainRequest->delete();
 
-            ChannelSubscriptions::create([
-                'userId'        => $uid,
-                'channelId'     => $domain->generalId,
-                'lastRead'      => Carbon::now()
-            ]);
+                DomainSubscriptions::create([
+                    'userId'   => $uid,
+                    'domainId' => $domain->id,
+                    'level'    => 2,
+                    'status'   => 1
+                ]);
 
-            return redirect('d/'.$domain->id.'/settings/users/')->with('alert-success', 'User Added Successfully');
-        }else{
-            dd(404);
+                ChannelSubscriptions::create([
+                    'userId'        => $uid,
+                    'channelId'     => $domain->generalId,
+                    'lastRead'      => Carbon::now()
+                ]);
+
+                return redirect('d/'.$domain->id.'/settings/users/')->with('alert-success', 'User Added Successfully');
+
+            }
         }
+        dd(404);
     }
 
     public function requestCancel($did, $uid)
@@ -565,43 +559,31 @@ class DomainController extends Controller
 
         $domainRequest = DomainRequests::where('userId',$uid)->where('domainId',$did)->first();
 
-        if($domainRequest){
-            DomainNotifications::where('fromId',$uid)
-                                ->where('toId',$did)
-                                ->where('type',0)
-                                ->where('deleteOnAction',$domainRequest->id)->delete();
-            $domainRequest->delete();
-            if($uid==Auth::user()->id){
-                return redirect('d/'.$domain->id.'/request')->with('alert-success', 'Request Canceled');
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if(($level && ($level->level==0 || $level->level == 1))||$userId == $uid) {
+            if($domainRequest){
+                DomainNotifications::where('fromId',$uid)
+                    ->where('toId',$did)
+                    ->where('type',0)
+                    ->where('deleteOnAction',$domainRequest->id)->delete();
+                $domainRequest->delete();
+                if($uid==Auth::user()->id){
+                    return redirect('d/'.$domain->id.'/request')->with('alert-success', 'Request Canceled');
+                }
+                return redirect('d/'.$domain->id.'/settings/users')->with('alert-success', 'Request Canceled');
+
             }
-            return redirect('d/'.$domain->id.'/settings/users')->with('alert-success', 'Request Canceled');
-
-        }else{
-            dd(404);
         }
-
+        dd(404);
     }
 
-    public function editUsers($did)
+    public function users($did)
     {
-        /*
-         * Funtions for admin
-         * add user
-         * delete user or ban then
-         * unban them
-         * send invites
-         * accept requests
-         * make admins
-         */
-        /*
-         * leave domain
-         * create channel
-         * manage notification
-         */
         $domain  = Domain::find($did);
         $userId  = Auth::user()->id;
         $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
-        if($level && $level->level==0){
+        if($level && ($level->level==0 || $level->level == 1)){
             $channels = Channel::where('domainId', $did)->get();
             return view('domain.settings.admin.userBS', compact('domain', 'channels'));
         } else{
@@ -609,18 +591,45 @@ class DomainController extends Controller
         }
     }
 
-    public function updateUsers($did, CreateDomainRequest $request)
+    public function editUser($did, $uid)
     {
+        $domain  = Domain::find($did);
+        if(!$domain){
+            dd(404);
+        }
         $userId  = Auth::user()->id;
         $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
         if($level && $level->level==0){
-            $input = $request->all();
-            Domain::where('id',$did)->update(['name' => $input['name'], 'description' => $input['description'], 'privacy' => $input['privacy']]);
-            $request->session()->flash('alert-success', 'Domain successfully updated!!');
-            return redirect('d/'.$did.'/settings');
-        } else{
+            $levelUserToEdit = DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->select('level')->first();
+            if($levelUserToEdit && $levelUserToEdit->level>0){
+                $user  = User::find($uid);
+                return view('domain.settings.admin.editUserBS', compact('domain','user'));
+            }
+        }
+        dd(404);
+    }
+
+    public function updateUser($did, $uid)
+    {
+        //validate
+        $domain  = Domain::find($did);
+        if(!$domain){
             dd(404);
         }
+        $userId  = Auth::user()->id;
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && ($level->level==0 || $level->level == 1)){
+            $levelUserToEdit = DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->select('level')->first();
+            if($levelUserToEdit && $levelUserToEdit->level>0){
+                if($levelUserToEdit->level == 1){
+                    DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->update(['level' => 2]);
+                }else{
+                    DomainSubscriptions::where('userId',$uid)->where('domainId',$did)->update(['level' => 1]);
+                }
+                return redirect('d/'.$domain->id.'/settings/user/'.$uid);
+            }
+        }
+        dd(404);
     }
 
     public function editChannels($did)

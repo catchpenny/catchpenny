@@ -20,7 +20,12 @@ class Domain extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'domain_subscriptions', 'domainId', 'userId')->wherePivot('level','!=',-1);
+        return $this->belongsToMany('App\User', 'domain_subscriptions', 'domainId', 'userId')->wherePivot('level',2);
+    }
+
+    public function moderators()
+    {
+        return $this->belongsToMany('App\User', 'domain_subscriptions', 'domainId', 'userId')->wherePivot('level',1);
     }
 
     public function usersInvited()

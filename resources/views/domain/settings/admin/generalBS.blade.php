@@ -54,13 +54,21 @@
                     </div>
                 </form>
                 <br>
+
                 <form method="POST" action="{{ url('d/'.$domain->id.'/destroy') }}">
                     <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="btn-group btn-group-justified" role="group" aria-label="...">
                         <div class="btn-group" role="group">
-                            <button type="submit" class="btn btn-default">Leave Domain</button>
+                            <button type="submit" class="btn btn-default">
+                                @if($currentUser->id == $domain->created_by)
+                                    Delete Domain
+                                @else
+                                    Leave Domain
+                                @endif
+                            </button>
                         </div>
                     </div>
                 </form>
+
 
 @endsection
