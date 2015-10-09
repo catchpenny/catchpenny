@@ -16,6 +16,7 @@ use App\Notifications;
 use App\DomainInvitations;
 use App\DomainRequests;
 use App\DomainNotifications;
+use Validator;
 
 class DomainController extends Controller
 {
@@ -632,19 +633,13 @@ class DomainController extends Controller
         dd(404);
     }
 
-    public function editChannels($did)
+    public function channelsIndex($did)
     {
         /*
          * CRUD channels
-         * add users to channel notifications
+         * general channel can not be leaved or changed  or NO SETTINGS OPTION
          */
-        /*
-         * general channel can not be leaved or changed
-         */
-        /*
-         * manage channel subscription
-         * remove or add them for notification
-         */
+
         $domain  = Domain::find($did);
         $userId  = Auth::user()->id;
         $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
@@ -656,8 +651,54 @@ class DomainController extends Controller
         }
     }
 
+    public function channelCreate($did, Request $request)
+    {
+        $domain  = Domain::find($did);
+        $userId  = Auth::user()->id;
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('d/'.$did.'/settings/channels')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
+        if($level && $level->level==0){
+
+            $channel = Channel::create([
+                'name'          => $request->name,
+                'description'   => $request->description,
+                'created_by'    => $userId,
+                'domainId'      => $domain->id
+            ]);
+
+            ChannelSubscriptions::create([
+                'userId'        => $userId,
+                'channelId'     => $channel->id,
+                'lastRead'      => Carbon::now()
+            ]);
+
+            $request->session()->flash('alert-success', 'Domain was successful created!!');
+            $channels = Channel::where('domainId', $did)->get();
+            return view('domain.settings.admin.channelBS', compact('domain', 'channels'));
+        } else{
+            dd(404);
+        }
+    }
+
     public function updateChannels($did, CreateDomainRequest $request)
     {
+        /*
+         * add users to channel notifications
+         * general channel can not be leaved or changed
+         * manage channel subscription
+         * remove or add them for notification
+         */
         $userId  = Auth::user()->id;
         $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
         if($level && $level->level==0){

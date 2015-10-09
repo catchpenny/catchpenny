@@ -145,6 +145,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
 
     ],
 
@@ -193,7 +194,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'Image'     => 'Intervention\Image\Facades\Image'
+        'Gate'      => Illuminate\Support\Facades\Gate::class,
+        'Image'     => 'Intervention\Image\Facades\Image',
 
     ],
 

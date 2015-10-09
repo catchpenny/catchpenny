@@ -14,11 +14,15 @@
             </ul>
         @endif
 
-        <form method="POST" action="{{ url('d/'. $domain->id .'/c/create') }}">
+        <form method="POST" action="{{ url('d/'. $domain->id .'/channel/create') }}">
             <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
             <div class="form-group">
-                <label for="exampleInputEmail1">Create New Channel: </label>
+                <label for="name">Create New Channel: </label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Channel Name">
+            </div>
+            <div class="form-group">
+                <label for="description">Description: </label>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Channel Descripton">
             </div>
             <div class="btn-group btn-group-justified" role="group" aria-label="...">
                 <div class="btn-group" role="group">

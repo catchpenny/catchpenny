@@ -16,7 +16,18 @@ Route::get('/', function () {
 });
 
 Route::get('home','HomeController@index');
+
+//=============================================================================
+
+// User Settings
 Route::get('settings','SettingsController@index');
+Route::get('settings/profile','SettingsController@profileIndex');
+Route::post('settings/profile','SettingsController@profileUpdate');
+Route::get('settings/security','SettingsController@index');
+Route::get('settings/privacy','SettingsController@index');
+Route::get('settings/domain','SettingsController@index');
+
+//=============================================================================
 
 //Domains
 Route::get('domain/create', 'DomainController@create');
@@ -31,20 +42,22 @@ Route::get('d/{did}/banremove/{uid}', 'DomainController@banRemove');
 
 Route::get('d/{did}/request', 'DomainController@request');
 Route::get('d/{did}/request/register', 'DomainController@registerRequest');
-Route::post('d/{did}/requestDestroy', 'DomainController@registerDestroy');
+Route::post('d/{did}/requestDestroy', 'DomainController@registerDestroy');  //  change to request/destroy
 Route::get('d/{did}/request/{uid}/accept', 'DomainController@requestAccept');
 Route::get('d/{did}/request/{uid}/cancel', 'DomainController@requestCancel');
 
 Route::get('d/{did}/settings/user/{uid}', 'DomainController@editUser');
 Route::post('d/{did}/settings/user/{uid}', 'DomainController@updateUser');
 Route::get('d/{did}/settings/users', 'DomainController@users');
-Route::get('d/{did}/settings/channels', 'DomainController@editChannels');
 Route::get('d/{did}/settings/notifications', 'DomainController@notification');
 Route::get('d/{did}/settings', 'DomainController@edit');
 Route::post('d/{did}/settings', 'DomainController@update');
 Route::post('d/{did}/destroy', 'DomainController@destroy');
 
+Route::get('d/{did}/settings/channels', 'DomainController@channelsIndex');
+Route::post('d/{did}/channel/create', 'DomainController@channelCreate');
 
+//=============================================================================
 
 //Channel Routes
 Route::get('d/{did}/c/create', 'ChannelController@create');
@@ -52,6 +65,8 @@ Route::post('d/{did}/c/create', 'ChannelController@store');
 Route::get('d/{did}/c/{cid}/settings', 'ChannelController@edit');
 Route::post('d/{did}/c/{cid}/settings', 'ChannelController@update');
 Route::get('d/{did}/c/{cid}', 'ChannelController@index');
+
+//=============================================================================
 
 // Notifications
 Route::get('n/{nid}','NotificationController@index');
@@ -63,6 +78,7 @@ Route::get('dn/{nid}/accept','NotificationController@acceptDomain');
 Route::get('dn/{nid}/cancel','NotificationController@cancelDomain');
 Route::get('dn/{nid}/delete','NotificationController@destroyDomain');
 
+//=============================================================================
 
 // Login routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -72,6 +88,9 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+//=============================================================================
+
 
 //old
 // Image

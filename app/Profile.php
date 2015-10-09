@@ -19,7 +19,6 @@ class Profile extends Model
         'coverSmall',
         'city',
         'country',
-        'contactEmail',
         'contactNumber'
     ];
 
