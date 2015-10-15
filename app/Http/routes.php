@@ -99,3 +99,15 @@ Route::get('api/image/{id}','Api\ImageController@index');
 
 // Searching
 Route::get('search/{query}', 'Api\SearchController@show');
+
+
+Route::post('fire/{did}', function ($did) {
+    // this fires the event
+    event(new App\Events\TestEvents($did));
+    return "200";
+});
+
+Route::get('test/{did}', function () {
+    // this checks for the event
+    return view('testevents/index');
+});
