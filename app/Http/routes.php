@@ -101,11 +101,13 @@ Route::get('api/image/{id}','Api\ImageController@index');
 Route::get('search/{query}', 'Api\SearchController@show');
 
 
-Route::post('fire/{did}', function ($did) {
-    // this fires the event
-    event(new App\Events\TestEvents($did));
-    return "200";
-});
+//Route::post('fire/{did}/c/{cid}', function ($did) {
+//    // this fires the event
+//    event(new App\Events\TestEvents($did));
+//    return "200";
+//});
+Route::post('fire/{did}/c/{cid}', 'ChannelController@fire');
+
 
 Route::get('test/{did}', function () {
     // this checks for the event

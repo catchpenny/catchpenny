@@ -137,6 +137,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         'Intervention\Image\ImageServiceProvider',
+        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 
 
         /*
@@ -196,6 +197,8 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Gate'      => Illuminate\Support\Facades\Gate::class,
         'Image'     => 'Intervention\Image\Facades\Image',
+        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory'
 
     ],
 

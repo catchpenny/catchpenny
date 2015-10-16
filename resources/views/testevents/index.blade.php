@@ -39,7 +39,7 @@
 
         var socket_connect = function (room) {
             return io(window.location.origin + ':6001', {
-                query: { 'r_var' : room, 'key' : "somekey" }
+                query: { 'domain' : domain, 'key' : "somekey" }
             });
         };
 

@@ -7,10 +7,14 @@ use App\Channel;
 use App\ChannelSubscriptions;
 use App\DomainSubscriptions;
 use App\User;
+use App\Events\TestEvents;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class ChannelController extends Controller
 {
@@ -50,7 +54,21 @@ class ChannelController extends Controller
             //
         }
 
+
+        $_jwttoken = JWTAuth::fromUser(Auth::user());
+//        dd($_jwttoken . Auth::user());
+//        $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
+//        $payload = JWTFactory::make($customClaims);
+//        $_jwttoken = JWTAuth::encode($payload);
+
         $channels = Channel::where('domainId',$did)->get();
-        return view('channel.indexBS', compact('domain', 'currentChannel', 'channels'));
+        return view('channel.indexBS', compact('domain', 'currentChannel', 'channels', '_jwttoken'));
+    }
+
+    public function fire($did, $cid, Request $request)
+    {
+        // verify if user is subscribed to the domain
+        event(new TestEvents($did, $cid, Auth::user()->firstName.' '.Auth::user()->lastName, Auth::user()->id, $request['m']));
+        return 200;
     }
 }

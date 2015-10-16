@@ -5,7 +5,6 @@ namespace App\Events;
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Request;
 
 
 class TestEvents extends Event implements ShouldBroadcast
@@ -14,14 +13,15 @@ class TestEvents extends Event implements ShouldBroadcast
 
     public $data;
 
-    public function __construct($did)
+    public function __construct($did , $cid, $name, $id, $m)
     {
-        $request = Request::all();
         $this->data = array(
-            'power'=> '10',
-            'room' => $did,
-            'm'    => $request['m'],
-            'from' => "Jane Doe"
+            'domain' => $did,
+            'channel'=> $cid,
+            'm'    => $m,
+            'from' => $name,
+            'id'   => $id,
+            'time' => ''
         );
 
     }
