@@ -3,80 +3,12 @@
 @section('title', 'CatchPenny | Home')
 
 <style>
-    *{
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    .well {
-        margin-top:-20px;
-        background-color:#007FBD;
-        border:2px solid #0077B2;
-        text-align:center;
-        cursor:pointer;
-        font-size: 25px;
-        padding: 15px;
-        border-radius: 0px !important;
-    }
-
-    .well:hover {
-        margin-top:-20px;
-        background-color:#0077B2;
-        border:2px solid #0077B2;
-        text-align:center;
-        cursor:pointer;
-        font-size: 25px;
-        padding: 15px;
-        border-radius: 0px !important;
-        border-bottom : 2px solid rgba(97, 203, 255, 0.65);
-    }
-
-    body {
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #fff;
-        background-color: #F1F1F1;
-    }
-
-
 
     .bg_blur
     {
         background-image:url('http://data2.whicdn.com/images/139218968/large.jpg');
         height: 300px;
         background-size: cover;
-    }
-
-    .follow_btn {
-        text-decoration: none;
-        position: absolute;
-        left: 35%;
-        top: 42.5%;
-        width: 35%;
-        height: 15%;
-        background-color: #007FBE;
-        padding: 10px;
-        padding-top: 6px;
-        color: #fff;
-        text-align: center;
-        font-size: 20px;
-        border: 4px solid #007FBE;
-    }
-
-    .follow_btn:hover {
-        text-decoration: none;
-        position: absolute;
-        left: 35%;
-        top: 42.5%;
-        width: 35%;
-        height: 15%;
-        background-color: #007FBE;
-        padding: 10px;
-        padding-top: 6px;
-        color: #fff;
-        text-align: center;
-        font-size: 20px;
-        border: 4px solid rgba(255, 255, 255, 0.8);
     }
 
     .header{
@@ -100,22 +32,6 @@
         bottom: 70%;
     }
 
-    .btn-style{
-        color: #fff;
-        background-color: #007FBE;
-        border-color: #adadad;
-        width: 33.3%;
-    }
-
-    .btn-style:hover {
-        color: #333;
-        background-color: #3D5DE0;
-        border-color: #adadad;
-        width: 33.3%;
-
-    }
-
-
     @media (max-width: 767px) {
         .header{
             text-align : center;
@@ -127,25 +43,7 @@
             margin-top : 30px;
         }
     }
-
-
-    .profile-userbuttons {
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    .profile-userbuttons .btn {
-        text-transform: uppercase;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 6px 15px;
-        margin-right: 5px;
-    }
-
-    .profile-userbuttons .btn:last-child {
-        margin-right: 0px;
-    }
-
+    
     .profile-usermenu {
         margin-top: 30px;
     }
@@ -194,7 +92,6 @@
 
         <div class="row panel">
             <div class="col-md-4 bg_blur ">
-                <a href="#" class="follow_btn hidden-xs">Follow</a>
             </div>
             <div class="col-md-8  col-xs-12">
                 <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg" class="img-thumbnail picture hidden-xs" />
