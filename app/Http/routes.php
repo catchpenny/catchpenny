@@ -17,6 +17,11 @@ Route::get('/', function () {
 
 Route::get('home','HomeController@index');
 
+
+Route::get('u/{uid}','ProfileController@index');
+
+
+
 //=============================================================================
 
 // User Settings
@@ -107,9 +112,3 @@ Route::get('search/{query}', 'Api\SearchController@show');
 //    return "200";
 //});
 Route::post('fire/{did}/c/{cid}', 'ChannelController@fire');
-
-
-Route::get('test/{did}', function () {
-    // this checks for the event
-    return view('testevents/index');
-});

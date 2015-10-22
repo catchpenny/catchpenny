@@ -305,6 +305,7 @@
                             // log data to the console so we can see
                             console.log(data);
                             $('#m').val('');
+                            $('#msg-wrap').animate({scrollTop: $('#msg-wrap')[0].scrollHeight});
                             // here we will handle errors and validation messages
                         });
                 // stop the form from submitting the normal way and refreshing the page

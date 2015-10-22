@@ -54,12 +54,9 @@ class ChannelController extends Controller
             //
         }
 
-
-        $_jwttoken = JWTAuth::fromUser(Auth::user());
+        $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
+        $_jwttoken = JWTAuth::fromUser(Auth::user(), $customClaims);
 //        dd($_jwttoken . Auth::user());
-//        $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
-//        $payload = JWTFactory::make($customClaims);
-//        $_jwttoken = JWTAuth::encode($payload);
 
         $channels = Channel::where('domainId',$did)->get();
         return view('channel.indexBS', compact('domain', 'currentChannel', 'channels', '_jwttoken'));
