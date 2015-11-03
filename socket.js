@@ -2,8 +2,8 @@ var app = require('http').createServer(handler);
 var io = require('socket.io')(app);
 var Redis = require('ioredis');
 var redis = new Redis();
-var jwt = require('jsonwebtoken');
-var colors = require('colors');
+//var jwt = require('jsonwebtoken');
+//var colors = require('colors');
 
 app.listen(6001, function() {
     console.log('Server is running!');
@@ -42,13 +42,15 @@ io.on('connection', function(socket) {
     socket.join(domain);
     var data = { 'm' : "a user connected" };
     socket.to(domain).emit("alert",data);
-    console.log((socket.id + ' ->user joined room #'+domain).green);
+    console.log((socket.id + ' ->user joined room #'+domain));
+    //console.log((socket.id + ' ->user joined room #'+domain).green);
 
     socket.on('disconnect', function(){
         socket.leave(domain);
         var data = { 'm' : "a user disconnected" };
         socket.to(domain).emit("alert",data);
-        console.log((socket.id + ' ->user left room #'+domain).red);
+        console.log((socket.id + ' ->user left room #'+domain));
+        //console.log((socket.id + ' ->user left room #'+domain).red);
     });
 });
 

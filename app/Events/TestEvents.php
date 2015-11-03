@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Events\Event;
+use Carbon\Carbon;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
@@ -21,8 +22,8 @@ class TestEvents extends Event implements ShouldBroadcast
             'm'    => $m,
             'from' => $name,
             'id'   => $id,
-            'time' => ''
-        );
+            'time' => Carbon::now()->toIso8601String()
+    );
 
     }
 
