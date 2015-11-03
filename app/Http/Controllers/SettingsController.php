@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use Image;
+use Storage;
+use File;
 
 class SettingsController extends Controller
 {
@@ -29,6 +33,15 @@ class SettingsController extends Controller
     {
         $profile  = \App\Profile::find(Auth::user()->id);
         $profile->update($request->all());
+        if(Input::hasFile('profilePhoto')){
+
+            //          small - 120x90 Pixel
+            //          medium - 240x180 Pixel
+            //          large - 480x360 Pixel
+
+            File::exists(storage_path('app/users/'.Auth::user()->id)) or File::makeDirectory(storage_path('app/users/'.Auth::user()->id));
+            Image::make(Input::file('profilePhoto'))->resize(300, 200)->save( storage_path().'/app/users/'.Auth::user()->id.'/foo.jpg');
+        }
         return view('settings.profileBS', compact('profile'));
     }
 }

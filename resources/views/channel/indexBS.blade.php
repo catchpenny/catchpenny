@@ -250,11 +250,7 @@
 
 
         $(document).ready(function(){
-            // change alert
-            // time
-            // pagination
-            // queue
-            // channel and domain notification
+
             var domain = window.location.href.split("/")[window.location.href.split("/").length - 3];
             var channel = window.location.href.split("/")[window.location.href.split("/").length - 1];
 
@@ -267,8 +263,11 @@
                            }
                 });
             };
+
             var socket      = socket_connect(domain);
+
             var socketchannel = "test-channel:App\\Events\\TestEvents\\"+channel;
+
             socket.on(socketchannel, function(message){
                 var messagehtml = '<div class="media msg">'
                         +'<a class="pull-left" href="#">'
@@ -284,12 +283,10 @@
 
                 $("#msg-wrap").append(messagehtml);
             });
-            socket.on("alert", function(message){
-                $("#messages").append('<li>' + message.m + '</li>');
-            });
 
+
+            // Sending through post request
             $('#form1').submit(function(event) {
-
                 var formData = {
                     '_token'              : $('input[name=_token]').val(),
                     'm'                   : $('textarea[name=m]').val()
@@ -302,13 +299,10 @@
                     encode          : true
                 })
                         .done(function(data) {
-                            // log data to the console so we can see
                             console.log(data);
                             $('#m').val('');
                             $('#msg-wrap').animate({scrollTop: $('#msg-wrap')[0].scrollHeight});
-                            // here we will handle errors and validation messages
                         });
-                // stop the form from submitting the normal way and refreshing the page
                 event.preventDefault();
             });
 

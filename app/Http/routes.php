@@ -112,3 +112,11 @@ Route::get('search/{query}', 'Api\SearchController@show');
 //    return "200";
 //});
 Route::post('fire/{did}/c/{cid}', 'ChannelController@fire');
+
+
+Route::get('testdomain', function(){
+    return view('test.domainBS');
+});
+Route::get('testprofile', function(){
+    return view('test.profileBS');
+});
