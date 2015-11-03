@@ -6,7 +6,7 @@
         <h1> Profile </h1>
     </div>
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <input type="hidden" ng-model="_token" name="_token" value="<?php echo csrf_token(); ?>">
         <div class="form-group">
             <label for="exampleInputEmail1">About Me</label>
@@ -29,18 +29,15 @@
             <input type="text" class="form-control" name="country" id="country" placeholder="Country" value="{{ $profile->country }}">
         </div>
         <div class="form-group">
-            <label for="exampleInputFile">Profile Photo</label>
-            <input type="file" id="exampleInputFile">
-            <p class="help-block">Example block-level help text here.</p>
+            <label for="profilePhoto">Profile Photo</label>
+            <input type="file" id="profilePhoto" name="profilePhoto">
         </div>
         <div class="form-group">
-            <label for="exampleInputFile">Cover Photo</label>
-            <input type="file" id="exampleInputFile">
-            <p class="help-block">Example block-level help text here.</p>
+            <label for=""coverPhoto>Cover Photo</label>
+            <input type="file" id="coverPhoto" name="coverPhoto">
         </div>
         <button type="submit" class="btn btn-default"> Update </button>
     </form>
-
 
 
 @endsection

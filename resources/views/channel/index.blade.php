@@ -349,7 +349,7 @@
                             // here we will handle errors and validation messages
                         });
                 // stop the form from submitting the normal way and refreshing the page
-
+                event.preventDefault();
             });
 
             $('#loading-div').on( "click", "a#loading", function (event) {

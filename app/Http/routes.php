@@ -115,7 +115,6 @@ Route::get('search/{query}', 'Api\SearchController@show');
 Route::post('fire/{did}/c/{cid}', 'ChannelController@fire');
 
 
-
 /*
 |--------------------------------------------------------------------------
 | DEBUGGING ONLY
@@ -128,3 +127,10 @@ Route::post('fire/{did}/c/{cid}', 'ChannelController@fire');
 //{
 //    var_dump($query);
 //});
+
+Route::get('testdomain', function(){
+    return view('test.domainBS');
+});
+Route::get('testprofile', function(){
+    return view('test.profileBS');
+});

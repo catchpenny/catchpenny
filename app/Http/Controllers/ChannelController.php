@@ -57,9 +57,15 @@ class ChannelController extends Controller
             //
         }
 
-        $customClaims = ['foo' => 'bar', 'baz' => 'bob'];
+        $customClaims = [
+            'firstName' => 'bar',
+            'lastName' => 'bob',
+            'id' => '',
+            'email' => '',
+            //maybe his list of domains and channel
+        ];
         $_jwttoken = JWTAuth::fromUser(Auth::user(), $customClaims);
-//        dd($_jwttoken . Auth::user());
+
         $channels = Channel::where('domainId',$did)->get();
 
         $channel_messages = $this->posts($did, $cid, 0);
