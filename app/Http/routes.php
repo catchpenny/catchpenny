@@ -69,6 +69,7 @@ Route::get('d/{did}/c/create', 'ChannelController@create');
 Route::post('d/{did}/c/create', 'ChannelController@store');
 Route::get('d/{did}/c/{cid}/settings', 'ChannelController@edit');
 Route::post('d/{did}/c/{cid}/settings', 'ChannelController@update');
+Route::get('d/{did}/c/{cid}/posts', 'ChannelController@posts');
 Route::get('d/{did}/c/{cid}', 'ChannelController@index');
 
 //=============================================================================
@@ -113,6 +114,19 @@ Route::get('search/{query}', 'Api\SearchController@show');
 //});
 Route::post('fire/{did}/c/{cid}', 'ChannelController@fire');
 
+
+/*
+|--------------------------------------------------------------------------
+| DEBUGGING ONLY
+|--------------------------------------------------------------------------
+| Display all Eloquent queries fired off.
+|
+*/
+
+//Event::listen('illuminate.query', function($query)
+//{
+//    var_dump($query);
+//});
 
 Route::get('testdomain', function(){
     return view('test.domainBS');

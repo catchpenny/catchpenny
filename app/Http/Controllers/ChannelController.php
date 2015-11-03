@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Domain;
 use App\Channel;
+use App\ChannelPosts;
 use App\ChannelSubscriptions;
 use App\DomainSubscriptions;
 use App\User;
 use App\Events\TestEvents;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -41,6 +43,7 @@ class ChannelController extends Controller
 
         if(!DomainSubscriptions::where('domainId',$did)->where('userId', Auth::user()->id)->where('level','!=','-1')->first())
         {
+            // If user is not subscribed and domain is private
            if($domain->privacy!=2){
                return redirect('/d/'.$domain->id.'/request');
            } else {
@@ -64,13 +67,33 @@ class ChannelController extends Controller
         $_jwttoken = JWTAuth::fromUser(Auth::user(), $customClaims);
 
         $channels = Channel::where('domainId',$did)->get();
-        return view('channel.indexBS', compact('domain', 'currentChannel', 'channels', '_jwttoken'));
+
+        $channel_messages = $this->posts($did, $cid, 0);
+
+        return view('channel.index', compact('domain', 'currentChannel', 'channels', 'channel_messages', '_jwttoken'));
     }
 
     public function fire($did, $cid, Request $request)
     {
         // verify if user is subscribed to the domain
-        event(new TestEvents($did, $cid, Auth::user()->firstName.' '.Auth::user()->lastName, Auth::user()->id, $request['m']));
+        $message = ChannelPosts::create([
+            'domainID'      => $did,
+            'channelID'     => $cid,
+            'body'          => $request['message'],
+            'created_by'    => Auth::user()->id,
+        ]);
+        event(new TestEvents($did, $cid, Auth::user()->firstName.' '.Auth::user()->lastName, Auth::user()->id, $request['message']));
         return 200;
+    }
+
+    public function posts($did, $cid)
+    {
+        $messages = ChannelPosts::where(['domainID' => $did, 'channelID' => $cid])->orderBy('created_at', 'desc')->paginate(10);
+        foreach ($messages as $message)
+        {
+            $user = User::where('id', $message->created_by)->first();
+            $message->created_by = $user->firstName.' '.$user->lastName;
+        }
+        return $messages;
     }
 }
