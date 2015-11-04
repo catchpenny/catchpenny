@@ -56,41 +56,42 @@ class SettingsController extends Controller
             $small->name = $small->id.'.jpg';
             $small->save();
 
-//            $medium = Files::create([
-//                'path' => '',
-//                'name' => '',
-//                'description' => Auth::user()->firstName . ' ' . Auth::user()->lastName,
-//                'type' => 'jpg',
-//                'creatorId' => Auth::user()->id,
-//                'ownerId' => Auth::user()->id
-//            ]);
-//            $medium->path = storage_path().'/app/users/'.Auth::user()->id.'/'.$small->id.'.jpg';
-//            $medium->name = $small->id.'.jpg';
-//            $medium->save();
-//
-//            $large = Files::create([
-//                'path' => '',
-//                'name' => '',
-//                'description' => Auth::user()->firstName . ' ' . Auth::user()->lastName,
-//                'type' => 'jpg',
-//                'creatorId' => Auth::user()->id,
-//                'ownerId' => Auth::user()->id
-//            ]);
-//            $large->path = storage_path().'/app/users/'.Auth::user()->id.'/'.$small->id.'.jpg';
-//            $large->name = $small->id.'.jpg';
-//            $large->save();
-//
-//            Image::make(Input::file('profilePhoto'))->resize(64, 64)->save( storage_path().'/app/users/'.Auth::user()->id.'/'. $small->id .'.jpg' );
-//            Image::make(Input::file('profilePhoto'))->resize(240, 180)->save( storage_path().'/app/users/'.Auth::user()->id.'/'. $medium->id .'.jpg' );
-//            // save original photo in case of big
-//            Image::make(Input::file('profilePhoto'))->save( storage_path().'/app/users/'.Auth::user()->id.'/'. $large->id .'.jpg' );
-//
-//            //save entry in profile
-//           $profile->update([
-//               'photoSmall' => $small->id,
-//               'photoMedium' => $medium->id,
-//               'photoBig' => $large->id
-//           ]);
+            $medium = Files::create([
+                'path' => '',
+                'name' => '',
+                'description' => Auth::user()->firstName . ' ' . Auth::user()->lastName,
+                'type' => 'jpg',
+                'creatorId' => Auth::user()->id,
+                'ownerId' => Auth::user()->id
+            ]);
+            $medium->path = storage_path().'/app/users/'.Auth::user()->id.'/'.$medium->id.'.jpg';
+            $medium->name = $medium->id.'.jpg';
+            $medium->save();
+
+            $big = Files::create([
+                'path' => '',
+                'name' => '',
+                'description' => Auth::user()->firstName . ' ' . Auth::user()->lastName,
+                'type' => 'jpg',
+                'creatorId' => Auth::user()->id,
+                'ownerId' => Auth::user()->id
+            ]);
+            $big->path = storage_path().'/app/users/'.Auth::user()->id.'/'.$big->id.'.jpg';
+            $big->name = $big->id.'.jpg';
+            $big->save();
+
+            // save original photo in case of big
+            Image::make(Input::file('profilePhoto'))->save( storage_path().'/app/users/'.Auth::user()->id.'/'. $big->id .'.jpg' );
+            Image::make(Input::file('profilePhoto'))->fit(240)->save( storage_path().'/app/users/'.Auth::user()->id.'/'. $medium->id .'.jpg' );
+            Image::make(Input::file('profilePhoto'))->fit(64)->save( storage_path().'/app/users/'.Auth::user()->id.'/'. $small->id .'.jpg' );
+
+
+            //save entry in profile
+           $profile->update([
+               'photoSmall' => $small->id,
+               'photoMedium' => $medium->id,
+               'photoBig' => $big->id
+           ]);
 
 
         }

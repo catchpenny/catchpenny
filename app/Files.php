@@ -10,6 +10,12 @@ class Files extends Model
 
     protected $fillable = [
         'path',
+        'name',
+        'description',
+        'type',
+        'creatorId',
+        'domainId',
+        'channelId',
         'ownerId',
     ];
 }

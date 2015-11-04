@@ -92,6 +92,7 @@ class ChannelController extends Controller
         foreach ($messages as $message)
         {
             $user = User::where('id', $message->created_by)->first();
+            $message->created_by_id = $message->created_by;
             $message->created_by = $user->firstName.' '.$user->lastName;
         }
         return $messages;

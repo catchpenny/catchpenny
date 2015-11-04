@@ -21,7 +21,7 @@ class TestEvents extends Event implements ShouldBroadcast
             'channel'=> $cid,
             'm'    => $m,
             'from' => $name,
-            'id'   => $id,
+            'fromId'   => $id,
             'time' => Carbon::now()->toIso8601String()
     );
 

@@ -101,6 +101,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 //old
 // Image
 Route::get('api/image/{id}','Api\ImageController@index');
+Route::get('api/image/{userId}/profile/{size}','Api\ImageController@userProfileImage');
 
 
 // Searching
