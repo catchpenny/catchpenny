@@ -65,7 +65,6 @@
         $(window).resize(function(){
             $('.auto-overflow').height($(window).height() - $('.navbar').outerHeight(true));
             $('.msg-wrap').height($(window).height() - $('.navbar').outerHeight(true) - $('.channel-header').outerHeight(true) - $('.form-wrap').outerHeight(true));
-            console.log($('.msg-wrap').height() + ' ' + $(window).height() );
         });
 
     </script>
@@ -174,6 +173,8 @@
 
         $(document).ready(function(){
 
+            $('.msg-wrap').animate({scrollTop: $('.msg-wrap')[0].scrollHeight});
+
             //Helper Function
             function getURLParameter(url, name) {
                 return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
@@ -204,31 +205,35 @@
                                                 + ' </a>'
                                             + '</div>'
                                             + '<div class="media-body">'
-                                                + '<h4 class="media-heading"> '+message.data.from+' <small class="time-from-now" data-date=""> '+message.data.time+' </small></h4>'
+                                                + '<h4 class="media-heading"> '+message.data.from+' <small> <span class="time-from-now" data-date="'+message.data.time+'"></span></small></h4>'
                                                 + '<p>'+message.data.m+'</p>'
                                             + '</div>'
                                      + '</div>';
                 $(".msg-wrap").append(messagehtml);
+                $('.msg-wrap').animate({scrollTop: $('.msg-wrap')[0].scrollHeight});
             });
 
             $('#form1').submit(function(event) {
-                var formData = {
-                    '_token'              : $('input[name=_token]').val(),
-                    'message'             : $('textarea[name=message]').val()
-                };
-                $.ajax({
-                    type        : 'POST',
-                    url         : '/fire/' + domain + '/c/' + channel,
-                    data        : formData,
-                    dataType    : 'json',
-                    encode      : true
-                })
-                        .done(function(data) {
-                            $('#m').val('');
-                            $('.msg-wrap').animate({scrollTop: $('.msg-wrap')[0].scrollHeight});
-                        });
+                if($('textarea[name=message]').val()!=''){
+                    var formData = {
+                        '_token'              : $('input[name=_token]').val(),
+                        'message'             : $('textarea[name=message]').val()
+                    };
+                    $.ajax({
+                        type        : 'POST',
+                        url         : '/fire/' + domain + '/c/' + channel,
+                        data        : formData,
+                        dataType    : 'json',
+                        encode      : true
+                    })
+                            .done(function(data) {
+                                $('#m').val('');
+                                $('.msg-wrap').animate({scrollTop: $('.msg-wrap')[0].scrollHeight});
+                            });
+                }
                 event.preventDefault();
             });
+
 
             $('#loading-div').on( "click", "a#loading", function (event) {
                 $("#loading").text('Loading! Please wait');
@@ -247,24 +252,17 @@
                                         + ' </a>'
                                         + '</div>'
                                         + '<div class="media-body">'
-                                        + '<h4 class="media-heading"> '+val.created_by+'<small class="time-from-now" data-date=""> '+val.created_at+' </small></h4>'
+                                        + '<h4 class="media-heading"> '+val.created_by+'<small> <span class="time-from-now" data-date="'+val.created_at+'"></span></small></h4>'
                                         + '<p>'+val.body+'</p>'
                                         + '</div>'
                                         + '</div>';
-
-                                $("#loading").text('Load Previous Messages');
-
-//                                var height = $('.msg-wrap')[0].scrollHeight;
-//                                console.log(height);
                                 $(".messages").prepend(messagehtml);
-//                                console.log($('.msg-wrap')[0].scrollHeight);
-//                                console.log($('.msg-wrap')[0].scrollHeight - height);
-//                                $(".msg-wrap").scrollTop($('.msg-wrap')[0].scrollHeight - height);
                             });
 
                             if (data.next_page_url)
                             {
                                 $('a#loading').attr('href',  data.next_page_url);
+                                $("#loading").text('Load Previous Messages');
                             }else{
                                 $("#loading").remove();
                                 $("#loading-div").text('No Previous Messages');
@@ -274,16 +272,12 @@
         });
 
         $(document).ready(function(){
-//            var i = 0;
             (function timeCheck() {
-//                console.log("Check #"+i);
                 $('span.time-from-now', $('.msg-wrap')).each(function () {
                     var item = $(this);
                     date = moment($(this).attr('data-date'));
-//                    console.log(moment(item.attr('data-date')).fromNow());
                     item.html(date.fromNow());
                 })
-//                i++;
                 setTimeout(timeCheck, 10000);
             })();
         });
