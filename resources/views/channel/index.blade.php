@@ -2,158 +2,77 @@
 
 @section('title', 'CatchPenny | Home')
 
-<style>
-
-    .conversation
-    {
-        padding:5px;
-        border-bottom:1px solid #ddd;
-        margin:0;
-
-    }
-
-    .message-wrap
-    {
-        box-shadow: 0 0 3px #ddd;
-        padding:0;
-
-    }
-    .msg
-    {
-        padding:5px;
-        /*border-bottom:1px solid #ddd;*/
-        margin:0;
-    }
-    .msg-wrap
-    {
-        padding:10px;
-        max-height: 400px;
-        overflow: auto;
-
-    }
-
-    .time
-    {
-        color:#bfbfbf;
-    }
-
-    .send-wrap
-    {
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-        padding:10px;
-        /*background: #f8f8f8;*/
-    }
-
-    .send-message
-    {
-        resize: none;
-    }
-
-    .highlight
-    {
-        background-color: #f7f7f9;
-        border: 1px solid #e1e1e8;
-    }
-
-    .send-message-btn
-    {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        border-bottom-left-radius: 0;
-
-        border-bottom-right-radius: 0;
-    }
-    .btn-panel
-    {
-        background: #f7f7f9;
-    }
-
-    .btn-panel .btn
-    {
-        color:#b8b8b8;
-
-        transition: 0.2s all ease-in-out;
-    }
-
-    .btn-panel .btn:hover
-    {
-        color:#666;
-        background: #f8f8f8;
-    }
-    .btn-panel .btn:active
-    {
-        background: #f8f8f8;
-        box-shadow: 0 0 1px #ddd;
-    }
-
-    .btn-panel-conversation .btn,.btn-panel-msg .btn
-    {
-
-        background: #f8f8f8;
-    }
-    .btn-panel-conversation .btn:first-child
-    {
-        border-right: 1px solid #ddd;
-    }
-
-    .msg-wrap .media-heading
-    {
-        color:#003bb3;
-        font-weight: 700;
-    }
-
-    .form-wrap{
-        margin-bottom: 0px;
-    }
-
-
-    .msg-date
-    {
-        background: none;
-        text-align: center;
-        color:#aaa;
-        border:none;
-        box-shadow: none;
-        border-bottom: 1px solid #ddd;
-    }
-
-
-    body::-webkit-scrollbar {
-        width: 12px;
-    }
-
-
-    /* Let's get this party started */
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        /*        -webkit-border-radius: 10px;
-                border-radius: 10px;*/
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        /*        -webkit-border-radius: 10px;
-                border-radius: 10px;*/
-        background:#ddd;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-    }
-    ::-webkit-scrollbar-thumb:window-inactive {
-        background: #ddd;
-    }
-
-</style>
-
 @section('content')
+
+    <style>
+        .no-margin{
+            margin: 0px !important;
+        }
+
+        .no-padding{
+            padding: 0px !important;
+        }
+
+        .white-font{
+            color: white;
+        }
+
+        .auto-overflow{
+            overflow: auto;
+        }
+        /* Let's get this party started */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            /*        -webkit-border-radius: 10px;
+                    border-radius: 10px;*/
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            /*        -webkit-border-radius: 10px;
+                    border-radius: 10px;*/
+            background:#ddd;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+        }
+        ::-webkit-scrollbar-thumb:window-inactive {
+            background: #ddd;
+        }
+
+        .form-wrap{
+            position: absolute;
+            bottom: 0px;
+            right: 0;
+            left: 0;
+            margin: auto;
+            width: 100%;
+            padding: 15px;
+        }
+
+    </style>
+
+    <script>
+
+        $(document).ready(function(){
+            $('.auto-overflow').height($(window).height() - $('.navbar').outerHeight(true));
+            $('.msg-wrap').height($(window).height() - $('.navbar').outerHeight(true) - $('.channel-header').outerHeight(true) - $('.form-wrap').outerHeight(true));
+        });
+
+        $(window).resize(function(){
+            $('.auto-overflow').height($(window).height() - $('.navbar').outerHeight(true));
+            $('.msg-wrap').height($(window).height() - $('.navbar').outerHeight(true) - $('.channel-header').outerHeight(true) - $('.form-wrap').outerHeight(true));
+            console.log($('.msg-wrap').height() + ' ' + $(window).height() );
+        });
+
+    </script>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 auto-overflow hidden-sm hidden-xs" >
                 <div class="page-header">
                     <a href=" {{ url('d/'.$domain->id.'/c/'.$domain->generalId) }}">
                         <h1> {{ $domain->name }} </h1>
@@ -175,102 +94,81 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="page-header" style="margin-bottom: 0px;">
-                    <h1>{{ '#'.$currentChannel->name }} <small>{{ $currentChannel->description }}</small></h1>
+            <div class="col-md-9 auto-overflow">
+                <div class="page-header channel-header" style="margin: 0px;">
+                    <h3>#general <small>this channel is for general talks</small></h3>
                 </div>
 
-                {{--start--}}
-                <div class="row">
+                <div class="msg-wrap auto-overflow" id="msg-wrap">
 
-                    <div class="message-wrap">
+                    <div id="loading-div" class="loading" align="center" style="margin: 10px;">
+                        <a id="loading" href="{{ $currentChannel->id }}/posts/?page={{ $channel_messages->currentPage() + 1 }}">Load Previous Messages</a>
+                    </div>
 
-                        <div class="msg-wrap" id="msg-wrap">
-
-                            <div id="loading-div" class="loading" align="center">
-                                <a id="loading" href="{{ $currentChannel->id }}/posts/?page={{ $channel_messages->currentPage() + 1 }}">Loading</a>
-                            </div>
-
-                            @foreach (array_reverse($channel_messages->toArray()['data']) as $msg)
-                                <div class="media-msg">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACqUlEQVR4Xu2Y60tiURTFl48STFJMwkQjUTDtixq+Av93P6iBJFTgg1JL8QWBGT4QfDX7gDIyNE3nEBO6D0Rh9+5z9rprr19dTa/XW2KHl4YFYAfwCHAG7HAGgkOQKcAUYAowBZgCO6wAY5AxyBhkDDIGdxgC/M8QY5AxyBhkDDIGGYM7rIAyBgeDAYrFIkajEYxGIwKBAA4PDzckpd+322243W54PJ5P5f6Omh9tqiTAfD5HNpuFVqvFyckJms0m9vf3EY/H1/u9vb0hn89jsVj8kwDfUfNviisJ8PLygru7O4TDYVgsFtDh9Xo9NBrNes9cLgeTybThgKenJ1SrVXGf1WoVDup2u4jFYhiPx1I1P7XVBxcoCVCr1UBfTqcTrVYLe3t7OD8/x/HxsdiOPqNGo9Eo0un02gHkBhJmuVzC7/fj5uYGXq8XZ2dnop5Mzf8iwMPDAxqNBmw2GxwOBx4fHzGdTpFMJkVzNB7UGAmSSqU2RoDmnETQ6XQiOyKRiHCOSk0ZEZQcUKlU8Pz8LA5vNptRr9eFCJQBFHq//szG5eWlGA1ywOnpqQhBapoWPfl+vw+fzweXyyU+U635VRGUBOh0OigUCggGg8IFK/teXV3h/v4ew+Hwj/OQU4gUq/w4ODgQrkkkEmKEVGp+tXm6XkkAOngmk4HBYBAjQA6gEKRmyOL05GnR99vbW9jtdjEGdP319bUIR8oA+pnG5OLiQoghU5OElFlKAtCGr6+vKJfLmEwm64aosd/XbDbbyIBSqSSeNKU+HXzlnFAohKOjI6maMs0rO0B20590n7IDflIzMmdhAfiNEL8R4jdC/EZIJj235R6mAFOAKcAUYApsS6LL9MEUYAowBZgCTAGZ9NyWe5gCTAGmAFOAKbAtiS7TB1Ng1ynwDkxRe58vH3FfAAAAAElFTkSuQmCC">
+                    <div class="messages">
+                        @foreach (array_reverse($channel_messages->toArray()['data']) as $msg)
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTBjZjQ1NTgwOSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1MGNmNDU1ODA5Ij48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy40NzY1NjI1IiB5PSIzNi41Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
                                     </a>
-                                    <div class="media-body">
-                                        <small class="pull-right time">
-                                            <i class="fa fa-clock-o"></i>
-                                            <span class="time-from-now" data-date="{{ $msg['created_at'] }}"></span>
-                                        </small>
-                                        <h5 class="media-heading">{{ $msg['created_by'] }}</h5>
-                                        <small class="col-lg-10">{{ $msg['body'] }}</small>
-                                    </div>
                                 </div>
-                            @endforeach
-
-
-{{--                            {{ var_dump(array_reverse($channel_messages)) }}--}}
-
-                            {{--<div class="alert alert-info msg-date">--}}
-                            {{--<strong>Today</strong>--}}
-                            {{--</div>--}}
-
-                        </div>
-                    </div>
-                    <div class="form-wrap">
-                        <form action="fire" method="POST" name="form1" id="form1">
-                            <div class="send-wrap">
-                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                                <input type="hidden" name="_jwttoken" value="{{ $_jwttoken }}">
-                                <textarea class="form-control send-message" rows="3" placeholder="Write a reply..." id="m" name="message" autocomplete="off"></textarea>
+                                <div class="media-body">
+                                    <h4 class="media-heading"> {{ $msg['created_by'] }} <small> <span class="time-from-now" data-date="{{ $msg['created_at'] }}"></span></small></h4>
+                                    <p>{{ $msg['body'] }}</p>
+                                </div>
                             </div>
-                            <div class="btn-panel">
-                                <a href="" class=" col-lg-3 btn   send-message-btn " role="button"><i class="fa fa-cloud-upload"></i> Add Files</a>
-                                <button class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button"><i class="fa fa-plus"></i> Send Message</button>
-                            </div>
-                        </form>
+                        @endforeach
                     </div>
 
                 </div>
-                {{--end--}}
+
+                <div class="form-wrap">
+                    <form action="fire" method="POST" name="form1" id="form1">
+                        <div class="send-wrap">
+                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <input type="hidden" name="_jwttoken" value="{{ $_jwttoken }}">
+                            <textarea class="form-control send-message" rows="3" placeholder="Write a reply..." id="m" name="message" autocomplete="off"></textarea>
+                        </div>
+                        <div class="btn-panel">
+                            <a href="" class=" col-lg-3 btn   send-message-btn " role="button"><i class="fa fa-cloud-upload"></i> Add Files</a>
+                            <button class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button"><i class="fa fa-plus"></i> Send Message</button>
+                        </div>
+                    </form>
+                </div>
 
             </div>
-            <div class="col-md-3">
+            {{--<div class="col-md-2">--}}
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Users
-                    </div>
-                    <ul class="list-group">
-                        @foreach($channel->users as $user)
-                            <li class="list-group-item">
-                                {{ $user->firstName . ' ' . $user->lastName}}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                {{--<div class="panel panel-default">--}}
+                    {{--<div class="panel-heading">--}}
+                        {{--Users--}}
+                    {{--</div>--}}
+                    {{--<ul class="list-group">--}}
+                        {{--@foreach($channel->users as $user)--}}
+                            {{--<li class="list-group-item">--}}
+                                {{--{{ $user->firstName . ' ' . $user->lastName}}--}}
+                            {{--</li>--}}
+                        {{--@endforeach--}}
+                    {{--</ul>--}}
+                {{--</div>--}}
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Notifications
-                    </div>
-                    <ul class="list-group">
+                {{--<div class="panel panel-default">--}}
+                    {{--<div class="panel-heading">--}}
+                        {{--Notifications--}}
+                    {{--</div>--}}
+                    {{--<ul class="list-group">--}}
                         {{--@foreach($channel->users as $user)--}}
                         {{--<li class="list-group-item">--}}
                         {{--{{ $user->firstName . ' ' . $user->lastName}}--}}
                         {{--</li>--}}
                         {{--@endforeach--}}
-                    </ul>
-                </div>
+                    {{--</ul>--}}
+                {{--</div>--}}
 
-            </div>
+            {{--</div>--}}
         </div>
     </div>
-
-    {{--<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>--}}
-    {{--<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>--}}
-    <script type="text/javascript" src="{{ asset('node_modules/socket.io/node_modules/socket.io-client/socket.io.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-2.1.3.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('node_modules/moment/moment.js') }}"></script>
 
     <script>
 
@@ -281,11 +179,6 @@
                 return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
             }
 
-
-            // change alert
-            // pagination
-            // queue
-            // channel and domain notification
             var domain = window.location.href.split("/")[window.location.href.split("/").length - 3];
             var channel = window.location.href.split("/")[window.location.href.split("/").length - 1];
 
@@ -300,36 +193,25 @@
                 });
             };
 
-            var socket      = socket_connect(domain);
-
+            var socket        = socket_connect(domain);
             var socketchannel = "test-channel:App\\Events\\TestEvents\\"+channel;
 
             socket.on(socketchannel, function(message){
-                var messagehtml = '<div class="media-msg">'
-                        +'<a class="pull-left" href="#">'
-                        +'<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACqUlEQVR4Xu2Y60tiURTFl48STFJMwkQjUTDtixq+Av93P6iBJFTgg1JL8QWBGT4QfDX7gDIyNE3nEBO6D0Rh9+5z9rprr19dTa/XW2KHl4YFYAfwCHAG7HAGgkOQKcAUYAowBZgCO6wAY5AxyBhkDDIGdxgC/M8QY5AxyBhkDDIGGYM7rIAyBgeDAYrFIkajEYxGIwKBAA4PDzckpd+322243W54PJ5P5f6Omh9tqiTAfD5HNpuFVqvFyckJms0m9vf3EY/H1/u9vb0hn89jsVj8kwDfUfNviisJ8PLygru7O4TDYVgsFtDh9Xo9NBrNes9cLgeTybThgKenJ1SrVXGf1WoVDup2u4jFYhiPx1I1P7XVBxcoCVCr1UBfTqcTrVYLe3t7OD8/x/HxsdiOPqNGo9Eo0un02gHkBhJmuVzC7/fj5uYGXq8XZ2dnop5Mzf8iwMPDAxqNBmw2GxwOBx4fHzGdTpFMJkVzNB7UGAmSSqU2RoDmnETQ6XQiOyKRiHCOSk0ZEZQcUKlU8Pz8LA5vNptRr9eFCJQBFHq//szG5eWlGA1ywOnpqQhBapoWPfl+vw+fzweXyyU+U635VRGUBOh0OigUCggGg8IFK/teXV3h/v4ew+Hwj/OQU4gUq/w4ODgQrkkkEmKEVGp+tXm6XkkAOngmk4HBYBAjQA6gEKRmyOL05GnR99vbW9jtdjEGdP319bUIR8oA+pnG5OLiQoghU5OElFlKAtCGr6+vKJfLmEwm64aosd/XbDbbyIBSqSSeNKU+HXzlnFAohKOjI6maMs0rO0B20590n7IDflIzMmdhAfiNEL8R4jdC/EZIJj235R6mAFOAKcAUYApsS6LL9MEUYAowBZgCTAGZ9NyWe5gCTAGmAFOAKbAtiS7TB1Ng1ynwDkxRe58vH3FfAAAAAElFTkSuQmCC">'
-                        +'</a>'
-                        +'<div class="media-body">'
-                        +'<small class="pull-right time">'
-                        +'<i class="fa fa-clock-o"></i>'
-                        +'<span class="time-from-now" data-date="'
-                        + message.data.time
-                        +'"></span>'
-                        +'</small>'
-                        +'<h5 class="media-heading">'+message.data.from+'</h5>'
-                        +'<small class="col-lg-10">'+message.data.m+'</small>'
-                        +'</div>'
-                        +'</div>';
-                console.log(message.data.domain+ ' ' + message.data.channel);
-
-                $("#msg-wrap").append(messagehtml);
-            });
-            socket.on("alert", function(message){
-                $("#messages").append('<li>' + message.m + '</li>');
+                var messagehtml =   '<div class="media">'
+                                            + '<div class="media-left">'
+                                                + '<a href="#">'
+                                                    + '<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTBjZjQ1NTgwOSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1MGNmNDU1ODA5Ij48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy40NzY1NjI1IiB5PSIzNi41Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true">'
+                                                + ' </a>'
+                                            + '</div>'
+                                            + '<div class="media-body">'
+                                                + '<h4 class="media-heading"> '+message.data.from+' <small class="time-from-now" data-date=""> '+message.data.time+' </small></h4>'
+                                                + '<p>'+message.data.m+'</p>'
+                                            + '</div>'
+                                     + '</div>';
+                $(".msg-wrap").append(messagehtml);
             });
 
             $('#form1').submit(function(event) {
-
                 var formData = {
                     '_token'              : $('input[name=_token]').val(),
                     'message'             : $('textarea[name=message]').val()
@@ -342,56 +224,50 @@
                     encode      : true
                 })
                         .done(function(data) {
-                            // log data to the console so we can see
-                            console.log(data);
                             $('#m').val('');
-                            $('#msg-wrap').animate({scrollTop: $('#msg-wrap')[0].scrollHeight});
-                            // here we will handle errors and validation messages
+                            $('.msg-wrap').animate({scrollTop: $('.msg-wrap')[0].scrollHeight});
                         });
-                // stop the form from submitting the normal way and refreshing the page
                 event.preventDefault();
             });
 
             $('#loading-div').on( "click", "a#loading", function (event) {
+                $("#loading").text('Loading! Please wait');
                 event.preventDefault();
                 event.stopPropagation();
                 var url = ($(this).attr('href'));
                 var page = getURLParameter(url, 'page');
-
-//                console.log(url);
                 $.getJSON(url)
                         .success(function (data) {
-                            console.log(data);
                             $.each(data.data, function(key, val) {
 
-                                var messagehtml = '<div class="media-msg">'
-                                        +'<a class="pull-left" href="#">'
-                                        +'<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 32px; height: 32px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACqUlEQVR4Xu2Y60tiURTFl48STFJMwkQjUTDtixq+Av93P6iBJFTgg1JL8QWBGT4QfDX7gDIyNE3nEBO6D0Rh9+5z9rprr19dTa/XW2KHl4YFYAfwCHAG7HAGgkOQKcAUYAowBZgCO6wAY5AxyBhkDDIGdxgC/M8QY5AxyBhkDDIGGYM7rIAyBgeDAYrFIkajEYxGIwKBAA4PDzckpd+322243W54PJ5P5f6Omh9tqiTAfD5HNpuFVqvFyckJms0m9vf3EY/H1/u9vb0hn89jsVj8kwDfUfNviisJ8PLygru7O4TDYVgsFtDh9Xo9NBrNes9cLgeTybThgKenJ1SrVXGf1WoVDup2u4jFYhiPx1I1P7XVBxcoCVCr1UBfTqcTrVYLe3t7OD8/x/HxsdiOPqNGo9Eo0un02gHkBhJmuVzC7/fj5uYGXq8XZ2dnop5Mzf8iwMPDAxqNBmw2GxwOBx4fHzGdTpFMJkVzNB7UGAmSSqU2RoDmnETQ6XQiOyKRiHCOSk0ZEZQcUKlU8Pz8LA5vNptRr9eFCJQBFHq//szG5eWlGA1ywOnpqQhBapoWPfl+vw+fzweXyyU+U635VRGUBOh0OigUCggGg8IFK/teXV3h/v4ew+Hwj/OQU4gUq/w4ODgQrkkkEmKEVGp+tXm6XkkAOngmk4HBYBAjQA6gEKRmyOL05GnR99vbW9jtdjEGdP319bUIR8oA+pnG5OLiQoghU5OElFlKAtCGr6+vKJfLmEwm64aosd/XbDbbyIBSqSSeNKU+HXzlnFAohKOjI6maMs0rO0B20590n7IDflIzMmdhAfiNEL8R4jdC/EZIJj235R6mAFOAKcAUYApsS6LL9MEUYAowBZgCTAGZ9NyWe5gCTAGmAFOAKbAtiS7TB1Ng1ynwDkxRe58vH3FfAAAAAElFTkSuQmCC">'
-                                        +'</a>'
-                                        +'<div class="media-body">'
-                                        +'<small class="pull-right time">'
-                                        +'<i class="fa fa-clock-o"></i>'
-                                        +'<span class="time-from-now" data-date="'
-                                        + val.created_at
-                                        +'"></span>'
-                                        +'</small>'
-                                        +'<h5 class="media-heading">'+val.created_by+'</h5>'
-                                        +'<small class="col-lg-10">'+val.body+'</small>'
-                                        +'</div>'
-                                        +'</div>';
-                                $('#loading-div').remove();
-                                $("#msg-wrap").prepend(messagehtml);
+                                var messagehtml =   '<div class="media">'
+                                        + '<div class="media-left">'
+                                        + '<a href="#">'
+                                        + '<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTBjZjQ1NTgwOSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1MGNmNDU1ODA5Ij48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy40NzY1NjI1IiB5PSIzNi41Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true">'
+                                        + ' </a>'
+                                        + '</div>'
+                                        + '<div class="media-body">'
+                                        + '<h4 class="media-heading"> '+val.created_by+'<small class="time-from-now" data-date=""> '+val.created_at+' </small></h4>'
+                                        + '<p>'+val.body+'</p>'
+                                        + '</div>'
+                                        + '</div>';
+
+                                $("#loading").text('Load Previous Messages');
+
+//                                var height = $('.msg-wrap')[0].scrollHeight;
+//                                console.log(height);
+                                $(".messages").prepend(messagehtml);
+//                                console.log($('.msg-wrap')[0].scrollHeight);
+//                                console.log($('.msg-wrap')[0].scrollHeight - height);
+//                                $(".msg-wrap").scrollTop($('.msg-wrap')[0].scrollHeight - height);
                             });
 
-                            if (page <= data.last_page)
+                            if (data.next_page_url)
                             {
-                                page = parseInt(page) + 1;
-                                var loadingHTML = '<div id="loading-div" class="loading" align="center">'
-                                        +'<a id="loading" href="{{ $currentChannel->id }}/posts/?page='
-                                        +page
-                                        +'">Loading</a>'
-                                        +'</div>';
-                                $("#msg-wrap").prepend(loadingHTML);
+                                $('a#loading').attr('href',  data.next_page_url);
+                            }else{
+                                $("#loading").remove();
+                                $("#loading-div").text('No Previous Messages');
                             }
                         });
             });
@@ -401,7 +277,7 @@
 //            var i = 0;
             (function timeCheck() {
 //                console.log("Check #"+i);
-                $('span.time-from-now', $('#msg-wrap')).each(function () {
+                $('span.time-from-now', $('.msg-wrap')).each(function () {
                     var item = $(this);
                     date = moment($(this).attr('data-date'));
 //                    console.log(moment(item.attr('data-date')).fromNow());
@@ -411,6 +287,9 @@
                 setTimeout(timeCheck, 10000);
             })();
         });
+
+
+
     </script>
 
 @endsection

@@ -10,12 +10,16 @@
     <link rel="stylesheet" href="{{ url('css/bootstrap-theme.min.css') }}">
     <script src="{{ url('js/jquery-2.1.3.min.js') }}"></script>
     <script src="{{ url('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/socket.io/node_modules/socket.io-client/socket.io.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/moment/moment.js') }}"></script>
 
     {{--ONLINE SOURCE--}}
     {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--}}
     {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">--}}
     {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>--}}
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>--}}
+    {{--<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>--}}
+
 
     <title> @yield('title') </title>
 </head>
