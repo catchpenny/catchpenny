@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url('css/bootstrap-theme.min.css') }}">
     <script src="{{ url('js/jquery-2.1.3.min.js') }}"></script>
     <script src="{{ url('js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('js/angular.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('node_modules/socket.io/node_modules/socket.io-client/socket.io.js') }}"></script>
     <script type="text/javascript" src="{{ asset('node_modules/moment/moment.js') }}"></script>
 
