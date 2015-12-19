@@ -16,10 +16,9 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {

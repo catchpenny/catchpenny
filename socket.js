@@ -21,10 +21,6 @@ io.on('connection', function(socket) {
     socket.join(socket.handshake['query']['domain']);
     console.log(socket.handshake);
 
-    //
-    //socket.join("d/2");
-    //socket.join("d/3");
-
     // inform domain user connected
     //var data = { 'm' : "a user connected" };
     //socket.to(domain).emit("alert",data);
@@ -39,6 +35,8 @@ io.on('connection', function(socket) {
         console.log((socket.id + ' ->user left').red);
     });
 });
+
+
 
 redis.psubscribe('*', function(err, count) {
     //

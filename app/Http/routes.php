@@ -97,13 +97,6 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 //=============================================================================
 
-
-//old
-// Image
-Route::get('api/image/{id}','Api\ImageController@index');
-Route::get('api/image/{userId}/profile/{size}','Api\ImageController@userProfileImage');
-
-
 // Searching
 Route::get('search/{query}', 'Api\SearchController@show');
 
@@ -114,6 +107,23 @@ Route::get('search/{query}', 'Api\SearchController@show');
 //    return "200";
 //});
 Route::post('fire/{did}/c/{cid}', 'ChannelController@fire');
+
+//=============================================================================
+
+
+Route::group(['prefix' => 'api/v1'], function() {
+    //old Image
+    Route::get('image/{id}','Api\ImageController@index');
+    Route::get('image/{userId}/profile/{size}','Api\ImageController@userProfileImage');
+
+    // Mobile App Api
+    Route::post('auth/login', 'Api\ApiController@login');
+    Route::get('access', 'Api\ApiController@access');
+    Route::get('d/{did}/c/{cid}', 'Api\ApiController@channel');
+
+    // TODO How to logout JWT style?
+    Route::get('auth/logout', 'Api\ApiController@logout');
+});
 
 
 /*
