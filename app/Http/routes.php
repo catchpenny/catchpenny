@@ -139,6 +139,9 @@ Route::group(['prefix' => 'api/v1'], function() {
 //    var_dump($query);
 //});
 
+Route::get('spa', 'dev\SPAController@index');
+Route::get('spa/getDomains', 'dev\SPAController@getDomains');
+Route::get('spa/getDomainsAjax', 'dev\SPAController@getDomainsAjax');
 Route::get('testdomain', function(){
     return view('test.domainBS');
 });

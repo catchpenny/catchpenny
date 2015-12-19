@@ -69,7 +69,7 @@
 
     </script>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 auto-overflow hidden-sm hidden-xs" >
                 <div class="page-header">
