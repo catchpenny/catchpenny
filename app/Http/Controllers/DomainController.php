@@ -30,12 +30,12 @@ class DomainController extends Controller
      *
      * @return Response
      */
-    public function create()
-    {   //stable
-        return view('domain.createBS');
+    public function createDomain()
+    {
+        return view('domain.create');
     }
 
-    public function store(CreateDomainRequest $request)
+    public function storeDomain(CreateDomainRequest $request)
     {
         //stable
         $input = $request->all();
@@ -79,7 +79,7 @@ class DomainController extends Controller
         return redirect('d/'.$domain->id.'/c/'.$general->id);
     }
 
-    public function edit($did)
+    public function editDomain($did)
     {
         $domain  = Domain::find($did);
         if(!$domain) {
@@ -90,16 +90,16 @@ class DomainController extends Controller
         $level = DomainSubscriptions::where('userId',$userId)->where('domainId',$did)->select('level')->first();
         if($level && $level->level!= -1){
                 if($level->level==0 || $level->level == 1){
-                    return view('domain.settings.admin.generalBS', compact('domain','channel'));
+                    return view('domain.admin.settings.general', compact('domain'));
                 }else{
-                    return view('domain.settings.generalBS', compact('domain'));
+                    return view('domain.user.settings.general', compact('domain'));
                 }
         } else{
             dd(404);
         }
     }
 
-    public function update($did, CreateDomainRequest $request)
+    public function updateDomain($did, CreateDomainRequest $request)
     {
         $domain  = Domain::find($did);
         if(!$domain) {
@@ -117,7 +117,7 @@ class DomainController extends Controller
         dd(404);
     }
 
-    public function destroy($did, Request $request)
+    public function destroyDomain($did, Request $request)
     {
         // check if admin is quiting then delete domain
         $domain  = Domain::find($did);
@@ -149,6 +149,14 @@ class DomainController extends Controller
         }
         dd(404);
     }
+
+
+
+    /*
+     *  User
+     */
+
+
 
     public function invite($did, Request $request)
     {

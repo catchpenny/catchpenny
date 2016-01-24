@@ -35,32 +35,33 @@ Route::get('settings/domain','SettingsController@index');
 //=============================================================================
 
 //Domains
-Route::get('domain/create', 'DomainController@create');
-Route::post('domain/create', 'DomainController@store');
+Route::get('domain/create'                 , 'DomainController@createDomain');
+Route::post('domain/create'                , 'DomainController@storeDomain');
+Route::post('d/{did}/destroy'              , 'DomainController@destroyDomain');
 
-Route::post('d/{did}/invite', 'DomainController@invite');
-Route::get('d/{did}/invite/accept', 'DomainController@inviteAccept');
-Route::get('d/{did}/invite/{uid}/destroy', 'DomainController@inviteDestroy');
+Route::post('d/{did}/invite'               , 'DomainController@invite');
+Route::get('d/{did}/invite/accept'         , 'DomainController@inviteAccept');
+Route::get('d/{did}/invite/{uid}/destroy'  , 'DomainController@inviteDestroy');
 
-Route::post('d/{did}/ban', 'DomainController@ban');
-Route::get('d/{did}/banremove/{uid}', 'DomainController@banRemove');
+Route::post('d/{did}/ban'                  , 'DomainController@ban');
+Route::get('d/{did}/banremove/{uid}'       , 'DomainController@banRemove');
 
-Route::get('d/{did}/request', 'DomainController@request');
-Route::get('d/{did}/request/register', 'DomainController@registerRequest');
-Route::post('d/{did}/requestDestroy', 'DomainController@registerDestroy');  //  change to request/destroy
-Route::get('d/{did}/request/{uid}/accept', 'DomainController@requestAccept');
-Route::get('d/{did}/request/{uid}/cancel', 'DomainController@requestCancel');
+Route::get('d/{did}/request'               , 'DomainController@request');
+Route::get('d/{did}/request/register'      , 'DomainController@registerRequest');
+Route::post('d/{did}/requestDestroy'       , 'DomainController@registerDestroy');  //  change to request/destroy
+Route::get('d/{did}/request/{uid}/accept'  , 'DomainController@requestAccept');
+Route::get('d/{did}/request/{uid}/cancel'  , 'DomainController@requestCancel');
 
-Route::get('d/{did}/settings/user/{uid}', 'DomainController@editUser');
-Route::post('d/{did}/settings/user/{uid}', 'DomainController@updateUser');
-Route::get('d/{did}/settings/users', 'DomainController@users');
+Route::get('d/{did}/settings/user/{uid}'   , 'DomainController@editUser');
+Route::post('d/{did}/settings/user/{uid}'  , 'DomainController@updateUser');
+Route::get('d/{did}/settings/users'        , 'DomainController@users');
 Route::get('d/{did}/settings/notifications', 'DomainController@notification');
-Route::get('d/{did}/settings', 'DomainController@edit');
-Route::post('d/{did}/settings', 'DomainController@update');
-Route::post('d/{did}/destroy', 'DomainController@destroy');
 
-Route::get('d/{did}/settings/channels', 'DomainController@channelsIndex');
-Route::post('d/{did}/channel/create', 'DomainController@channelCreate');
+Route::get('d/{did}/settings'              , 'DomainController@editDomain');
+Route::post('d/{did}/settings'             , 'DomainController@updateDomain');
+
+Route::get('d/{did}/settings/channels'     , 'DomainController@channelsIndex');
+Route::post('d/{did}/channel/create'       , 'DomainController@channelCreate');
 
 //=============================================================================
 
